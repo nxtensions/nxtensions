@@ -15,7 +15,7 @@
       "runner": "@nrwl/nx-cloud",
       "options": {
         "cacheableOperations": ["build", "lint", "test", "e2e"],
-        "accessToken": "ZTNmOGI3ZTQtY2ViYi00ODRmLWExYzYtNmI4ODc0NDhlMDRifHJlYWQtd3JpdGU="
+        "accessToken": "NmMzZThhOGUtMGM0Zi00ZGVjLWFhOTctY2E3NjgxNjA0Y2UxfHJlYWQtd3JpdGU="
       }
     }
   },
@@ -26,6 +26,10 @@
         "projects": "dependencies"
       }
     ]
+  },
+  "workspaceLayout": {
+    "appsDir": "",
+    "libsDir": "packages"
   },
   "projects": {}
 }

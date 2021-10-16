@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "NxAstroExecutor",
+  "cli": "nx",
+  "title": "Astro build executor",
+  "type": "object",
+  "properties": {
+    "deleteOutputPath": {
+      "type": "boolean",
+      "description": "Delete the output path before building.",
+      "default": true
+    }
+  },
+  "additionalProperties": false,
+  "required": []
+}

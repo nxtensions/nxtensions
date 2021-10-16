@@ -1,0 +1,56 @@
+{
+  "root": "packages/astro",
+  "sourceRoot": "packages/astro/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/astro/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/astro"],
+      "options": {
+        "jestConfig": "packages/astro/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/astro",
+        "tsConfig": "packages/astro/tsconfig.lib.json",
+        "packageJson": "packages/astro/package.json",
+        "main": "packages/astro/src/index.ts",
+        "assets": [
+          "packages/astro/*.md",
+          {
+            "input": "./packages/astro/src",
+            "glob": "**/!(*.ts)",
+            "output": "./src"
+          },
+          {
+            "input": "./packages/astro/src",
+            "glob": "**/*.d.ts",
+            "output": "./src"
+          },
+          {
+            "input": "./packages/astro",
+            "glob": "generators.json",
+            "output": "."
+          },
+          {
+            "input": "./packages/astro",
+            "glob": "executors.json",
+            "output": "."
+          }
+        ]
+      }
+    }
+  },
+  "tags": ["scope:astro"]
+}
