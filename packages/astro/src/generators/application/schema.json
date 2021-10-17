@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "Application",
+  "title": "",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the application.",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What name would you like to use?"
+    },
+    "tags": {
+      "type": "string",
+      "description": "Comma separated list of tags to be applied to the project (used for linting).",
+      "alias": "t"
+    },
+    "directory": {
+      "type": "string",
+      "description": "A directory where the project is placed.",
+      "alias": "d"
+    },
+    "renderers": {
+      "type": "array",
+      "description": "Renderers to use in the application.",
+      "alias": "r",
+      "default": [],
+      "items": {
+        "enum": [
+          "@astrojs/renderer-preact",
+          "@astrojs/renderer-react",
+          "@astrojs/renderer-solid",
+          "@astrojs/renderer-svelte",
+          "@astrojs/renderer-vue"
+        ]
+      },
+      "x-prompt": {
+        "message": "Which renderers do you want to use?",
+        "type": "list",
+        "multiselect": true,
+        "items": [
+          {
+            "label": "Preact",
+            "value": "@astrojs/renderer-preact"
+          },
+          {
+            "label": "React",
+            "value": "@astrojs/renderer-react"
+          },
+          {
+            "label": "Solid",
+            "value": "@astrojs/renderer-solid"
+          },
+          {
+            "label": "Svelte",
+            "value": "@astrojs/renderer-svelte"
+          },
+          {
+            "label": "Vue",
+            "value": "@astrojs/renderer-vue"
+          }
+        ]
+      }
+    }
+  },
+  "required": ["name"]
+}

@@ -1,0 +1,17 @@
+// Full Astro Configuration API Documentation:
+// https://docs.astro.build/reference/configuration-reference
+
+// @ts-check
+export default /** @type {import('astro').AstroUserConfig} */ ({
+  dist: '<%= offsetFromRoot %>dist/<%= projectRoot %>',
+  buildOptions: {
+    // site: 'http://example.com', // Your public domain, e.g.: https://my-site.dev/. Used to generate sitemaps and canonical URLs.
+    sitemap: true,
+  },
+  devOptions: {
+    // hostname: 'localhost', // The hostname to run the dev server on.
+    // port: 3000, // The port to run the dev server on.
+    // tailwindConfig: '', // Path to tailwind.config.js if used, e.g. './tailwind.config.js'
+  },
+  renderers: [<%- renderers.map(renderer => `'${renderer}'`) %>],
+});
