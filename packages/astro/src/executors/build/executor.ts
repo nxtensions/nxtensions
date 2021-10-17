@@ -1,12 +1,12 @@
 import { ExecutorContext, logger } from '@nrwl/devkit';
 import { ChildProcess, fork } from 'child_process';
 import { removeSync } from 'fs-extra';
-import { BuildExecutorSchema } from './schema';
+import { BuildExecutorOptions } from './schema';
 
 let childProcess: ChildProcess;
 
 export async function buildExecutor(
-  options: BuildExecutorSchema,
+  options: BuildExecutorOptions,
   context: ExecutorContext
 ): Promise<{ success: boolean }> {
   const projectRoot = context.workspace.projects[context.projectName].root;

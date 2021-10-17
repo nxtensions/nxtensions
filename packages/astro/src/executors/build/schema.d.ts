@@ -1,3 +1,3 @@
-export interface BuildExecutorSchema {
+export interface BuildExecutorOptions {
   deleteOutputPath?: boolean;
 }
