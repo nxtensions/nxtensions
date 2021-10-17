@@ -5,6 +5,11 @@
       "implementation": "./src/executors/build/executor",
       "schema": "./src/executors/build/schema.json",
       "description": "Builds an Astro application."
+    },
+    "dev": {
+      "implementation": "./src/executors/dev/executor",
+      "schema": "./src/executors/dev/schema.json",
+      "description": "Starts the Astro application in development mode."
     }
   }
 }

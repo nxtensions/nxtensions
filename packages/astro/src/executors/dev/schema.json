@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "NxAstroDevExecutor",
+  "cli": "nx",
+  "title": "Astro dev executor",
+  "type": "object",
+  "properties": {
+    "port": {
+      "type": "integer",
+      "description": "Port to run on."
+    }
+  },
+  "additionalProperties": false,
+  "required": []
+}
