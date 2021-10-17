@@ -3,17 +3,18 @@ jest.mock('child_process');
 import { ExecutorContext } from '@nrwl/devkit';
 import { fork } from 'child_process';
 import * as fsExtra from 'fs-extra';
-import executor from './executor';
+import { buildExecutor } from './executor';
 
 type ChildProcessEvents = 'error' | 'exit';
-let mockedEventName: ChildProcessEvents;
-let mockedEventValue: unknown;
+type ChildProcessEventStore = { [event in ChildProcessEvents]?: unknown };
+
+const childProcessEventStore: ChildProcessEventStore = {};
+
 function emitChildProcessEvent(
   eventName: ChildProcessEvents,
   value: unknown
 ): void {
-  mockedEventName = eventName;
-  mockedEventValue = value;
+  childProcessEventStore[eventName] = value;
 }
 
 describe('Build Executor', () => {
@@ -22,6 +23,7 @@ describe('Build Executor', () => {
   beforeEach(() => {
     context = {
       projectName: 'app1',
+      root: 'root',
       target: {
         outputs: ['dist/apps/app1'],
       },
@@ -36,8 +38,8 @@ describe('Build Executor', () => {
     (fork as jest.Mock).mockImplementation(() => ({
       kill: jest.fn(),
       on: (eventName, cb) => {
-        if (eventName === mockedEventName) {
-          cb(mockedEventValue);
+        if (childProcessEventStore[eventName] !== undefined) {
+          cb(childProcessEventStore[eventName]);
         }
       },
     }));
@@ -47,45 +49,45 @@ describe('Build Executor', () => {
     jest.clearAllMocks();
   });
 
-  it('should run successfully', async () => {
+  test('should run successfully', async () => {
     emitChildProcessEvent('exit', 0);
 
-    const output = await executor({}, context);
+    const result = await buildExecutor({}, context);
 
-    expect(output.success).toBe(true);
+    expect(result.success).toBe(true);
     expect(fork).toHaveBeenCalled();
   });
 
-  it('should fail if exit code is different than 0', async () => {
+  test('should fail if exit code is different than 0', async () => {
     emitChildProcessEvent('exit', 1);
 
-    const output = await executor({}, context);
+    const result = await buildExecutor({}, context);
 
-    expect(output.success).toBe(false);
+    expect(result.success).toBe(false);
     expect(fork).toHaveBeenCalled();
   });
 
-  it('should fail when the forked process errors', async () => {
+  test('should fail when the forked process errors', async () => {
     emitChildProcessEvent('error', new Error('Build failed!'));
 
-    const output = await executor({}, context);
+    const result = await buildExecutor({}, context);
 
-    expect(output.success).toBe(false);
+    expect(result.success).toBe(false);
     expect(fork).toHaveBeenCalled();
   });
 
-  it('should delete output path', async () => {
+  test('should delete output path', async () => {
     emitChildProcessEvent('exit', 0);
 
-    await executor({ deleteOutputPath: true }, context);
+    await buildExecutor({ deleteOutputPath: true }, context);
 
     expect(fsExtra.removeSync).toHaveBeenCalledWith(context.target.outputs[0]);
   });
 
-  it('should not delete output path when "deleteOuputPath" is set to false', async () => {
+  test('should not delete output path when "deleteOuputPath" is set to false', async () => {
     emitChildProcessEvent('exit', 0);
 
-    await executor({ deleteOutputPath: false }, context);
+    await buildExecutor({ deleteOutputPath: false }, context);
 
     expect(fsExtra.removeSync).not.toHaveBeenCalled();
   });

@@ -1,6 +1,7 @@
 import { ExecutorContext, logger } from '@nrwl/devkit';
 import { ChildProcess, fork } from 'child_process';
 import { removeSync } from 'fs-extra';
+import { join } from 'path';
 import { BuildExecutorOptions } from './schema';
 
 let childProcess: ChildProcess;
@@ -9,8 +10,13 @@ export async function buildExecutor(
   options: BuildExecutorOptions,
   context: ExecutorContext
 ): Promise<{ success: boolean }> {
-  const projectRoot = context.workspace.projects[context.projectName].root;
-  // TODO: replace with what is in astro.config.mjs when astro js appi is available
+  const projectRoot = join(
+    context.root,
+    context.workspace.projects[context.projectName].root
+  );
+
+  // TODO: use what's in the Astro config once the CLI API is available.
+  // See https://github.com/snowpackjs/astro/issues/1483.
   const outputPath = context.target?.outputs?.[0] ?? `dist/${projectRoot}`;
 
   if (options.deleteOutputPath) {
@@ -36,6 +42,8 @@ export default buildExecutor;
 
 function runCliBuild(projectRoot: string) {
   return new Promise((resolve, reject) => {
+    // TODO: use Astro CLI API once it's available.
+    // See https://github.com/snowpackjs/astro/issues/1483.
     childProcess = fork(require.resolve('astro'), ['build'], {
       cwd: projectRoot,
       stdio: 'inherit',

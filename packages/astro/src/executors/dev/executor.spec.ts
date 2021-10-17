@@ -48,7 +48,7 @@ describe('Dev Executor', () => {
     (fork as jest.Mock).mockImplementation(() => ({
       kill: jest.fn(),
       on: (eventName, cb) => {
-        if (childProcessEventStore[eventName]) {
+        if (childProcessEventStore[eventName] !== undefined) {
           cb(childProcessEventStore[eventName]);
         }
       },
