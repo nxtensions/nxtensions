@@ -56,6 +56,15 @@ describe('Build Executor', () => {
     expect(fork).toHaveBeenCalled();
   });
 
+  it('should fail if exit code is different than 0', async () => {
+    emitChildProcessEvent('exit', 1);
+
+    const output = await executor({}, context);
+
+    expect(output.success).toBe(false);
+    expect(fork).toHaveBeenCalled();
+  });
+
   it('should fail when the forked process errors', async () => {
     emitChildProcessEvent('error', new Error('Build failed!'));
 

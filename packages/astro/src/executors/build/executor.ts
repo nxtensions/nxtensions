@@ -18,9 +18,9 @@ export async function buildExecutor(
   }
 
   try {
-    await runCliBuild(projectRoot);
+    const exitCode = await runCliBuild(projectRoot);
 
-    return { success: true };
+    return { success: exitCode === 0 };
   } catch (e) {
     logger.error(e);
 
