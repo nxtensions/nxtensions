@@ -4,12 +4,17 @@
     "build": {
       "implementation": "./src/executors/build/executor",
       "schema": "./src/executors/build/schema.json",
-      "description": "Builds an Astro application."
+      "description": "Builds an Astro application for production."
     },
     "dev": {
       "implementation": "./src/executors/dev/executor",
       "schema": "./src/executors/dev/schema.json",
-      "description": "Starts the Astro application in development mode."
+      "description": "Starts the Astro development server for an application."
+    },
+    "preview": {
+      "implementation": "./src/executors/preview/executor",
+      "schema": "./src/executors/preview/schema.json",
+      "description": "Starts a local static file server to serve the application built artifacts."
     }
   }
 }
