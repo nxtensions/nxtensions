@@ -15,6 +15,11 @@ import { Markdown } from 'astro/components';
       ```
       /
       ├── public/
+      │   ├── assets/
+      │   │   └── logo.svg
+      │   ├── styles/
+      │   │   ├── global.css
+      │   │   └── home.css
       │   ├── robots.txt
       │   └── favicon.ico
       ├── src/
@@ -36,7 +41,8 @@ import { Markdown } from 'astro/components';
 
   <section>
     <h2>👀 Want to learn more?</h2>
-    <p>Feel free to check <a href="https://github.com/snowpackjs/astro">our documentation</a> or jump into our <a href="https://astro.build/chat">Discord server</a>.</p>
+    <p>Check the <a href="https://astro.build/">Astro documentation</a>, <a href="https://github.com/snowpackjs/astro">source code</a> or jump into its <a href="https://astro.build/chat">Discord server</a>.</p>
+    <p>Also, check the <a href="https://nx.dev/">Nx documentation</a>, <a href="https://github.com/nrwl/nx">source code</a> or jump into the <a href="https://nrwlcommunity.slack.com/">Nrwl Community Slack</a>.</p>
   </section>
 </article>
 
