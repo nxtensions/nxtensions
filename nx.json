@@ -31,5 +31,7 @@
     "appsDir": "",
     "libsDir": "packages"
   },
-  "projects": {}
+  "cli": {
+    "defaultCollection": "@nrwl/workspace"
+  }
 }

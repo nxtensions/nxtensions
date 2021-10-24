@@ -3,8 +3,5 @@
   "projects": {
     "astro": "packages/astro",
     "astro-e2e": "e2e/astro-e2e"
-  },
-  "cli": {
-    "defaultCollection": "@nrwl/workspace"
   }
 }
