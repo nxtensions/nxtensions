@@ -1,0 +1,26 @@
+{
+  "root": "packages/tsconfig-paths-snowpack-plugin",
+  "sourceRoot": "packages/tsconfig-paths-snowpack-plugin/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/tsconfig-paths-snowpack-plugin/**/*.ts"]
+      }
+    },
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/tsconfig-paths-snowpack-plugin",
+        "tsConfig": "packages/tsconfig-paths-snowpack-plugin/tsconfig.json",
+        "packageJson": "packages/tsconfig-paths-snowpack-plugin/package.json",
+        "main": "packages/tsconfig-paths-snowpack-plugin/src/index.ts",
+        "assets": ["packages/tsconfig-paths-snowpack-plugin/*.md"]
+      }
+    }
+  },
+  "tags": []
+}

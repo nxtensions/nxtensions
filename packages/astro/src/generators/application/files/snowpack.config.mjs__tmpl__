@@ -1,0 +1,4 @@
+export default {
+  workspaceRoot: '<%= offsetFromRoot %>',
+  plugins: ['@nxtensions/tsconfig-paths-snowpack-plugin'],
+};

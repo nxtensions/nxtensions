@@ -1,10 +1,29 @@
 {
   "name": "@nxtensions/astro",
   "version": "0.0.1",
+  "description": "Extensions and plugins for Nx.",
+  "homepage": "https://github.com/nxtensions/nxtensions/tree/main/packages/astro#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nxtensions/nxtensions.git",
+    "directory": "packages/astro"
+  },
+  "keywords": [
+    "Nx",
+    "Astro",
+    "monorepo"
+  ],
+  "author": "Leosvel Pérez Espinosa <leosvel.perez.espinosa@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nxtensions/nxtensions/issues"
+  },
+  "types": "./src/index.d.ts",
   "main": "src/index.js",
   "generators": "./generators.json",
   "executors": "./executors.json",
   "dependencies": {
-    "astro": "^0.20.12"
+    "astro": "^0.20.12",
+    "@nxtensions/tsconfig-paths-snowpack-plugin": "*"
   }
 }

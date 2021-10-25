@@ -15,7 +15,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@nxtensions/astro": ["packages/astro/src/index.ts"]
+      "@nxtensions/astro": ["packages/astro/src/index.ts"],
+      "@nxtensions/tsconfig-paths-snowpack-plugin": [
+        "packages/tsconfig-paths-snowpack-plugin/src/index.js"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

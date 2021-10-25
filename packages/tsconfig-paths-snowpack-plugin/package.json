@@ -1,0 +1,27 @@
+{
+  "name": "@nxtensions/tsconfig-paths-snowpack-plugin",
+  "version": "0.0.1",
+  "description": "Snowpack plugin to use the tsconfig path mappings as aliases.",
+  "homepage": "https://github.com/nxtensions/nxtensions/blob/main/packages/tsconfig-paths-snowpack-plugin#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nxtensions/nxtensions.git",
+    "directory": "packages/tsconfig-paths-snowpack-plugin"
+  },
+  "keywords": [
+    "Snowpack",
+    "Typescript",
+    "tsconfig.json",
+    "alias"
+  ],
+  "author": "Leosvel Pérez Espinosa <leosvel.perez.espinosa@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nxtensions/nxtensions/issues"
+  },
+  "types": "./src/index.d.ts",
+  "main": "./src/index.js",
+  "peerDependencies": {
+    "typescript": "*"
+  }
+}
