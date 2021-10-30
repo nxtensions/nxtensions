@@ -5,31 +5,36 @@ export function addProject(
   tree: Tree,
   options: NormalizedGeneratorOptions
 ): void {
-  addProjectConfiguration(tree, options.projectName, {
-    root: options.projectRoot,
-    projectType: 'application',
-    sourceRoot: `${options.projectRoot}/src`,
-    targets: {
-      build: {
-        outputs: [`dist/${options.projectRoot}`],
-        executor: '@nxtensions/astro:build',
-        options: {},
+  addProjectConfiguration(
+    tree,
+    options.projectName,
+    {
+      root: options.projectRoot,
+      projectType: 'application',
+      sourceRoot: `${options.projectRoot}/src`,
+      targets: {
+        build: {
+          outputs: [`dist/${options.projectRoot}`],
+          executor: '@nxtensions/astro:build',
+          options: {},
+        },
+        dev: {
+          executor: '@nxtensions/astro:dev',
+          options: {},
+        },
+        preview: {
+          dependsOn: [
+            {
+              target: 'build',
+              projects: 'self',
+            },
+          ],
+          executor: '@nxtensions/astro:preview',
+          options: {},
+        },
       },
-      dev: {
-        executor: '@nxtensions/astro:dev',
-        options: {},
-      },
-      preview: {
-        dependsOn: [
-          {
-            target: 'build',
-            projects: 'self',
-          },
-        ],
-        executor: '@nxtensions/astro:preview',
-        options: {},
-      },
+      tags: options.parsedTags,
     },
-    tags: options.parsedTags,
-  });
+    options.standaloneConfig
+  );
 }

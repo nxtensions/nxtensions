@@ -9,6 +9,7 @@ export interface GeneratorOptions {
   name: string;
   directory?: string;
   renderers?: Renderer[];
+  standaloneConfig?: boolean;
   tags?: string;
 }
 
@@ -18,4 +19,5 @@ interface NormalizedGeneratorOptions extends GeneratorOptions {
   projectDirectory: string;
   parsedTags: string[];
   renderers: Renderer[];
+  standaloneConfig: boolean;
 }

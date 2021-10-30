@@ -146,4 +146,20 @@ describe('application generator', () => {
       expect(devDependencies['@astrojs/renderer-vue']).toBeUndefined();
     });
   });
+
+  describe('--standaloneConfig', () => {
+    test('should create a project.json when standaloneConfig is true', async () => {
+      await applicationGenerator(tree, { ...options, standaloneConfig: true });
+
+      expect(tree.exists(`apps/${options.name}/project.json`)).toBeTruthy();
+    });
+
+    test('should not create a project.json when standaloneConfig is false', async () => {
+      await applicationGenerator(tree, { ...options, standaloneConfig: false });
+
+      expect(tree.exists(`apps/${options.name}/project.json`)).toBeFalsy();
+      const project = readProjectConfiguration(tree, options.name);
+      expect(project).toBeTruthy();
+    });
+  });
 });
