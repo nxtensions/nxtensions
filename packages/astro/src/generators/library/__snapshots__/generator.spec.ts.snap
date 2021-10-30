@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`library generator should add project configuration 1`] = `
+Object {
+  "projectType": "library",
+  "root": "libs/lib1",
+  "sourceRoot": "libs/lib1",
+  "tags": Array [],
+  "targets": Object {},
+}
+`;

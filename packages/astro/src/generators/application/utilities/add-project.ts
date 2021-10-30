@@ -16,7 +16,6 @@ export function addProject(
         options: {},
       },
       dev: {
-        // TODO: Amend if needed when executor is implemented
         executor: '@nxtensions/astro:dev',
         options: {},
       },
@@ -27,7 +26,6 @@ export function addProject(
             projects: 'self',
           },
         ],
-        // TODO: Amend if needed when executor is implemented
         executor: '@nxtensions/astro:preview',
         options: {},
       },

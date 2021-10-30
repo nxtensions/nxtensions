@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "NxtensionsLibraryGenerator",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the library.",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What name would you like to use?",
+      "pattern": "^[a-zA-Z].*$"
+    },
+    "tags": {
+      "type": "string",
+      "description": "Comma separated list of tags to be applied to the project (used for linting).",
+      "alias": "t"
+    },
+    "directory": {
+      "type": "string",
+      "description": "A directory where the project is placed.",
+      "alias": "d"
+    },
+    "publishable": {
+      "type": "boolean",
+      "description": "Whether the library is intended to be distributed.",
+      "default": false
+    },
+    "importPath": {
+      "type": "string",
+      "description": "The path used to import the library, like `@myorg/my-awesome-lib`. Must be a valid npm name and must be provided when creating a publishable library."
+    },
+    "standaloneConfig": {
+      "description": "Split the project configuration into `<projectRoot>/project.json` rather than including it inside `workspace.json`.",
+      "type": "boolean"
+    }
+  },
+  "required": ["name"]
+}

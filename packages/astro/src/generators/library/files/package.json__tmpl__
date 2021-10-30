@@ -1,0 +1,6 @@
+{
+  "name": "<%= importPath %>",
+  "version": "0.0.1",
+  "keywords": ["astro-component"],
+  "exports": "./index.js"
+}

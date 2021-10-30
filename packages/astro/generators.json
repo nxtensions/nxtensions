@@ -6,7 +6,15 @@
     "application": {
       "factory": "./src/generators/application/generator",
       "schema": "./src/generators/application/schema.json",
+      "aliases": ["app"],
       "description": "Generates an Astro application."
+    },
+    "library": {
+      "factory": "./src/generators/library/generator",
+      "schema": "./src/generators/library/schema.json",
+      "aliases": ["lib"],
+      "x-type": "library",
+      "description": "Generates an Astro library."
     }
   }
 }

@@ -1,7 +1,7 @@
 import * as devkit from '@nrwl/devkit';
 import { readJson, readProjectConfiguration, Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
-import generator from './generator';
+import { applicationGenerator } from './generator';
 import { GeneratorOptions } from './schema';
 
 describe('application generator', () => {
@@ -9,18 +9,18 @@ describe('application generator', () => {
   const options: GeneratorOptions = { name: 'app1' };
 
   beforeEach(() => {
-    tree = createTreeWithEmptyWorkspace();
+    tree = createTreeWithEmptyWorkspace(2);
   });
 
   test('should add project configuration', async () => {
-    await generator(tree, options);
+    await applicationGenerator(tree, options);
 
     const config = readProjectConfiguration(tree, options.name);
     expect(config).toMatchSnapshot();
   });
 
   test('should generate files', async () => {
-    await generator(tree, options);
+    await applicationGenerator(tree, options);
 
     expect(
       tree.exists(`apps/${options.name}/public/assets/logo.svg`)
@@ -49,7 +49,7 @@ describe('application generator', () => {
   test('should format files', async () => {
     jest.spyOn(devkit, 'formatFiles');
 
-    await generator(tree, options);
+    await applicationGenerator(tree, options);
 
     expect(devkit.formatFiles).toHaveBeenCalled();
   });
@@ -58,7 +58,7 @@ describe('application generator', () => {
     test('should add project with the right name when a directory is provided', async () => {
       const directory = 'some-directory/sub-directory';
 
-      await generator(tree, { ...options, directory });
+      await applicationGenerator(tree, { ...options, directory });
 
       const project = readProjectConfiguration(
         tree,
@@ -70,7 +70,7 @@ describe('application generator', () => {
     test('should generate files in the right directory', async () => {
       const directory = 'some-directory/sub-directory';
 
-      await generator(tree, { ...options, directory });
+      await applicationGenerator(tree, { ...options, directory });
 
       expect(
         tree.exists(`apps/${directory}/${options.name}/public/assets/logo.svg`)
@@ -111,7 +111,7 @@ describe('application generator', () => {
 
   describe('--tags', () => {
     test('should add project tags when provided', async () => {
-      await generator(tree, { ...options, tags: 'foo, bar' });
+      await applicationGenerator(tree, { ...options, tags: 'foo, bar' });
 
       const { tags } = readProjectConfiguration(tree, options.name);
       expect(tags).toEqual(['foo', 'bar']);
@@ -120,7 +120,7 @@ describe('application generator', () => {
 
   describe('--renderers', () => {
     test('should install no renderer when none are provided', async () => {
-      const installRenderersTask = await generator(tree, options);
+      const installRenderersTask = await applicationGenerator(tree, options);
 
       expect(installRenderersTask).toBeUndefined();
       const { devDependencies } = readJson(tree, 'package.json');
@@ -132,7 +132,7 @@ describe('application generator', () => {
     });
 
     test('should install provided renderers', async () => {
-      const installRenderersTask = await generator(tree, {
+      const installRenderersTask = await applicationGenerator(tree, {
         ...options,
         renderers: ['@astrojs/renderer-preact', '@astrojs/renderer-solid'],
       });
