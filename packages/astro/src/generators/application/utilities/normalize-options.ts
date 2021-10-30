@@ -8,22 +8,22 @@ export function normalizeOptions(
   const { appsDir, standaloneAsDefault } = getWorkspaceLayout(tree);
 
   const name = names(options.name).fileName;
-  const projectDirectory = options.directory
+  const directory = options.directory
     ? `${names(options.directory).fileName}/${name}`
     : name;
-  const projectName = projectDirectory.replace(/\//g, '-');
-  const projectRoot = `${appsDir}/${projectDirectory}`;
-  const parsedTags = options.tags
+  const projectName = directory.replace(/\//g, '-');
+  const projectRoot = `${appsDir}/${directory}`;
+  const tags = options.tags
     ? options.tags.split(',').map((tag) => tag.trim())
     : [];
 
   return {
     ...options,
+    directory,
     projectName,
     projectRoot,
-    projectDirectory,
-    parsedTags,
     renderers: options.renderers ?? [],
     standaloneConfig: options.standaloneConfig ?? standaloneAsDefault,
+    tags,
   };
 }

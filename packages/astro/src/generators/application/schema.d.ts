@@ -13,11 +13,8 @@ export interface GeneratorOptions {
   tags?: string;
 }
 
-interface NormalizedGeneratorOptions extends GeneratorOptions {
+interface NormalizedGeneratorOptions extends Required<GeneratorOptions> {
   projectName: string;
   projectRoot: string;
-  projectDirectory: string;
-  parsedTags: string[];
-  renderers: Renderer[];
-  standaloneConfig: boolean;
+  tags: string[];
 }

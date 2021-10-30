@@ -7,11 +7,8 @@ export interface GeneratorOptions {
   tags?: string;
 }
 
-interface NormalizedGeneratorOptions extends GeneratorOptions {
-  importPath: string;
+interface NormalizedGeneratorOptions extends Required<GeneratorOptions> {
   projectName: string;
   projectRoot: string;
-  projectDirectory: string;
-  parsedTags: string[];
-  standaloneConfig: boolean;
+  tags: string[];
 }

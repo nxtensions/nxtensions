@@ -33,7 +33,7 @@ export function addProject(
           options: {},
         },
       },
-      tags: options.parsedTags,
+      tags: options.tags,
     },
     options.standaloneConfig
   );

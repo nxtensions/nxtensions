@@ -8,23 +8,22 @@ export function normalizeOptions(
   const { libsDir, npmScope, standaloneAsDefault } = getWorkspaceLayout(tree);
 
   const name = names(options.name).fileName;
-  const projectDirectory = options.directory
+  const directory = options.directory
     ? `${names(options.directory).fileName}/${name}`
     : name;
-  const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
-  const projectRoot = `${libsDir}/${projectDirectory}`;
+  const projectName = directory.replace(new RegExp('/', 'g'), '-');
+  const projectRoot = `${libsDir}/${directory}`;
   const importPath = options.importPath || `@${npmScope}/${projectName}`;
-  const parsedTags = options.tags
-    ? options.tags.split(',').map((s) => s.trim())
-    : [];
+  const tags = options.tags ? options.tags.split(',').map((s) => s.trim()) : [];
 
   return {
     ...options,
+    directory,
     importPath,
     projectName,
     projectRoot,
-    projectDirectory,
-    parsedTags,
+    publishable: options.publishable ?? false,
     standaloneConfig: options.standaloneConfig ?? standaloneAsDefault,
+    tags,
   };
 }

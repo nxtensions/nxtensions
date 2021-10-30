@@ -13,7 +13,7 @@ export function addProject(
       sourceRoot: options.projectRoot,
       projectType: 'library',
       targets: {},
-      tags: options.parsedTags,
+      tags: options.tags,
     },
     options.standaloneConfig
   );
