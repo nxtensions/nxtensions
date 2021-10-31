@@ -8,6 +8,7 @@ on:
 env:
   NX_BRANCH: ${{ github.event.number }}
   NX_RUN_GROUP: ${{ github.run_id }}
+  NX_CLOUD_DISTRIBUTED_EXECUTION: true
 
 jobs:
   main:
@@ -31,6 +32,9 @@ jobs:
       - name: Install packages
         run: yarn install
 
+      - name: Nx Cloud start agents
+        run: yarn nx-cloud start-ci-run
+
       - name: Lint affected projects
         run: yarn nx affected --target=lint --parallel
 
@@ -39,3 +43,6 @@ jobs:
 
       - name: Test affected projects
         run: npx nx affected --target=test --parallel
+
+      - name: Nx Cloud stop agents
+        run: yarn nx-cloud stop-all-agents
