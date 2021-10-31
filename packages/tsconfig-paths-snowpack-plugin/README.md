@@ -1,7 +1,32 @@
-# tsconfig-paths-snowpack-plugin
+# @nxtensions/tsconfig-paths-snowpack-plugin
 
-This library was generated with [Nx](https://nx.dev).
+[Snowpack](https://www.snowpack.dev/) plugin adding support for using path mappings specified in tsconfig files. This is useful for projects that use Typescript and want to reuse the defined path mappings in the tsconfig as [aliases](https://www.snowpack.dev/reference/configuration#alias) in Snowpack.
 
-## Running unit tests
+## How to use
 
-Run `nx test tsconfig-paths-snowpack-plugin` to execute the unit tests via [Jest](https://jestjs.io).
+Add the plugin to your Snowpack configuration:
+
+```javascript
+// snowpack.config.mjs
+
+/** @type {import("snowpack").SnowpackUserConfig } */
+export default {
+  plugins: ['@nxtensions/tsconfig-paths-snowpack-plugin'],
+};
+```
+
+By default the plugin will try to locate a `tsconfig.json` file relative to the Snowpack root. A custom configuration file path can be specified by specifying the `tsConfig` option:
+
+```javascript
+// snowpack.config.mjs
+
+/** @type {import("snowpack").SnowpackUserConfig } */
+export default {
+  plugins: [
+    [
+      '@nxtensions/tsconfig-paths-snowpack-plugin',
+      { tsConfig: 'tsconfig.app.json' },
+    ],
+  ],
+};
+```
