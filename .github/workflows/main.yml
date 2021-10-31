@@ -6,8 +6,7 @@ on:
       - main
 
 env:
-  NX_BRANCH: ${{ github.event.number }}
-  NX_RUN_GROUP: ${{ github.run_id }}
+  NX_CLOUD_DISTRIBUTED_EXECUTION: true
 
 jobs:
   main:
@@ -31,6 +30,9 @@ jobs:
       - name: Install packages
         run: yarn install
 
+      - name: Nx Cloud start agents
+        run: yarn nx-cloud start-ci-run
+
       - name: Lint affected projects
         run: yarn nx affected --target=lint --parallel
 
@@ -39,3 +41,29 @@ jobs:
 
       - name: Test affected projects
         run: npx nx affected --target=test --parallel
+
+      - name: Nx Cloud stop agents
+        run: yarn nx-cloud stop-all-agents
+
+  agents:
+    runs-on: ubuntu-latest
+    name: Agent
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        agent: [1, 2, 3]
+    steps:
+      - name: Checkout [${{ github.event.pull_request.head.ref }}]
+        uses: actions/checkout@v2
+
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Start Nx Agent ${{ matrix.agent }}
+        run: yarn nx-cloud start-agent
