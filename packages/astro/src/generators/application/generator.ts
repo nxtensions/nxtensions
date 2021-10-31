@@ -7,6 +7,7 @@ import {
   normalizeOptions,
 } from './utilities';
 
+// dummy comment
 export async function applicationGenerator(
   tree: Tree,
   rawOptions: GeneratorOptions

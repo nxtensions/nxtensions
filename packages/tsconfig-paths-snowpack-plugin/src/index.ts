@@ -8,6 +8,7 @@ export interface PluginOptions {
 
 const pluginName = 'tsconfig-paths-snowpack-plugin';
 
+// dummy comment
 export default function (
   initialSnowpackConfig: SnowpackConfig,
   pluginOptions: PluginOptions
