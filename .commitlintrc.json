@@ -1,0 +1,38 @@
+{
+  "extends": ["@commitlint/config-conventional"],
+  "rules": {
+    "scope-enum": [
+      2,
+      "always",
+      ["astro", "tsconfig-paths-snowpack-plugin", "repo"]
+    ],
+    "type-enum": [2, "always", ["feat", "fix", "test", "chore", "docs"]],
+    "type-empty": [2, "never"],
+    "scope-empty": [2, "never"],
+    "subject-empty": [2, "never"],
+    "body-max-line-length": [1, "always", 400],
+    "footer-max-line-length": [1, "always", 400],
+    "header-max-length": [1, "always", 100]
+  },
+  "prompt": {
+    "questions": {
+      "scope": {
+        "description": "What is the scope of this change",
+        "enum": {
+          "astro": {
+            "description": "@nxtensions/astro package related change",
+            "title": "Nx Astro plugin"
+          },
+          "tsconfig-paths-snowpack-plugin": {
+            "description": "@nxtensions/tsconfig-paths-snowpack-plugin package related change",
+            "title": "Snowpack plugin for tsconfig path mappings"
+          },
+          "repo": {
+            "description": "Repository related change",
+            "title": "Repository"
+          }
+        }
+      }
+    }
+  }
+}
