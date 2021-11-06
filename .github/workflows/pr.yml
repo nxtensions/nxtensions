@@ -1,4 +1,4 @@
-name: Run PR checks
+name: PR checks
 
 on:
   pull_request:
@@ -16,9 +16,6 @@ jobs:
           ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0
 
-      - name: Derive appropriate SHAs for base and head for Nx affected commands
-        uses: nrwl/nx-set-shas@v2
-
       - name: Install Node.js
         uses: actions/setup-node@v2
         with:
@@ -27,6 +24,12 @@ jobs:
 
       - name: Install packages
         run: yarn install
+
+      - name: Derive appropriate SHAs for base and head for Nx affected commands
+        uses: nrwl/nx-set-shas@v2
+
+      - name: Check formatting
+        run: yarn nx format:check
 
       - name: Lint affected projects
         run: yarn nx affected --target=lint --parallel
