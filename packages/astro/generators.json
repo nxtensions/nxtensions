@@ -7,7 +7,13 @@
       "factory": "./src/generators/application/generator",
       "schema": "./src/generators/application/schema.json",
       "aliases": ["app"],
+      "x-type": "application",
       "description": "Generates an Astro application."
+    },
+    "init": {
+      "factory": "./src/generators/init/generator",
+      "schema": "./src/generators/init/schema.json",
+      "description": "Initializes the Astro plugin."
     },
     "library": {
       "factory": "./src/generators/library/generator",

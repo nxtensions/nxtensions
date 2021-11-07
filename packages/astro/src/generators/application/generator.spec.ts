@@ -119,18 +119,6 @@ describe('application generator', () => {
   });
 
   describe('--renderers', () => {
-    test('should install no renderer when none are provided', async () => {
-      const installRenderersTask = await applicationGenerator(tree, options);
-
-      expect(installRenderersTask).toBeUndefined();
-      const { devDependencies } = readJson(tree, 'package.json');
-      expect(devDependencies['@astrojs/renderer-preact']).toBeUndefined();
-      expect(devDependencies['@astrojs/renderer-react']).toBeUndefined();
-      expect(devDependencies['@astrojs/renderer-solid']).toBeUndefined();
-      expect(devDependencies['@astrojs/renderer-svelte']).toBeUndefined();
-      expect(devDependencies['@astrojs/renderer-vue']).toBeUndefined();
-    });
-
     test('should install provided renderers', async () => {
       const installRenderersTask = await applicationGenerator(tree, {
         ...options,

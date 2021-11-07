@@ -1,2 +1,2 @@
-export * from './generators/application/generator';
-export * from './generators/library/generator';
+export * from './generators';
+export * from './project-graph/plugin';
