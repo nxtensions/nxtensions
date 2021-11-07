@@ -1,4 +1,5 @@
 import { formatFiles, GeneratorCallback, Tree } from '@nrwl/devkit';
+import { initGenerator } from '../init/generator';
 import { GeneratorOptions } from './schema';
 import {
   addFiles,
@@ -13,15 +14,22 @@ export async function applicationGenerator(
 ): Promise<GeneratorCallback | void> {
   const options = normalizeOptions(tree, rawOptions);
 
+  const initTask = initGenerator(tree);
+
+  const tasks: GeneratorCallback[] = [];
+  tasks.push(initTask);
+
   addProject(tree, options);
   addFiles(tree, options);
+
   const renderersTask = installRenderers(tree, options.renderers);
+  if (renderersTask) {
+    tasks.push(renderersTask);
+  }
 
   await formatFiles(tree);
 
-  if (renderersTask) {
-    return renderersTask;
-  }
+  return () => tasks.forEach((task) => task());
 }
 
 export default applicationGenerator;

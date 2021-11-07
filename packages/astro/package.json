@@ -9,8 +9,8 @@
     "directory": "packages/astro"
   },
   "keywords": [
-    "Nx",
-    "Astro",
+    "nx",
+    "astro",
     "monorepo"
   ],
   "author": "Leosvel Pérez Espinosa <leosvel.perez.espinosa@gmail.com>",
@@ -19,11 +19,15 @@
     "url": "https://github.com/nxtensions/nxtensions/issues"
   },
   "types": "./src/index.d.ts",
-  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
   "generators": "./generators.json",
   "executors": "./executors.json",
+  "peerDependencies": {
+    "astro": "0.20.12"
+  },
   "dependencies": {
-    "astro": "^0.20.12",
     "@nxtensions/tsconfig-paths-snowpack-plugin": "*"
   }
 }

@@ -6,9 +6,6 @@
   "license": "MIT",
   "scripts": {
     "commit": "git-cz",
-    "start": "nx serve",
-    "build": "nx build",
-    "test": "nx test",
     "prepare": "husky install"
   },
   "private": true,

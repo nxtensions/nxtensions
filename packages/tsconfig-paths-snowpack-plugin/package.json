@@ -9,8 +9,9 @@
     "directory": "packages/tsconfig-paths-snowpack-plugin"
   },
   "keywords": [
-    "Snowpack",
-    "Typescript",
+    "snowpack",
+    "typescript",
+    "tsconfig",
     "tsconfig.json",
     "alias"
   ],

@@ -1,0 +1,9 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "NxtensionsInitGenerator",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": false,
+  "required": []
+}
