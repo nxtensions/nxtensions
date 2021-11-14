@@ -16,7 +16,7 @@
   "author": "Leosvel Pérez Espinosa <leosvel.perez.espinosa@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nxtensions/nxtensions/issues"
+    "url": "https://github.com/nxtensions/nxtensions/issues?q=is%3Aopen+is%3Aissue+label%3A%22scope%3A+astro%22"
   },
   "types": "./src/index.d.ts",
   "exports": {
