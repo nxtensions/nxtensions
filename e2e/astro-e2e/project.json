@@ -1,7 +1,7 @@
 {
   "root": "e2e/astro-e2e",
   "projectType": "application",
-  "sourceRoot": "e2e/astro-e2e/src",
+  "sourceRoot": "e2e/astro-e2e/tests",
   "targets": {
     "e2e": {
       "executor": "@nrwl/nx-plugin:e2e",
