@@ -1,0 +1,24 @@
+storage: ../tmp/local-registry/storage
+
+uplinks:
+  npmjs:
+    url: https://registry.npmjs.org/
+    cache: true
+  yarn:
+    url: https://registry.yarnpkg.com
+    cache: true
+
+packages:
+  '@nxtensions/*':
+    access: $all
+    publish: $all
+    unpublish: $all
+
+  '**':
+    access: $all
+    publish: $all
+    unpublish: $all
+    proxy: npmjs
+
+logs:
+  - { type: stdout, format: pretty, level: http }
