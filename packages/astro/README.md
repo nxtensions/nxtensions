@@ -6,6 +6,13 @@
 
 [Astro](https://astro.build) plugin for [Nx](https://nx.dev/).
 
+## Features
+
+- Generators for scaffolding Astro applications and libraries.
+- Executors to run builds, Astro development server and preview.
+- Nx project graph plugin to see Astro project dependencies.
+- Use of Typescript path mappings to import from dependencies.
+
 ## Prerequisites
 
 To use the plugin an Nx workspace is required.
@@ -55,3 +62,16 @@ nx dev my-app
 ```
 
 For more information on the local static file server for Astro applications see https://docs.astro.build/reference/cli-reference/#astro-preview.
+
+## Project graph
+
+To visualize the workspace graph of dependencies run:
+
+```bash
+nx dep-graph
+```
+
+## Further reference
+
+- [Nx](https://nx.dev)
+- [Astro](https://astro.build)
