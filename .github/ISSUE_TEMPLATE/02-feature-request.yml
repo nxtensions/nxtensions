@@ -1,7 +1,7 @@
-name: "✨ Feature Request"
+name: '✨ Feature Request'
 description: 'Submit a request for a new feature or an idea.'
-title: "✨ [Feature Request]: "
-labels: ["type: feature"]
+title: '✨ [Feature Request]: '
+labels: ['type: feature']
 assignees: []
 body:
   - type: markdown
@@ -11,9 +11,9 @@ body:
     attributes:
       label: For which package(s) is the feature request for?
       options:
-        - label: @nxtensions/astro
-        - label: @nxtensions/tsconfig-paths-snowpack-plugin
-        - label: New package 🎉
+        - label: '@nxtensions/astro'
+        - label: '@nxtensions/tsconfig-paths-snowpack-plugin'
+        - label: 'New package 🎉'
     validations:
       required: true
   - type: textarea

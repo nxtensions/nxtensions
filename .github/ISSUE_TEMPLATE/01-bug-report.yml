@@ -1,7 +1,7 @@
-name: "🐛 Bug Report"
+name: '🐛 Bug Report'
 description: Report an issue or possible bug
-title: "🐛 [BUG]: "
-labels: ["type: bug", "needs triage"]
+title: '🐛 [BUG]: '
+labels: ['type: bug', 'needs triage']
 assignees: []
 body:
   - type: markdown
@@ -19,8 +19,8 @@ body:
     attributes:
       label: What package does the issue affects?
       options:
-        - @nxtensions/astro
-        - @nxtensions/tsconfig-paths-snowpack-plugin
+        - '@nxtensions/astro'
+        - '@nxtensions/tsconfig-paths-snowpack-plugin'
     validations:
       required: true
   - type: boolean
