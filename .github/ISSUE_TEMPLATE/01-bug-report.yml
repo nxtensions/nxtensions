@@ -1,0 +1,55 @@
+name: "🐛 Bug Report"
+description: Report an issue or possible bug
+title: "🐛 [BUG]: "
+labels: ["type: bug", "needs triage"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: checkboxes
+    attributes:
+      label: Is there an existing issue for this?
+      description: Please search to see if an issue already exists for the bug you encountered.
+      options:
+        - label: I have searched the existing issues
+          required: true
+  - type: dropdown
+    attributes:
+      label: What package does the issue affects?
+      options:
+        - @nxtensions/astro
+        - @nxtensions/tsconfig-paths-snowpack-plugin
+    validations:
+      required: true
+  - type: boolean
+  - type: textarea
+    attributes:
+      label: Describe the bug
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Steps to reproduce
+      description: Detailed steps on how to reproduce the issue.
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Link to minimal reproducible example
+      description: Please provide a minimal repository or Stackblitz where the issue can be reproduced. This would help troubleshooting the issue and save maintainers time. Failing to provide one might make the issue not to be prioritized.
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Environment
+      description: Paste here the outcome of running `nx report`.
+    validations:
+      required: true

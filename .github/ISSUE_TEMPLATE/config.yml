@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Read the community guidelines
+    about: 'Please make sure you have read the submission guidelines before posting an issue'
+    url: https://github.com/nxtensions/nxtensions/blob/main/CONTRIBUTING.md#submitting-an-issue
+  - name: Want to discuss an idea?
+    about: 'Want to start a thread to discuss an idea? Start a discussion in the Ideas category.'
+    url: https://github.com/nxtensions/nxtensions/discussions/new?category=ideas
+  - name: Have a question?
+    about: 'Check the Q&A dicussions, your questions might have been answered already or create a new one if not.'
+    url: https://github.com/nxtensions/nxtensions/discussions/categories/q-a
