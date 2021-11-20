@@ -12,9 +12,11 @@
   },
   "private": true,
   "dependencies": {
+    "@astrojs/parser": "~0.20.3",
     "@nrwl/devkit": "13.1.2",
-    "astro": "^0.20.12",
+    "astro": "~0.21.0",
     "fs-extra": "^10.0.0",
+    "snowpack": "^3.8.8",
     "tslib": "^2.0.0"
   },
   "devDependencies": {
@@ -22,7 +24,6 @@
     "@commitlint/config-conventional": "^13.2.0",
     "@commitlint/cz-commitlint": "^13.2.1",
     "@nrwl/cli": "13.1.2",
-    "@nrwl/devkit": "13.1.2",
     "@nrwl/eslint-plugin-nx": "13.1.2",
     "@nrwl/jest": "13.1.2",
     "@nrwl/linter": "13.1.2",

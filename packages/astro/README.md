@@ -11,7 +11,6 @@
 - Generators for scaffolding Astro applications and libraries.
 - Executors to run builds, Astro development server and preview.
 - Nx project graph plugin to see Astro project dependencies.
-- Use of Typescript path mappings to import from dependencies.
 
 ## Prerequisites
 
