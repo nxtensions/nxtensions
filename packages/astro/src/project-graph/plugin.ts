@@ -73,12 +73,12 @@ function getAstroFilesToProcess(filesToProcess: ProjectFileMap): {
   project: string;
   files: FileData[];
 }[] {
-  const astroExtension = '.astro';
+  const astroExtensions = ['.astro', '.md'];
 
   return Object.entries(filesToProcess)
     .map(([project, files]) => {
-      const astroFiles = files.filter(
-        (file) => extname(file.file) === astroExtension
+      const astroFiles = files.filter((file) =>
+        astroExtensions.includes(extname(file.file))
       );
       if (astroFiles.length > 0) {
         return { project, files: astroFiles };

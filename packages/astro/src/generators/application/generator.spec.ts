@@ -40,9 +40,6 @@ describe('application generator', () => {
       tree.exists(`apps/${options.name}/src/pages/index.astro`)
     ).toBeTruthy();
     expect(tree.exists(`apps/${options.name}/astro.config.mjs`)).toBeTruthy();
-    expect(
-      tree.exists(`apps/${options.name}/snowpack.config.mjs`)
-    ).toBeTruthy();
     expect(tree.exists(`apps/${options.name}/tsconfig.json`)).toBeTruthy();
   });
 
@@ -99,9 +96,6 @@ describe('application generator', () => {
       ).toBeTruthy();
       expect(
         tree.exists(`apps/${directory}/${options.name}/astro.config.mjs`)
-      ).toBeTruthy();
-      expect(
-        tree.exists(`apps/${directory}/${options.name}/snowpack.config.mjs`)
       ).toBeTruthy();
       expect(
         tree.exists(`apps/${directory}/${options.name}/tsconfig.json`)

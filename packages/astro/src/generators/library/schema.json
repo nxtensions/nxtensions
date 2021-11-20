@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/schema",
   "cli": "nx",
-  "$id": "NxtensionsLibraryGenerator",
+  "$id": "NxtensionsAstroLibraryGenerator",
   "type": "object",
   "properties": {
     "name": {
