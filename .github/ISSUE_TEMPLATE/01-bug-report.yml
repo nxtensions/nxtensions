@@ -1,5 +1,5 @@
 name: '🐛 Bug Report'
-description: Report an issue or possible bug
+description: Report an issue or possible bug.
 title: '🐛 [BUG]: '
 labels: ['type: bug', 'needs triage']
 assignees: []
@@ -23,7 +23,6 @@ body:
         - '@nxtensions/tsconfig-paths-snowpack-plugin'
     validations:
       required: true
-  - type: boolean
   - type: textarea
     attributes:
       label: Describe the bug
