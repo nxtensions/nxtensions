@@ -1,6 +1,6 @@
 {
   "name": "@nxtensions/astro",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Astro plugin for Nx.",
   "homepage": "https://github.com/nxtensions/nxtensions/tree/main/packages/astro#readme",
   "repository": {
