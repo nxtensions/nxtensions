@@ -15,7 +15,18 @@
 
 ## Prerequisites
 
-To use the plugin an Nx workspace is required.
+To use the plugin an Nx workspace is required. First, install the `@nxtensions/astro` package in the workspace by running:
+
+```bash
+# npm
+npm install -D @nxtensions/astro
+
+# yarn
+yarn add -D @nxtensions/astro
+
+# pnpm
+pnpm install -D @nxtensions/astro
+```
 
 ## Generate an application
 
