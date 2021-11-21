@@ -19,7 +19,7 @@ export function normalizeOptions(
 
   return {
     ...options,
-    directory,
+    addCypressTests: options.addCypressTests ?? true,
     projectName,
     projectRoot,
     renderers: options.renderers ?? [],

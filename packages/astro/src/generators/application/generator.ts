@@ -6,6 +6,7 @@ import {
   addProject,
   installRenderers,
   normalizeOptions,
+  setupE2ETests,
 } from './utilities';
 
 export async function applicationGenerator(
@@ -14,13 +15,20 @@ export async function applicationGenerator(
 ): Promise<GeneratorCallback | void> {
   const options = normalizeOptions(tree, rawOptions);
 
-  const initTask = initGenerator(tree);
+  const initTask = initGenerator(tree, {
+    addCypressTests: options.addCypressTests,
+  });
 
   const tasks: GeneratorCallback[] = [];
   tasks.push(initTask);
 
   addProject(tree, options);
   addFiles(tree, options);
+
+  const e2eTask = await setupE2ETests(tree, options);
+  if (e2eTask) {
+    tasks.push(e2eTask);
+  }
 
   const renderersTask = installRenderers(tree, options.renderers);
   if (renderersTask) {

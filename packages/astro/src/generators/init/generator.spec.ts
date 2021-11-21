@@ -1,3 +1,6 @@
+jest.mock('@nrwl/cypress');
+
+import { cypressInitGenerator } from '@nrwl/cypress';
 import { readJson, Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { initGenerator } from './generator';
@@ -8,6 +11,7 @@ describe('init generator', () => {
 
   beforeEach(() => {
     tree = createTreeWithEmptyWorkspace(2);
+    jest.clearAllMocks();
   });
 
   test('should add project graph plugin', () => {
@@ -60,5 +64,25 @@ node_modules
 
     const { devDependencies } = readJson(tree, 'package.json');
     expect(devDependencies.astro).toBe(astroVersion);
+  });
+
+  describe('--addCypressTests', () => {
+    test('should not add cypress when --addCypressTests=false', () => {
+      initGenerator(tree, { addCypressTests: false });
+
+      expect(cypressInitGenerator).not.toHaveBeenCalled();
+    });
+
+    test('should add cypress by default', () => {
+      initGenerator(tree, {});
+
+      expect(cypressInitGenerator).toHaveBeenCalled();
+    });
+
+    test('should add cypress when --addCypressTests=true', () => {
+      initGenerator(tree, {});
+
+      expect(cypressInitGenerator).toHaveBeenCalled();
+    });
   });
 });

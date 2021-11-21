@@ -3,7 +3,13 @@
   "cli": "nx",
   "$id": "NxtensionsAstroInitGenerator",
   "type": "object",
-  "properties": {},
+  "properties": {
+    "addCypressTests": {
+      "description": "Generate an E2E project with Cypress.",
+      "type": "boolean",
+      "default": true
+    }
+  },
   "additionalProperties": false,
   "required": []
 }

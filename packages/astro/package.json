@@ -33,6 +33,8 @@
   },
   "dependencies": {
     "@astrojs/parser": "~0.20.3",
+    "@nrwl/cypress": "^13.1.2",
+    "@nrwl/linter": "^13.1.2",
     "fs-extra": "^10.0.0"
   }
 }

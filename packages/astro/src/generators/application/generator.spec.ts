@@ -1,5 +1,10 @@
 import * as devkit from '@nrwl/devkit';
-import { readJson, readProjectConfiguration, Tree } from '@nrwl/devkit';
+import {
+  getProjects,
+  readJson,
+  readProjectConfiguration,
+  Tree,
+} from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { applicationGenerator } from './generator';
 import { GeneratorOptions } from './schema';
@@ -142,6 +147,64 @@ describe('application generator', () => {
       expect(tree.exists(`apps/${options.name}/project.json`)).toBeFalsy();
       const project = readProjectConfiguration(tree, options.name);
       expect(project).toBeTruthy();
+    });
+  });
+
+  describe('--addCypressTests', () => {
+    test('should not add an e2e project when --addCypressTests=false', async () => {
+      const e2eProjectName = `${options.name}-e2e`;
+
+      await applicationGenerator(tree, { ...options, addCypressTests: false });
+
+      expect(tree.exists(`apps/${e2eProjectName}`)).toBeFalsy();
+      const projects = getProjects(tree);
+      expect(projects.has(e2eProjectName)).toBeFalsy();
+    });
+
+    test('should add an e2e project by default', async () => {
+      const e2eProjectName = `${options.name}-e2e`;
+
+      await applicationGenerator(tree, options);
+
+      expect(tree.exists(`apps/${e2eProjectName}`)).toBeTruthy();
+      expect(readProjectConfiguration(tree, e2eProjectName)).toBeTruthy();
+    });
+
+    test('should add an e2e project when --addCypressTests=true', async () => {
+      const e2eProjectName = `${options.name}-e2e`;
+
+      await applicationGenerator(tree, { ...options, addCypressTests: true });
+
+      expect(tree.exists(`apps/${e2eProjectName}`)).toBeTruthy();
+      expect(readProjectConfiguration(tree, e2eProjectName)).toBeTruthy();
+    });
+
+    test('should configure the e2e target correctly', async () => {
+      const e2eProjectName = `${options.name}-e2e`;
+
+      await applicationGenerator(tree, { ...options, addCypressTests: true });
+
+      const e2eProject = readProjectConfiguration(tree, e2eProjectName);
+      expect(e2eProject.targets.e2e).toBeTruthy();
+      expect(e2eProject.targets.e2e.options.devServerTarget).toBe(
+        `${options.name}:dev`
+      );
+      expect(e2eProject.targets.e2e.configurations).toBeUndefined();
+    });
+
+    test('should be configured correctly when passing a directory', async () => {
+      const directory = 'some-directory/sub-directory';
+      const e2eProjectName = `some-directory-sub-directory-${options.name}-e2e`;
+
+      await applicationGenerator(tree, {
+        ...options,
+        directory,
+        addCypressTests: true,
+      });
+
+      expect(tree.exists(`apps/${directory}/${options.name}-e2e`)).toBeTruthy();
+      const e2eProject = readProjectConfiguration(tree, e2eProjectName);
+      expect(e2eProject.targets.e2e).toBeTruthy();
     });
   });
 });

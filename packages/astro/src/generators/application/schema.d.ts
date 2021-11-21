@@ -8,13 +8,17 @@ type Renderer =
 export interface GeneratorOptions {
   name: string;
   directory?: string;
+  addCypressTests?: boolean;
   renderers?: Renderer[];
   standaloneConfig?: boolean;
   tags?: string;
 }
 
-interface NormalizedGeneratorOptions extends Required<GeneratorOptions> {
+interface NormalizedGeneratorOptions extends GeneratorOptions {
+  addCypressTests: boolean;
   projectName: string;
   projectRoot: string;
+  renderers: Renderer[];
+  standaloneConfig: boolean;
   tags: string[];
 }
