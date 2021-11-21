@@ -96,6 +96,9 @@ async function releaseToNpm(
       infile: `${project.root}/CHANGELOG.md`,
       tagPrefix: `@nxtensions/${projectName}@v`,
       releaseCommitMessageFormat: `chore(release): @nxtensions/${projectName}@{{currentTag}}`,
+      scripts: {
+        postchangelog: 'npx nx format:write',
+      },
       verify: false,
       dryRun: options.dryRun,
     };
@@ -116,6 +119,12 @@ async function releaseToNpm(
 
   execSyncOrDryRun(
     `npm publish ${outputPath} --access=public`,
+    { stdio: 'inherit', env: process.env },
+    options.dryRun
+  );
+
+  execSyncOrDryRun(
+    'git push --follow-tags origin main',
     { stdio: 'inherit' },
     options.dryRun
   );
