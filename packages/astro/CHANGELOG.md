@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v0.0.1...@nxtensions/astro@v1.0.0) (2021-11-21)
+
+### Features
+
+- **astro:** add support for astro 0.21.0 ([#29](https://github.com/nxtensions/nxtensions/issues/29)) ([0b4a57d](https://github.com/nxtensions/nxtensions/commit/0b4a57d6a7b30e4d5dc311bcf698bf28341a752c))
+- **astro:** add support for generating cypress e2e tests for applications ([#30](https://github.com/nxtensions/nxtensions/issues/30)) ([5c9f9b8](https://github.com/nxtensions/nxtensions/commit/5c9f9b875e4635ca98dbe9c211881fe63e7d06fd))
+
 ### 0.0.1 (2021-11-15)
 
 ### Features
