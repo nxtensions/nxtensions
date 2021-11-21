@@ -20,7 +20,7 @@ export async function libraryGenerator(
 
   const options = normalizeOptions(tree, rawOptions);
 
-  const initTask = initGenerator(tree);
+  const initTask = initGenerator(tree, { addCypressTests: false });
 
   addProject(tree, options);
   addFiles(tree, options);

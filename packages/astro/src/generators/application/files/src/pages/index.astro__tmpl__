@@ -7,7 +7,7 @@ import Tour from '../components/Tour.astro';
 // You can write any JavaScript/TypeScript that you'd like here.
 // It will run during the build, but never in the browser.
 // All variables are available to use in the HTML template below.
-let title = '<%= className %>';
+let title = '<%= projectName %>';
 
 // Full Astro Component Syntax:
 // https://docs.astro.build/core-concepts/astro-components/
@@ -29,7 +29,7 @@ let title = '<%= className %>';
     <header>
       <div>
         <img width="60" height="80" src="/assets/logo.svg" alt="Astro logo">
-        <h1>Welcome to {title}</h1>
+        <h1>Welcome to {title}!</h1>
       </div>
     </header>
 

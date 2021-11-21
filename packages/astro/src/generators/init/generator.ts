@@ -1,3 +1,4 @@
+import { cypressInitGenerator } from '@nrwl/cypress';
 import {
   addDependenciesToPackageJson,
   GeneratorCallback,
@@ -6,12 +7,12 @@ import {
   Tree,
   writeJson,
 } from '@nrwl/devkit';
+import { GeneratorOptions } from './schema';
 import { astroVersion } from './versions';
 
 export function initGenerator(
   tree: Tree,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  options: Record<string, never> = {}
+  options: GeneratorOptions
 ): GeneratorCallback {
   const nxJson = readJson<NxJsonConfiguration>(tree, 'nx.json');
   nxJson.plugins = nxJson.plugins || [];
@@ -33,7 +34,20 @@ export function initGenerator(
     }
   }
 
-  return addDependenciesToPackageJson(tree, {}, { astro: astroVersion });
+  const tasks: GeneratorCallback[] = [];
+  if (options.addCypressTests !== false) {
+    const cypressTask = cypressInitGenerator(tree);
+    tasks.push(cypressTask);
+  }
+
+  const depsTask = addDependenciesToPackageJson(
+    tree,
+    {},
+    { astro: astroVersion }
+  );
+  tasks.push(depsTask);
+
+  return () => tasks.forEach((task) => task());
 }
 
 export default initGenerator;

@@ -72,7 +72,7 @@ describe('Dev Executor', () => {
   });
 
   test('should run successfully', async () => {
-    emitChildProcessStdioData('stdout', 'Server started in');
+    emitChildProcessStdioData('stdout', 'Server started');
 
     const resultIterator = devExecutor({}, context);
 
@@ -105,7 +105,7 @@ describe('Dev Executor', () => {
 
   describe('--port', () => {
     test('should default to port 3000 when no port is provided', async () => {
-      emitChildProcessStdioData('stdout', 'Server started in');
+      emitChildProcessStdioData('stdout', 'Server started');
 
       const resultIterator = devExecutor({}, context);
 
@@ -115,7 +115,7 @@ describe('Dev Executor', () => {
     });
 
     test('should use provided port', async () => {
-      emitChildProcessStdioData('stdout', 'Server started in');
+      emitChildProcessStdioData('stdout', 'Server started');
 
       const resultIterator = devExecutor({ port: 4200 }, context);
 
