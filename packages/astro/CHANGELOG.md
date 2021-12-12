@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v1.0.1...@nxtensions/astro@v1.1.0) (2021-12-12)
+
+### Features
+
+- **astro:** add component generator ([9f7c819](https://github.com/nxtensions/nxtensions/commit/9f7c819c04b333d3baeaafb741aec94a5b64c05e))
+
 ### [1.0.1](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v1.0.0...@nxtensions/astro@v1.0.1) (2021-11-21)
 
 ### Bug Fixes
