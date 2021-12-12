@@ -22,8 +22,8 @@ describe('library generator', () => {
   test('should generate files', async () => {
     await libraryGenerator(tree, options);
 
-    expect(tree.exists(`libs/${options.name}/index.js`)).toBeTruthy();
-    expect(tree.exists(`libs/${options.name}/Lib1.astro`)).toBeTruthy();
+    expect(tree.exists(`libs/${options.name}/src/index.js`)).toBeTruthy();
+    expect(tree.exists(`libs/${options.name}/src/lib/Lib1.astro`)).toBeTruthy();
     expect(tree.exists(`libs/${options.name}/README.md`)).toBeTruthy();
     expect(tree.exists(`libs/${options.name}/tsconfig.json`)).toBeTruthy();
   });
@@ -33,7 +33,7 @@ describe('library generator', () => {
 
     const { compilerOptions } = readJson(tree, 'tsconfig.base.json');
     expect(compilerOptions.paths[`@proj/${options.name}`]).toStrictEqual([
-      `libs/${options.name}/index.js`,
+      `libs/${options.name}/src/index.js`,
     ]);
   });
 
@@ -62,10 +62,10 @@ describe('library generator', () => {
       await libraryGenerator(tree, { ...options, directory });
 
       expect(
-        tree.exists(`libs/${directory}/${options.name}/index.js`)
+        tree.exists(`libs/${directory}/${options.name}/src/index.js`)
       ).toBeTruthy();
       expect(
-        tree.exists(`libs/${directory}/${options.name}/Lib1.astro`)
+        tree.exists(`libs/${directory}/${options.name}/src/lib/Lib1.astro`)
       ).toBeTruthy();
       expect(
         tree.exists(`libs/${directory}/${options.name}/README.md`)
@@ -83,7 +83,7 @@ describe('library generator', () => {
         compilerOptions.paths[
           `@proj/some-directory-sub-directory-${options.name}`
         ]
-      ).toStrictEqual([`libs/${directory}/${options.name}/index.js`]);
+      ).toStrictEqual([`libs/${directory}/${options.name}/src/index.js`]);
     });
   });
 
@@ -140,7 +140,7 @@ describe('library generator', () => {
 
       const { compilerOptions } = readJson(tree, 'tsconfig.base.json');
       expect(compilerOptions.paths[importPath]).toStrictEqual([
-        `libs/${options.name}/index.js`,
+        `libs/${options.name}/src/index.js`,
       ]);
     });
   });

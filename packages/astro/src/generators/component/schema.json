@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "NxtensionsAstroComponentGenerator",
+  "title": "Astro Component Generator",
+  "description": "Generates an Astro or Markdown component.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the component.",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What name would you like to use for the component?"
+    },
+    "project": {
+      "type": "string",
+      "description": "The name of the project.",
+      "alias": "p",
+      "x-prompt": "What is the name of the project for this component?"
+    },
+    "directory": {
+      "type": "string",
+      "description": "A directory where the component is placed, relative to the project root.",
+      "alias": "d"
+    },
+    "style": {
+      "type": "string",
+      "description": "Type of style to use.",
+      "alias": "s",
+      "enum": ["css", "scss", "sass", "less", "styl", "none"],
+      "default": "css",
+      "x-prompt": {
+        "message": "Which type of style do you want to use?",
+        "type": "list",
+        "multiselect": true,
+        "items": [
+          {
+            "label": "CSS",
+            "value": "css"
+          },
+          {
+            "label": "SCSS",
+            "value": "scss"
+          },
+          {
+            "label": "SASS",
+            "value": "sass"
+          },
+          {
+            "label": "LESS",
+            "value": "less"
+          },
+          {
+            "label": "Stylus",
+            "value": "styl"
+          },
+          {
+            "label": "None",
+            "value": "none"
+          }
+        ]
+      }
+    }
+  },
+  "required": ["name", "project"]
+}
