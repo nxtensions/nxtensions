@@ -10,6 +10,12 @@
       "x-type": "application",
       "description": "Generates an Astro application."
     },
+    "component": {
+      "factory": "./src/generators/component/generator",
+      "schema": "./src/generators/component/schema.json",
+      "aliases": ["c"],
+      "description": "Generates an Astro or Markdown component."
+    },
     "init": {
       "factory": "./src/generators/init/generator",
       "schema": "./src/generators/init/schema.json",

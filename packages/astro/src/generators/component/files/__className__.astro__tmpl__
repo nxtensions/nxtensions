@@ -1,0 +1,19 @@
+---
+// You can import other components here if needed.
+// Feel free to delete this Frontmatter script if not needed.
+---
+
+<% if (style !== 'none') { if (style === 'css') { %><style>
+p {
+  color: #ff5c01;
+}
+</style><% } else if (style !== 'sass') { %><style lang="<%= style %>">
+p {
+  color: #ff5c01;
+}
+</style><% } else { %><style lang="sass">
+p
+  color: #ff5c01
+</style><% } %>
+
+<% } %><p><%= className %> works!</p>

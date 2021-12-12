@@ -2,6 +2,8 @@
   "$schema": "http://json-schema.org/schema",
   "cli": "nx",
   "$id": "NxtensionsAstroLibraryGenerator",
+  "title": "Astro Library Generator",
+  "description": "Generates an Astro library.",
   "type": "object",
   "properties": {
     "name": {

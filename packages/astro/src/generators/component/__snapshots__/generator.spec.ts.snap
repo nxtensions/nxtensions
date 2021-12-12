@@ -1,0 +1,106 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`component generator --styles should create the component with the right stylesheet content when "css" is provided 1`] = `
+"---
+// You can import other components here if needed.
+// Feel free to delete this Frontmatter script if not needed.
+---
+
+<style>
+p {
+  color: #ff5c01;
+}
+</style>
+
+<p>Foo works!</p>
+"
+`;
+
+exports[`component generator --styles should create the component with the right stylesheet content when "less" is provided 1`] = `
+"---
+// You can import other components here if needed.
+// Feel free to delete this Frontmatter script if not needed.
+---
+
+<style lang=\\"less\\">
+p {
+  color: #ff5c01;
+}
+</style>
+
+<p>Foo works!</p>
+"
+`;
+
+exports[`component generator --styles should create the component with the right stylesheet content when "none" is provided 1`] = `
+"---
+// You can import other components here if needed.
+// Feel free to delete this Frontmatter script if not needed.
+---
+
+<p>Foo works!</p>
+"
+`;
+
+exports[`component generator --styles should create the component with the right stylesheet content when "sass" is provided 1`] = `
+"---
+// You can import other components here if needed.
+// Feel free to delete this Frontmatter script if not needed.
+---
+
+<style lang=\\"sass\\">
+p
+  color: #ff5c01
+</style>
+
+<p>Foo works!</p>
+"
+`;
+
+exports[`component generator --styles should create the component with the right stylesheet content when "scss" is provided 1`] = `
+"---
+// You can import other components here if needed.
+// Feel free to delete this Frontmatter script if not needed.
+---
+
+<style lang=\\"scss\\">
+p {
+  color: #ff5c01;
+}
+</style>
+
+<p>Foo works!</p>
+"
+`;
+
+exports[`component generator --styles should create the component with the right stylesheet content when "styl" is provided 1`] = `
+"---
+// You can import other components here if needed.
+// Feel free to delete this Frontmatter script if not needed.
+---
+
+<style lang=\\"styl\\">
+p {
+  color: #ff5c01;
+}
+</style>
+
+<p>Foo works!</p>
+"
+`;
+
+exports[`component generator --styles should create the component with the right stylesheet content when "undefined" is provided 1`] = `
+"---
+// You can import other components here if needed.
+// Feel free to delete this Frontmatter script if not needed.
+---
+
+<style>
+p {
+  color: #ff5c01;
+}
+</style>
+
+<p>Foo works!</p>
+"
+`;

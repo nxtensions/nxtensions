@@ -14,7 +14,7 @@ export function addPathMapping(
   updateJson(tree, rootTsConfigPath, (json) => {
     const c = json.compilerOptions;
     c.paths = c.paths ?? {};
-    c.paths[options.importPath] = [`${options.projectRoot}/index.js`];
+    c.paths[options.importPath] = [`${options.projectRoot}/src/index.js`];
 
     return json;
   });
