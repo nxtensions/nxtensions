@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v1.0.1...@nxtensions/astro@v1.2.0) (2021-12-23)
+
+### Features
+
+- **astro:** add component generator ([#34](https://github.com/nxtensions/nxtensions/issues/34)) ([b194bde](https://github.com/nxtensions/nxtensions/commit/b194bde4ccb7047780a96a8b66fe1cbe537c05e7))
+
+### Bug Fixes
+
+- **astro:** add workaround for nx not handling the project graph plugin without projectFilePatterns ([#36](https://github.com/nxtensions/nxtensions/issues/36)) ([c50009a](https://github.com/nxtensions/nxtensions/commit/c50009a6c1cf835942675f6dc687b982b145998b))
+
 ## [1.1.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v1.0.1...@nxtensions/astro@v1.1.0) (2021-12-12)
 
 ### Features
