@@ -8,10 +8,11 @@
 
 ## Features
 
-- Generator for scaffolding Astro applications and libraries.
+- Generators for scaffolding Astro applications and libraries.
+- Generators for scaffolding Astro components.
 - Cypress tests for Astro applications.
 - Executors to run builds, start the Astro development server and start a local static file server to preview built applications.
-- Nx project graph plugin to see Astro project dependencies.
+- Nx project graph plugin to visualize Astro project dependencies.
 
 ## Prerequisites
 
