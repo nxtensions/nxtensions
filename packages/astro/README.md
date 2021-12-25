@@ -45,6 +45,14 @@ To generate an Astro library run:
 nx generate @nxtensions/astro:lib my-lib
 ```
 
+## Generate a component
+
+To generate an Astro library run:
+
+```bash
+nx generate @nxtensions/astro:component my-component
+```
+
 ## Build
 
 To build an Astro application run:
