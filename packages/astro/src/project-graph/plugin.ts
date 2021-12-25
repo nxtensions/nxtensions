@@ -12,9 +12,6 @@ import { readFileSync } from 'fs';
 import { extname } from 'path';
 import * as ts from 'typescript';
 
-// TODO: This is a temporary workaround until https://github.com/nrwl/nx/pull/8290 is merged
-export const projectFilePatterns = [];
-
 export function processProjectGraph(
   graph: ProjectGraph,
   context: ProjectGraphProcessorContext
