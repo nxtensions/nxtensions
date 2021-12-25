@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v1.2.0...@nxtensions/astro@v1.3.0) (2021-12-25)
+
+### Features
+
+- **astro:** add recommended vscode extensions for astro when creating projects if needed ([#38](https://github.com/nxtensions/nxtensions/issues/38)) ([39eea0d](https://github.com/nxtensions/nxtensions/commit/39eea0d86b5e5e3d0a4c7fcbbcb34a20e84c8dc0))
+- **astro:** update astro and nx dependencies ([#37](https://github.com/nxtensions/nxtensions/issues/37)) ([7458014](https://github.com/nxtensions/nxtensions/commit/745801434aae1f157228ccc06ce0fbfc37ca0bdd))
+
+### Bug Fixes
+
+- **astro:** remove workaround for project graph as it's fixed on nx side ([#39](https://github.com/nxtensions/nxtensions/issues/39)) ([496a6a1](https://github.com/nxtensions/nxtensions/commit/496a6a19091d0b82df293645b36c3003cddc0246))
+
 ## [1.2.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v1.0.1...@nxtensions/astro@v1.2.0) (2021-12-23)
 
 ### Features
