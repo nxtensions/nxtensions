@@ -59,6 +59,43 @@ node_modules
 `);
   });
 
+  test('should not add VSCode extensions file when it does not exist', async () => {
+    initGenerator(tree, {});
+
+    expect(tree.exists('.vscode/extensions.json')).toBeFalsy();
+  });
+
+  test('should add the Astro extension to the VSCode recommended extensions', async () => {
+    tree.write(
+      '.vscode/extensions.json',
+      JSON.stringify({
+        recommendations: ['nrwl.angular-console'],
+      })
+    );
+
+    initGenerator(tree, {});
+
+    const { recommendations } = readJson(tree, '.vscode/extensions.json');
+    expect(recommendations).toContain('astro-build.astro-vscode');
+  });
+
+  test('should not duplicate the Astro extension when it is already present', async () => {
+    tree.write(
+      '.vscode/extensions.json',
+      JSON.stringify({
+        recommendations: ['nrwl.angular-console', 'astro-build.astro-vscode'],
+      })
+    );
+
+    initGenerator(tree, {});
+
+    const { recommendations } = readJson(tree, '.vscode/extensions.json');
+    expect(recommendations).toStrictEqual([
+      'nrwl.angular-console',
+      'astro-build.astro-vscode',
+    ]);
+  });
+
   test('should add astro as a devDependency', () => {
     initGenerator(tree, {});
 
