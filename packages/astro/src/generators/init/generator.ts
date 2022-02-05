@@ -22,7 +22,7 @@ export function initGenerator(
 
   const tasks: GeneratorCallback[] = [];
   if (options.addCypressTests !== false) {
-    const cypressTask = cypressInitGenerator(tree);
+    const cypressTask = cypressInitGenerator(tree, {});
     tasks.push(cypressTask);
   }
 
