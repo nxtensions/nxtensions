@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.2](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v1.3.1...@nxtensions/astro@v1.3.2) (2022-02-20)
+
+### Bug Fixes
+
+- **astro:** read files from the workspace root when processing the project graph ([7d509f0](https://github.com/nxtensions/nxtensions/commit/7d509f0ad4da2386d740fa027d92e4859b5a8cfe))
+
 ### [1.3.1](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v1.3.0...@nxtensions/astro@v1.3.1) (2022-02-17)
 
 ## [1.3.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v1.2.0...@nxtensions/astro@v1.3.0) (2021-12-25)
