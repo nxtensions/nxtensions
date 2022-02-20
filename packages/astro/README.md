@@ -29,6 +29,16 @@ yarn add -D @nxtensions/astro
 pnpm install -D @nxtensions/astro
 ```
 
+## Updating the package
+
+To update the package version and run any migrations included in it, use the `nx migrate` command:
+
+```bash
+nx migrate @nxtensions/astro@latest
+```
+
+For more information on the `nx migrate` command see https://nx.dev/cli/migrate.
+
 ## Generate an application
 
 To generate an Astro application run:

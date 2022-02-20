@@ -40,12 +40,7 @@
           },
           {
             "input": "./packages/astro",
-            "glob": "generators.json",
-            "output": "."
-          },
-          {
-            "input": "./packages/astro",
-            "glob": "executors.json",
+            "glob": "{executors,generators,migrations}.json",
             "output": "."
           }
         ]

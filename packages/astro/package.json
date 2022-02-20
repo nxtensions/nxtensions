@@ -25,15 +25,16 @@
   },
   "generators": "./generators.json",
   "executors": "./executors.json",
+  "nx-migrations": "./migrations.json",
   "peerDependencies": {
     "@nrwl/devkit": "^13.0.0",
     "@nrwl/tao": "^13.0.0",
     "@nrwl/workspace": "^13.0.0",
-    "astro": "~0.22.1",
+    "astro": "~0.23.0",
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "@astrojs/parser": "~0.22.0",
+    "@astrojs/parser": "~0.22.1",
     "@nrwl/cypress": "^13.0.0",
     "@nrwl/linter": "^13.0.0",
     "fs-extra": "^10.0.0"

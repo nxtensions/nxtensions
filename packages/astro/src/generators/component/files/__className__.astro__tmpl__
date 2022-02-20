@@ -3,6 +3,8 @@
 // Feel free to delete this Frontmatter script if not needed.
 ---
 
+<p><%= className %> works!</p>
+
 <% if (style !== 'none') { if (style === 'css') { %><style>
 p {
   color: #ff5c01;
@@ -14,6 +16,4 @@ p {
 </style><% } else { %><style lang="sass">
 p
   color: #ff5c01
-</style><% } %>
-
-<% } %><p><%= className %> works!</p>
+</style><% } %><% } %>

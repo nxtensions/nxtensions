@@ -6,13 +6,13 @@ exports[`component generator --styles should create the component with the right
 // Feel free to delete this Frontmatter script if not needed.
 ---
 
+<p>Foo works!</p>
+
 <style>
 p {
   color: #ff5c01;
 }
 </style>
-
-<p>Foo works!</p>
 "
 `;
 
@@ -22,13 +22,13 @@ exports[`component generator --styles should create the component with the right
 // Feel free to delete this Frontmatter script if not needed.
 ---
 
+<p>Foo works!</p>
+
 <style lang=\\"less\\">
 p {
   color: #ff5c01;
 }
 </style>
-
-<p>Foo works!</p>
 "
 `;
 
@@ -39,6 +39,8 @@ exports[`component generator --styles should create the component with the right
 ---
 
 <p>Foo works!</p>
+
+
 "
 `;
 
@@ -48,12 +50,12 @@ exports[`component generator --styles should create the component with the right
 // Feel free to delete this Frontmatter script if not needed.
 ---
 
+<p>Foo works!</p>
+
 <style lang=\\"sass\\">
 p
   color: #ff5c01
 </style>
-
-<p>Foo works!</p>
 "
 `;
 
@@ -63,13 +65,13 @@ exports[`component generator --styles should create the component with the right
 // Feel free to delete this Frontmatter script if not needed.
 ---
 
+<p>Foo works!</p>
+
 <style lang=\\"scss\\">
 p {
   color: #ff5c01;
 }
 </style>
-
-<p>Foo works!</p>
 "
 `;
 
@@ -79,13 +81,13 @@ exports[`component generator --styles should create the component with the right
 // Feel free to delete this Frontmatter script if not needed.
 ---
 
+<p>Foo works!</p>
+
 <style lang=\\"styl\\">
 p {
   color: #ff5c01;
 }
 </style>
-
-<p>Foo works!</p>
 "
 `;
 
@@ -95,12 +97,12 @@ exports[`component generator --styles should create the component with the right
 // Feel free to delete this Frontmatter script if not needed.
 ---
 
+<p>Foo works!</p>
+
 <style>
 p {
   color: #ff5c01;
 }
 </style>
-
-<p>Foo works!</p>
 "
 `;

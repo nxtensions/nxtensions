@@ -12,11 +12,11 @@
   },
   "private": true,
   "dependencies": {
-    "@astrojs/parser": "~0.22.0",
+    "@astrojs/parser": "~0.22.1",
     "@nrwl/cypress": "13.8.2",
     "@nrwl/devkit": "13.8.2",
     "@nrwl/linter": "13.8.2",
-    "astro": "~0.22.20",
+    "astro": "~0.23.0",
     "fs-extra": "^10.0.0",
     "snowpack": "^3.8.8",
     "tslib": "^2.0.0"
