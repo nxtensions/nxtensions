@@ -6,10 +6,11 @@ import {
   ProjectGraphBuilder,
   ProjectGraphProcessorContext,
 } from '@nrwl/devkit';
+import { appRootPath } from '@nrwl/tao/src/utils/app-root';
 import { TypeScriptImportLocator } from '@nrwl/workspace/src/core/project-graph/build-dependencies/typescript-import-locator';
 import { TargetProjectLocator } from '@nrwl/workspace/src/core/target-project-locator';
 import { readFileSync } from 'fs';
-import { extname } from 'path';
+import { extname, join } from 'path';
 import * as ts from 'typescript';
 
 export function processProjectGraph(
@@ -33,7 +34,7 @@ export function processProjectGraph(
 
   filesToProcess.forEach(({ project, files }) => {
     files.forEach((file) => {
-      const fileContent = readFileSync(file.file, 'utf-8');
+      const fileContent = readFileSync(join(appRootPath, file.file), 'utf-8');
 
       // parse the file to get the AST
       const { module } = parse(fileContent);

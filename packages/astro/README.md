@@ -4,7 +4,7 @@
 
 # @nxtensions/astro
 
-[Astro](https://astro.build) plugin for [Nx](https://nx.dev/).
+[Nx](https://nx.dev/) plugin adding first-class support for [Astro](https://astro.build).
 
 ## Features
 
@@ -61,7 +61,7 @@ To build an Astro application run:
 nx build my-app
 ```
 
-Form more information on building an Astro application see https://docs.astro.build/reference/cli-reference/#astro-build.
+Form more information on building an Astro application see https://docs.astro.build/en/reference/cli-reference/#astro-build.
 
 ## Development server
 
@@ -71,7 +71,7 @@ To run an Astro application in development mode run:
 nx dev my-app
 ```
 
-For more information on the Astro development server see https://docs.astro.build/reference/cli-reference/#astro-dev.
+For more information on the Astro development server see https://docs.astro.build/en/reference/cli-reference/#astro-dev.
 
 ## Preview
 
@@ -81,7 +81,7 @@ To start a local static file server to serve a previously built Astro applicatio
 nx dev my-app
 ```
 
-For more information on the local static file server for Astro applications see https://docs.astro.build/reference/cli-reference/#astro-preview.
+For more information on the local static file server for Astro applications see https://docs.astro.build/en/reference/cli-reference/#astro-preview.
 
 ## Project graph
 
