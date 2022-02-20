@@ -5,9 +5,42 @@
   "title": "Astro dev executor",
   "type": "object",
   "properties": {
+    "config": {
+      "type": "string",
+      "description": "Specify the path, relative to the project root, to the Astro config file."
+    },
+    "drafts": {
+      "type": "boolean",
+      "description": "Include markdown draft pages in the build.",
+      "default": false
+    },
+    "experimentalSsr": {
+      "type": "boolean",
+      "description": "Enable SSR compilation.",
+      "default": false
+    },
+    "experimentalStaticBuild": {
+      "type": "boolean",
+      "description": "Enable a more performant build that expects assets to be defined statically.",
+      "default": false
+    },
+    "hostname": {
+      "type": "string",
+      "description": "Server hostname to use."
+    },
     "port": {
       "type": "integer",
-      "description": "Port to run on."
+      "description": "Server port to run on."
+    },
+    "silent": {
+      "type": "boolean",
+      "description": "Disable logging.",
+      "default": false
+    },
+    "verbose": {
+      "type": "boolean",
+      "description": "Enable verbose logging.",
+      "default": false
     }
   },
   "additionalProperties": false,

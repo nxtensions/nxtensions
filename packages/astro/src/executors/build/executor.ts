@@ -10,6 +10,8 @@ export async function buildExecutor(
   options: BuildExecutorOptions,
   context: ExecutorContext
 ): Promise<{ success: boolean }> {
+  options = normalizeOptions(options);
+
   const projectRoot = join(
     context.root,
     context.workspace.projects[context.projectName].root
@@ -24,7 +26,7 @@ export async function buildExecutor(
   }
 
   try {
-    const exitCode = await runCliBuild(projectRoot);
+    const exitCode = await runCliBuild(projectRoot, options);
 
     return { success: exitCode === 0 };
   } catch (e) {
@@ -40,14 +42,18 @@ export async function buildExecutor(
 
 export default buildExecutor;
 
-function runCliBuild(projectRoot: string) {
+function runCliBuild(projectRoot: string, options: BuildExecutorOptions) {
   return new Promise((resolve, reject) => {
     // TODO: use Astro CLI API once it's available.
     // See https://github.com/snowpackjs/astro/issues/1483.
-    childProcess = fork(require.resolve('astro'), ['build'], {
-      cwd: projectRoot,
-      stdio: 'inherit',
-    });
+    childProcess = fork(
+      require.resolve('astro'),
+      ['build', ...getAstroBuildArgs(options)],
+      {
+        cwd: projectRoot,
+        stdio: 'inherit',
+      }
+    );
 
     // Ensure the child process is killed when the parent exits
     process.on('exit', () => childProcess.kill());
@@ -64,4 +70,40 @@ function runCliBuild(projectRoot: string) {
       }
     });
   });
+}
+
+function normalizeOptions(options: BuildExecutorOptions): BuildExecutorOptions {
+  return {
+    deleteOutputPath: true,
+    sitemap: true,
+    ...options,
+  };
+}
+
+function getAstroBuildArgs(options: BuildExecutorOptions): string[] {
+  const args: string[] = [];
+
+  if (options.config) {
+    args.push('--config', options.config);
+  }
+  if (options.drafts) {
+    args.push('--drafts');
+  }
+  if (options.experimentalSsr) {
+    args.push('--experimental-ssr');
+  }
+  if (options.experimentalStaticBuild) {
+    args.push('--experimental-static-build');
+  }
+  if (options.silent) {
+    args.push('--silent');
+  }
+  if (options.sitemap === false) {
+    args.push('--no-sitemap');
+  }
+  if (options.verbose) {
+    args.push('--verbose');
+  }
+
+  return args;
 }

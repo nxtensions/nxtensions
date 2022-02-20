@@ -1,1 +1,4 @@
-export interface PreviewExecutorOptions {} // eslint-disable-line
+export interface PreviewExecutorOptions {
+  silent?: boolean;
+  verbose?: boolean;
+}

@@ -15,7 +15,7 @@ export async function* previewExecutor(
   );
 
   try {
-    const success = await runCliPreview(projectRoot);
+    const success = await runCliPreview(projectRoot, options);
 
     // TODO: build url from what's in the Astro config once the CLI API is available.
     // See https://github.com/snowpackjs/astro/issues/1483.
@@ -37,15 +37,22 @@ export async function* previewExecutor(
 
 export default previewExecutor;
 
-function runCliPreview(projectRoot: string): Promise<boolean> {
+function runCliPreview(
+  projectRoot: string,
+  options: PreviewExecutorOptions
+): Promise<boolean> {
   return new Promise((resolve, reject) => {
     // TODO: use Astro CLI API once it's available.
     // See https://github.com/snowpackjs/astro/issues/1483.
-    childProcess = fork(require.resolve('astro'), ['preview'], {
-      cwd: projectRoot,
-      env: { ...process.env, FORCE_COLOR: 'true' },
-      stdio: 'pipe',
-    });
+    childProcess = fork(
+      require.resolve('astro'),
+      ['preview', ...getAstroPreviewArgs(options)],
+      {
+        cwd: projectRoot,
+        env: { ...process.env, FORCE_COLOR: 'true' },
+        stdio: 'pipe',
+      }
+    );
 
     // Ensure the child process is killed when the parent exits
     process.on('exit', () => childProcess.kill());
@@ -73,4 +80,17 @@ function runCliPreview(projectRoot: string): Promise<boolean> {
       }
     });
   });
+}
+
+function getAstroPreviewArgs(options: PreviewExecutorOptions): string[] {
+  const args: string[] = [];
+
+  if (options.silent) {
+    args.push('--silent');
+  }
+  if (options.verbose) {
+    args.push('--verbose');
+  }
+
+  return args;
 }

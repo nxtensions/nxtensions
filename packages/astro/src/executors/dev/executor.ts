@@ -85,9 +85,32 @@ function runCliDev(
 }
 
 function getAstroDevArgs(options: DevExecutorOptions): string[] {
+  const args: string[] = [];
+
+  if (options.config) {
+    args.push('--config', options.config);
+  }
+  if (options.drafts) {
+    args.push('--drafts');
+  }
+  if (options.experimentalSsr) {
+    args.push('--experimental-ssr');
+  }
+  if (options.experimentalStaticBuild) {
+    args.push('--experimental-static-build');
+  }
+  if (options.hostname) {
+    args.push('--hostname', options.hostname);
+  }
   if (options.port) {
-    return ['--port', options.port.toString()];
+    args.push('--port', options.port.toString());
+  }
+  if (options.silent) {
+    args.push('--silent');
+  }
+  if (options.verbose) {
+    args.push('--verbose');
   }
 
-  return [];
+  return args;
 }

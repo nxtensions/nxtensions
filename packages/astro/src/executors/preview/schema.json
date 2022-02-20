@@ -4,7 +4,18 @@
   "cli": "nx",
   "title": "Astro preview executor",
   "type": "object",
-  "properties": {},
+  "properties": {
+    "silent": {
+      "type": "boolean",
+      "description": "Disable logging.",
+      "default": false
+    },
+    "verbose": {
+      "type": "boolean",
+      "description": "Enable verbose logging.",
+      "default": false
+    }
+  },
   "additionalProperties": false,
   "required": []
 }

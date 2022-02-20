@@ -5,10 +5,45 @@
   "title": "Astro build executor",
   "type": "object",
   "properties": {
+    "config": {
+      "type": "string",
+      "description": "Specify the path, relative to the project root, to the Astro config file.",
+      "default": "astro.config.mjs"
+    },
+    "drafts": {
+      "type": "boolean",
+      "description": "Include markdown draft pages in the build.",
+      "default": false
+    },
     "deleteOutputPath": {
       "type": "boolean",
       "description": "Delete the output path before building.",
       "default": true
+    },
+    "experimentalSsr": {
+      "type": "boolean",
+      "description": "Enable SSR compilation.",
+      "default": false
+    },
+    "experimentalStaticBuild": {
+      "type": "boolean",
+      "description": "Enable a more performant build that expects assets to be defined statically.",
+      "default": false
+    },
+    "silent": {
+      "type": "boolean",
+      "description": "Disable logging.",
+      "default": false
+    },
+    "sitemap": {
+      "type": "boolean",
+      "description": "Enable sitemap generation.",
+      "default": true
+    },
+    "verbose": {
+      "type": "boolean",
+      "description": "Enable verbose logging.",
+      "default": false
     }
   },
   "additionalProperties": false,
