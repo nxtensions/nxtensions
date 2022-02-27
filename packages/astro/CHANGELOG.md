@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v1.3.2...@nxtensions/astro@v2.0.0) (2022-02-27)
+
+### ⚠ BREAKING CHANGES
+
+- **astro:** Astro v0.23.0 comes with a couple of breaking changes. Make sure to check the migration guide https://docs.astro.build/en/migrate/#migrate-to-v023.
+
+### Features
+
+- **astro:** add check executor to run astro diagnostic checks ([138f93a](https://github.com/nxtensions/nxtensions/commit/138f93a9d94828982e44f6a8704c4b726919588b))
+- **astro:** add check target to cacheable operations ([b8f69ca](https://github.com/nxtensions/nxtensions/commit/b8f69caf0a908a6afd8097edd184520311516491))
+- **astro:** add migration to add sass if not installed and it is being used in astro projects ([cb5e90c](https://github.com/nxtensions/nxtensions/commit/cb5e90c100e7edbc3fed02ffb00186ec326945d8))
+- **astro:** set default project if it is not set when creating an application ([262d1ef](https://github.com/nxtensions/nxtensions/commit/262d1ef66ef85b898f03885ad1a17c47541c56f0))
+- **astro:** support allowed flags for the build, dev and preview executors ([624a6ea](https://github.com/nxtensions/nxtensions/commit/624a6ead59609f289c71fabca2a59131242ce219))
+- **astro:** support astro v0.23.0 ([41c630c](https://github.com/nxtensions/nxtensions/commit/41c630c7eba34efb8d5e01ac684da205137d06e2))
+
+### Bug Fixes
+
+- **astro:** use the right astro version when initializing the plugin ([7c30ae7](https://github.com/nxtensions/nxtensions/commit/7c30ae7dbe4b37fba1174d3a3d68da32d635d3c0))
+
 ### [1.3.2](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v1.3.1...@nxtensions/astro@v1.3.2) (2022-02-20)
 
 ### Bug Fixes
