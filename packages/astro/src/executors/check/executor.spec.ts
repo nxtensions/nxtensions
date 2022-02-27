@@ -2,17 +2,13 @@ jest.mock('child_process');
 
 import { ExecutorContext } from '@nrwl/devkit';
 import { fork } from 'child_process';
-import { previewExecutor } from './executor';
+import * as fsExtra from 'fs-extra';
+import { checkExecutor } from './executor';
 
 type ChildProcessEvents = 'error' | 'exit';
 type ChildProcessEventStore = { [event in ChildProcessEvents]?: unknown };
-type ChildProcessStdio = 'stdout' | 'stderr';
-type ChildProcessStdioDataEventsStore = {
-  [event in ChildProcessStdio]?: unknown;
-};
 
 const childProcessEventStore: ChildProcessEventStore = {};
-const childProcessStdioDataEventStore: ChildProcessStdioDataEventsStore = {};
 
 function emitChildProcessEvent(
   eventName: ChildProcessEvents,
@@ -20,14 +16,8 @@ function emitChildProcessEvent(
 ): void {
   childProcessEventStore[eventName] = value;
 }
-function emitChildProcessStdioData(
-  stdio: 'stdout' | 'stderr',
-  value: unknown
-): void {
-  childProcessStdioDataEventStore[stdio] = value;
-}
 
-describe('Preview Executor', () => {
+describe('Check Executor', () => {
   let context: ExecutorContext;
 
   beforeEach(() => {
@@ -52,53 +42,36 @@ describe('Preview Executor', () => {
           cb(childProcessEventStore[eventName]);
         }
       },
-      stdout: {
-        on: (_, cb) => {
-          if (childProcessStdioDataEventStore['stdout']) {
-            cb(childProcessStdioDataEventStore['stdout']);
-          }
-        },
-      },
-      stderr: {
-        on: (_, cb) => {
-          if (childProcessStdioDataEventStore['stderr']) {
-            cb(childProcessStdioDataEventStore['stderr']);
-          }
-        },
-      },
     }));
 
-    emitChildProcessEvent('exit', 0);
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    jest.spyOn(fsExtra, 'removeSync').mockImplementation(() => {});
+    jest.clearAllMocks();
   });
 
   test('should run successfully', async () => {
-    emitChildProcessStdioData('stdout', 'Preview server started in');
+    emitChildProcessEvent('exit', 0);
 
-    const resultIterator = previewExecutor({}, context);
+    const result = await checkExecutor({}, context);
 
-    const result = (await resultIterator.next()).value;
     expect(result.success).toBe(true);
     expect(fork).toHaveBeenCalled();
   });
 
   test('should fail if exit code is different than 0', async () => {
     emitChildProcessEvent('exit', 1);
-    emitChildProcessStdioData('stdout', '');
 
-    const resultIterator = previewExecutor({}, context);
+    const result = await checkExecutor({}, context);
 
-    const result = (await resultIterator.next()).value;
     expect(result.success).toBe(false);
     expect(fork).toHaveBeenCalled();
   });
 
   test('should fail when the forked process errors', async () => {
-    emitChildProcessEvent('error', new Error('Preview failed!'));
-    emitChildProcessStdioData('stdout', '');
+    emitChildProcessEvent('error', new Error('Check failed!'));
 
-    const resultIterator = previewExecutor({}, context);
+    const result = await checkExecutor({}, context);
 
-    const result = (await resultIterator.next()).value;
     expect(result.success).toBe(false);
     expect(fork).toHaveBeenCalled();
   });

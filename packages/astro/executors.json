@@ -6,6 +6,11 @@
       "schema": "./src/executors/build/schema.json",
       "description": "Builds an Astro application for production."
     },
+    "check": {
+      "implementation": "./src/executors/check/executor",
+      "schema": "./src/executors/check/schema.json",
+      "description": "Runs diagnostics (such as type-checking) against a project."
+    },
     "dev": {
       "implementation": "./src/executors/dev/executor",
       "schema": "./src/executors/dev/schema.json",

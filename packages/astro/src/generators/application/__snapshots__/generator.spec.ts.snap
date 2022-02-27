@@ -14,6 +14,9 @@ Object {
         "dist/apps/app1",
       ],
     },
+    "check": Object {
+      "executor": "@nxtensions/astro:check",
+    },
     "dev": Object {
       "executor": "@nxtensions/astro:dev",
       "options": Object {},

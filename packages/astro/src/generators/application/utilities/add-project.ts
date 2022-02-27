@@ -32,6 +32,9 @@ export function addProject(
           executor: '@nxtensions/astro:preview',
           options: {},
         },
+        check: {
+          executor: '@nxtensions/astro:check',
+        },
       },
       tags: options.tags,
     },

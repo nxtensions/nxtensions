@@ -12,7 +12,7 @@ export function addProject(
       root: options.projectRoot,
       sourceRoot: options.projectRoot,
       projectType: 'library',
-      targets: {},
+      targets: { check: { executor: '@nxtensions/astro:check' } },
       tags: options.tags,
     },
     options.standaloneConfig

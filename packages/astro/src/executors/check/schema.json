@@ -1,0 +1,10 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "NxAstroCheckExecutor",
+  "cli": "nx",
+  "title": "Astro check executor",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": false,
+  "required": []
+}

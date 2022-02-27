@@ -1,5 +1,12 @@
 {
-  "generators": {},
+  "generators": {
+    "add-check-target": {
+      "cli": "nx",
+      "version": "1.4.0-beta.0",
+      "description": "Adds a check target to Astro projects.",
+      "factory": "./src/migrations/update-1-4-0/add-check-target"
+    }
+  },
   "packageJsonUpdates": {
     "1.4.0": {
       "version": "1.4.0-beta.0",

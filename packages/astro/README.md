@@ -11,7 +11,7 @@
 - Generators for scaffolding Astro applications and libraries.
 - Generators for scaffolding Astro components.
 - Cypress tests for Astro applications.
-- Executors to run builds, start the Astro development server and start a local static file server to preview built applications.
+- Executors to run builds, start the Astro development server, start a local static file server to preview built applications, and run diagnostic checks against projects.
 - Nx project graph plugin to visualize Astro project dependencies.
 
 ## Prerequisites
@@ -92,6 +92,16 @@ nx dev my-app
 ```
 
 For more information on the local static file server for Astro applications see https://docs.astro.build/en/reference/cli-reference/#astro-preview.
+
+## Check
+
+To run diagnostic checks (such as type-checking) against a project run:
+
+```bash
+nx check my-app
+```
+
+For more information see https://docs.astro.build/en/reference/cli-reference/#astro-check.
 
 ## Project graph
 

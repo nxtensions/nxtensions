@@ -6,6 +6,10 @@ Object {
   "root": "libs/lib1",
   "sourceRoot": "libs/lib1",
   "tags": Array [],
-  "targets": Object {},
+  "targets": Object {
+    "check": Object {
+      "executor": "@nxtensions/astro:check",
+    },
+  },
 }
 `;

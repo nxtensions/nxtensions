@@ -93,7 +93,7 @@ describe('Dev Executor', () => {
   });
 
   test('should fail when the forked process errors', async () => {
-    emitChildProcessEvent('error', new Error('Build failed!'));
+    emitChildProcessEvent('error', new Error('Dev server failed!'));
     emitChildProcessStdioData('stdout', '');
 
     const resultIterator = devExecutor({}, context);
