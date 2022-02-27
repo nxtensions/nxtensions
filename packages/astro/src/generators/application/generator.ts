@@ -6,6 +6,7 @@ import {
   addProject,
   installRenderers,
   normalizeOptions,
+  setDefaultProject,
   setupE2ETests,
 } from './utilities';
 
@@ -23,6 +24,7 @@ export async function applicationGenerator(
   tasks.push(initTask);
 
   addProject(tree, options);
+  setDefaultProject(tree, options.projectName);
   addFiles(tree, options);
 
   const e2eTask = await setupE2ETests(tree, options);

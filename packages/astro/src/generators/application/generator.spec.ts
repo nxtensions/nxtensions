@@ -3,7 +3,9 @@ import {
   getProjects,
   readJson,
   readProjectConfiguration,
+  readWorkspaceConfiguration,
   Tree,
+  updateWorkspaceConfiguration,
 } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { applicationGenerator } from './generator';
@@ -22,6 +24,24 @@ describe('application generator', () => {
 
     const config = readProjectConfiguration(tree, options.name);
     expect(config).toMatchSnapshot();
+  });
+
+  test('should not set the default project when it is already set', async () => {
+    let config = readWorkspaceConfiguration(tree);
+    config.defaultProject = 'other-app';
+    updateWorkspaceConfiguration(tree, config);
+
+    await applicationGenerator(tree, options);
+
+    config = readWorkspaceConfiguration(tree);
+    expect(config.defaultProject).toBe('other-app');
+  });
+
+  test('should set the default project when it is not set', async () => {
+    await applicationGenerator(tree, options);
+
+    const config = readWorkspaceConfiguration(tree);
+    expect(config.defaultProject).toBe(options.name);
   });
 
   test('should generate files', async () => {
