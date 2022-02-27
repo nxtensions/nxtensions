@@ -1,7 +1,7 @@
 jest.mock('@nrwl/cypress');
 
 import { cypressInitGenerator } from '@nrwl/cypress';
-import { readJson, Tree } from '@nrwl/devkit';
+import { readJson, readWorkspaceConfiguration, Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { initGenerator } from './generator';
 import { astroVersion } from './versions';
@@ -17,8 +17,17 @@ describe('init generator', () => {
   test('should add project graph plugin', () => {
     initGenerator(tree, {});
 
-    const { plugins } = readJson(tree, 'nx.json');
+    const { plugins } = readWorkspaceConfiguration(tree);
     expect(plugins).toContain('@nxtensions/astro');
+  });
+
+  test('should add the check target to the cacheable operations', async () => {
+    initGenerator(tree, {});
+
+    const workspace = readWorkspaceConfiguration(tree);
+    expect(
+      workspace.tasksRunnerOptions.default.options.cacheableOperations
+    ).toContain('check');
   });
 
   test('should correct node_modules entry in .gitignore file when only targeting root', () => {

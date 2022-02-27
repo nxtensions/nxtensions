@@ -1,7 +1,11 @@
+import * as devkit from '@nrwl/devkit';
 import {
   addProjectConfiguration,
   readProjectConfiguration,
+  readWorkspaceConfiguration,
+  removeProjectConfiguration,
   Tree,
+  updateWorkspaceConfiguration,
 } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import addCheckTarget from './add-check-target';
@@ -49,22 +53,77 @@ describe('add-check-target migration', () => {
     jest.clearAllMocks();
   });
 
+  test('should do nothing when there are no astro projects', async () => {
+    jest.spyOn(devkit, 'updateProjectConfiguration');
+    removeProjectConfiguration(tree, 'astro-app');
+    removeProjectConfiguration(tree, 'astro-lib');
+
+    await addCheckTarget(tree);
+
+    expect(devkit.updateProjectConfiguration).not.toHaveBeenCalled();
+    let project = readProjectConfiguration(tree, 'non-astro-app');
+    expect(project.targets.check).toBeFalsy();
+    project = readProjectConfiguration(tree, 'non-astro-lib');
+    expect(project.targets.check).toBeFalsy();
+  });
+
   test('should add the check target to Astro projects', async () => {
     await addCheckTarget(tree);
 
     let project = readProjectConfiguration(tree, 'astro-app');
     expect(project.targets.check).toEqual({
       executor: '@nxtensions/astro:check',
-      options: {},
     });
     project = readProjectConfiguration(tree, 'astro-lib');
     expect(project.targets.check).toEqual({
       executor: '@nxtensions/astro:check',
-      options: {},
     });
     project = readProjectConfiguration(tree, 'non-astro-app');
     expect(project.targets.check).toBeFalsy();
     project = readProjectConfiguration(tree, 'non-astro-lib');
     expect(project.targets.check).toBeFalsy();
+  });
+
+  test('should add the check target to the cacheable operations', async () => {
+    await addCheckTarget(tree);
+
+    const workspace = readWorkspaceConfiguration(tree);
+    expect(
+      workspace.tasksRunnerOptions.default.options.cacheableOperations
+    ).toContain('check');
+  });
+
+  test('should add the check target to multiple runners', async () => {
+    let workspace = readWorkspaceConfiguration(tree);
+    workspace.tasksRunnerOptions.runner2 = {
+      runner: 'some-awesome-runner',
+      options: { cacheableOperations: ['build', 'lint', 'test', 'e2e'] },
+    };
+    updateWorkspaceConfiguration(tree, workspace);
+
+    await addCheckTarget(tree);
+
+    workspace = readWorkspaceConfiguration(tree);
+    expect(
+      workspace.tasksRunnerOptions.default.options.cacheableOperations
+    ).toContain('check');
+    expect(
+      workspace.tasksRunnerOptions.runner2.options.cacheableOperations
+    ).toContain('check');
+  });
+
+  test('should not add the check target twice when it is already in the cacheable operations', async () => {
+    let workspace = readWorkspaceConfiguration(tree);
+    workspace.tasksRunnerOptions.default.options.cacheableOperations.push(
+      'check'
+    );
+    updateWorkspaceConfiguration(tree, workspace);
+
+    await addCheckTarget(tree);
+
+    workspace = readWorkspaceConfiguration(tree);
+    expect(
+      workspace.tasksRunnerOptions.default.options.cacheableOperations
+    ).toStrictEqual(['build', 'lint', 'test', 'e2e', 'check']);
   });
 });

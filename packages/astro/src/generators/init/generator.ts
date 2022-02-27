@@ -9,6 +9,7 @@ import {
   addProjectGraphPlugin,
   updateGitignore,
   addVSCodeRecommendedExtensions,
+  addCheckToCacheableOperations,
 } from './utilities';
 import { astroVersion } from './versions';
 
@@ -17,6 +18,7 @@ export function initGenerator(
   options: GeneratorOptions
 ): GeneratorCallback {
   addProjectGraphPlugin(tree);
+  addCheckToCacheableOperations(tree);
   updateGitignore(tree);
   addVSCodeRecommendedExtensions(tree);
 

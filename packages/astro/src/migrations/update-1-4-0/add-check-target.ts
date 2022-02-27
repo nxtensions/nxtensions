@@ -2,31 +2,55 @@ import {
   formatFiles,
   getProjects,
   ProjectConfiguration,
+  readWorkspaceConfiguration,
   Tree,
   updateProjectConfiguration,
+  updateWorkspaceConfiguration,
 } from '@nrwl/devkit';
 import { extname, join } from 'path';
 
 export default async function (tree: Tree) {
   const projects = getProjects(tree);
 
+  let hasAstroProject = false;
   for (const [projectName, project] of projects) {
     if (!isAstroProject(tree, project)) {
       continue;
     }
 
+    hasAstroProject = true;
+
     project.targets = {
       ...project.targets,
-      check: {
-        executor: '@nxtensions/astro:check',
-        options: {},
-      },
+      check: { executor: '@nxtensions/astro:check' },
     };
 
     updateProjectConfiguration(tree, projectName, project);
   }
 
-  await formatFiles(tree);
+  if (hasAstroProject) {
+    addCacheableOperation(tree);
+    await formatFiles(tree);
+  }
+}
+
+function addCacheableOperation(tree: Tree) {
+  const workspace = readWorkspaceConfiguration(tree);
+  if (!workspace.tasksRunnerOptions) {
+    return;
+  }
+
+  Object.keys(workspace.tasksRunnerOptions).forEach((taskRunnerName) => {
+    const taskRunner = workspace.tasksRunnerOptions[taskRunnerName];
+    taskRunner.options = {
+      ...(taskRunner.options ?? {}),
+      cacheableOperations: Array.from(
+        new Set([...(taskRunner.options?.cacheableOperations ?? []), 'check'])
+      ),
+    };
+  });
+
+  updateWorkspaceConfiguration(tree, workspace);
 }
 
 function isAstroProject(tree: Tree, project: ProjectConfiguration): boolean {
