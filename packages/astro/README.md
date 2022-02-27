@@ -37,6 +37,8 @@ To update the package version and run any migrations included in it, use the `nx
 nx migrate @nxtensions/astro@latest
 ```
 
+Then follow the intructions provided when the above command finishes running.
+
 For more information on the `nx migrate` command see https://nx.dev/cli/migrate.
 
 ## Generate an application
