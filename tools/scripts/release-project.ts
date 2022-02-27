@@ -5,7 +5,7 @@ import {
 import { execSync } from 'child_process';
 import { existsSync } from 'fs';
 import { join } from 'path';
-import * as standardVersion from 'standard-version';
+import standardVersion from 'standard-version';
 import { execSyncOrDryRun } from './utils';
 
 export interface ReleaseProjectOptions {
