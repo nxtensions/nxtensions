@@ -1,4 +1,8 @@
 jest.mock('child_process');
+jest.mock('fs-extra', () => ({
+  ...jest.requireActual<object>('fs-extra'),
+  removeSync: jest.fn(),
+}));
 
 import { ExecutorContext } from '@nrwl/devkit';
 import { fork } from 'child_process';
@@ -44,8 +48,6 @@ describe('Build Executor', () => {
       },
     }));
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    jest.spyOn(fsExtra, 'removeSync').mockImplementation(() => {});
     jest.clearAllMocks();
   });
 

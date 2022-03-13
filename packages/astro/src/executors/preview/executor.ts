@@ -1,6 +1,7 @@
 import { ExecutorContext, logger } from '@nrwl/devkit';
 import { ChildProcess, fork } from 'child_process';
 import { join } from 'path';
+import stripAnsi from 'strip-ansi';
 import { PreviewExecutorOptions } from './schema';
 
 let childProcess: ChildProcess;
@@ -58,10 +59,12 @@ function runCliPreview(
     process.on('exit', () => childProcess.kill());
     process.on('SIGTERM', () => childProcess.kill());
 
+    const serverStartedRegex =
+      /astro +v\d{1,3}.\d{1,3}.\d{1,3} started in \d+ms/;
     childProcess.stdout.on('data', (data) => {
       process.stdout.write(data);
 
-      if (data.toString().includes('Preview server started in')) {
+      if (serverStartedRegex.test(stripAnsi(data.toString()))) {
         resolve(true);
       }
     });

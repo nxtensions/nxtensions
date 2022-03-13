@@ -19,14 +19,18 @@
       "description": "Enable SSR compilation.",
       "default": false
     },
-    "experimentalStaticBuild": {
-      "type": "boolean",
-      "description": "Enable a more performant build that expects assets to be defined statically.",
-      "default": false
+    "host": {
+      "description": "Expose server on network.",
+      "oneOf": [{ "type": "boolean" }, { "type": "string" }]
     },
     "hostname": {
       "type": "string",
       "description": "Server hostname to use."
+    },
+    "legacyBuild": {
+      "type": "boolean",
+      "description": "Use the build strategy prior to v0.24.0.",
+      "default": false
     },
     "port": {
       "type": "integer",

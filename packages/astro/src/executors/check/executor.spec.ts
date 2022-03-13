@@ -2,7 +2,6 @@ jest.mock('child_process');
 
 import { ExecutorContext } from '@nrwl/devkit';
 import { fork } from 'child_process';
-import * as fsExtra from 'fs-extra';
 import { checkExecutor } from './executor';
 
 type ChildProcessEvents = 'error' | 'exit';
@@ -44,8 +43,6 @@ describe('Check Executor', () => {
       },
     }));
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    jest.spyOn(fsExtra, 'removeSync').mockImplementation(() => {});
     jest.clearAllMocks();
   });
 

@@ -30,13 +30,15 @@
     "@nrwl/devkit": "^13.0.0",
     "@nrwl/tao": "^13.0.0",
     "@nrwl/workspace": "^13.0.0",
-    "astro": "~0.23.0",
+    "astro": "~0.24.0",
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "@astrojs/parser": "~0.22.1",
+    "@astrojs/parser": "~0.22.2",
     "@nrwl/cypress": "^13.0.0",
     "@nrwl/linter": "^13.0.0",
-    "fs-extra": "^10.0.0"
+    "@phenomnomnominal/tsquery": "~4.2.0",
+    "fs-extra": "^10.0.0",
+    "strip-ansi": "~6.0.1"
   }
 }

@@ -3,7 +3,7 @@ export interface BuildExecutorOptions {
   drafts?: boolean;
   deleteOutputPath?: boolean;
   experimentalSsr?: boolean;
-  experimentalStaticBuild?: boolean;
+  legacyBuild?: boolean;
   silent?: boolean;
   sitemap?: boolean;
   verbose?: boolean;

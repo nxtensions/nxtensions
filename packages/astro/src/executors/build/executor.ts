@@ -92,8 +92,8 @@ function getAstroBuildArgs(options: BuildExecutorOptions): string[] {
   if (options.experimentalSsr) {
     args.push('--experimental-ssr');
   }
-  if (options.experimentalStaticBuild) {
-    args.push('--experimental-static-build');
+  if (options.legacyBuild) {
+    args.push('--legacy-build');
   }
   if (options.silent) {
     args.push('--silent');

@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`remove-experimental-static-build migration astro configuration should delete the experimentalStaticBuild option when set to true 1`] = `
+"export default /** @type {import('astro').AstroUserConfig} */ ({
+          buildOptions: {
+            
+            drafts: true,
+          },
+        });"
+`;
+
+exports[`remove-experimental-static-build migration astro configuration should do nothing when experimentalStaticBuild is contained in a comment 1`] = `
+"export default /** @type {import('astro').AstroUserConfig} */ ({
+          buildOptions: {
+            // experimentalStaticBuild: true,
+            drafts: true,
+          },
+        });"
+`;
+
+exports[`remove-experimental-static-build migration astro configuration should do nothing when experimentalStaticBuild is not part of buildOptions (invalid config) 1`] = `
+"export default /** @type {import('astro').AstroUserConfig} */ ({
+          buildOptions: {
+            drafts: true,
+          },
+          experimentalStaticBuild: true,
+        });"
+`;
+
+exports[`remove-experimental-static-build migration astro configuration should do nothing when experimentalStaticBuild is not set 1`] = `
+"export default /** @type {import('astro').AstroUserConfig} */ ({
+          buildOptions: {
+            drafts: true,
+          },
+        });"
+`;
+
+exports[`remove-experimental-static-build migration astro configuration should handle "astro.config.cjs" 1`] = `
+"export default /** @type {import('astro').AstroUserConfig} */ ({
+          buildOptions: {
+            
+            drafts: true,
+          },
+        });"
+`;
+
+exports[`remove-experimental-static-build migration astro configuration should handle "astro.config.js" 1`] = `
+"export default /** @type {import('astro').AstroUserConfig} */ ({
+          buildOptions: {
+            
+            drafts: true,
+          },
+        });"
+`;
+
+exports[`remove-experimental-static-build migration astro configuration should handle "astro.config.mjs" 1`] = `
+"export default /** @type {import('astro').AstroUserConfig} */ ({
+          buildOptions: {
+            
+            drafts: true,
+          },
+        });"
+`;
+
+exports[`remove-experimental-static-build migration astro configuration should handle "astro.config.ts" 1`] = `
+"export default /** @type {import('astro').AstroUserConfig} */ ({
+          buildOptions: {
+            
+            drafts: true,
+          },
+        });"
+`;
+
+exports[`remove-experimental-static-build migration astro configuration should set legacyBuild to true when the experimentalStaticBuild option is set to false 1`] = `
+"export default /** @type {import('astro').AstroUserConfig} */ ({
+          buildOptions: {
+            legacyBuild: true,
+            drafts: true,
+          },
+        });"
+`;

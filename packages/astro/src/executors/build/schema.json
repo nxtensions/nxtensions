@@ -25,9 +25,9 @@
       "description": "Enable SSR compilation.",
       "default": false
     },
-    "experimentalStaticBuild": {
+    "legacyBuild": {
       "type": "boolean",
-      "description": "Enable a more performant build that expects assets to be defined statically.",
+      "description": "Use the build strategy prior to v0.24.0.",
       "default": false
     },
     "silent": {

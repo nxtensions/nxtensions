@@ -27,6 +27,13 @@ function emitChildProcessStdioData(
   childProcessStdioDataEventStore[stdio] = value;
 }
 
+const astroServerStartedTerminalOutput = `
+  🚀 [42m[30m astro [39m[49m [32mv0.24.0[39m [2mstarted in 476ms[22m
+
+  [2m┃[22m Local    [1m[36mhttp://localhost:3000/[39m[22m
+  [2m┃[22m Network  [2muse --host to expose[22m
+`;
+
 describe('Dev Executor', () => {
   let context: ExecutorContext;
 
@@ -72,7 +79,7 @@ describe('Dev Executor', () => {
   });
 
   test('should run successfully', async () => {
-    emitChildProcessStdioData('stdout', 'Server started');
+    emitChildProcessStdioData('stdout', astroServerStartedTerminalOutput);
 
     const resultIterator = devExecutor({}, context);
 
@@ -105,7 +112,7 @@ describe('Dev Executor', () => {
 
   describe('--port', () => {
     test('should default to port 3000 when no port is provided', async () => {
-      emitChildProcessStdioData('stdout', 'Server started');
+      emitChildProcessStdioData('stdout', astroServerStartedTerminalOutput);
 
       const resultIterator = devExecutor({}, context);
 
@@ -115,7 +122,7 @@ describe('Dev Executor', () => {
     });
 
     test('should use provided port', async () => {
-      emitChildProcessStdioData('stdout', 'Server started');
+      emitChildProcessStdioData('stdout', astroServerStartedTerminalOutput);
 
       const resultIterator = devExecutor({ port: 4200 }, context);
 

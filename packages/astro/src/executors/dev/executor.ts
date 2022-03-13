@@ -1,6 +1,7 @@
 import { ExecutorContext, logger } from '@nrwl/devkit';
 import { ChildProcess, fork } from 'child_process';
 import { join } from 'path';
+import stripAnsi from 'strip-ansi';
 import { DevExecutorOptions } from './schema';
 
 let childProcess: ChildProcess;
@@ -58,10 +59,12 @@ function runCliDev(
     process.on('exit', () => childProcess.kill());
     process.on('SIGTERM', () => childProcess.kill());
 
+    const serverStartedRegex =
+      /astro +v\d{1,3}.\d{1,3}.\d{1,3} started in \d+ms/;
     childProcess.stdout.on('data', (data) => {
       process.stdout.write(data);
 
-      if (data.toString().includes('Server started')) {
+      if (serverStartedRegex.test(stripAnsi(data.toString()))) {
         resolve(true);
       }
     });
@@ -96,11 +99,14 @@ function getAstroDevArgs(options: DevExecutorOptions): string[] {
   if (options.experimentalSsr) {
     args.push('--experimental-ssr');
   }
-  if (options.experimentalStaticBuild) {
-    args.push('--experimental-static-build');
+  if (options.host !== undefined) {
+    args.push('--host', options.host.toString());
   }
   if (options.hostname) {
     args.push('--hostname', options.hostname);
+  }
+  if (options.legacyBuild) {
+    args.push('--legacy-build');
   }
   if (options.port) {
     args.push('--port', options.port.toString());
