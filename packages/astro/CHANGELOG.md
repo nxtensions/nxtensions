@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v2.0.0...@nxtensions/astro@v2.1.0) (2022-03-13)
+
+### Features
+
+- **astro:** add support for astro v0.24.0 ([5f534ef](https://github.com/nxtensions/nxtensions/commit/5f534ef1c0d7d8b23965c6d1cca41147ba7d2b4a))
+
+### Bug Fixes
+
+- **astro:** add missing "site" option to the build executor ([29ff5cf](https://github.com/nxtensions/nxtensions/commit/29ff5cf641c86157445b8005fa944465f77a76fc))
+
 ## [2.0.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v1.3.2...@nxtensions/astro@v2.0.0) (2022-02-27)
 
 ### ⚠ BREAKING CHANGES
