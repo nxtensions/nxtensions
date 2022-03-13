@@ -98,6 +98,9 @@ function getAstroBuildArgs(options: BuildExecutorOptions): string[] {
   if (options.silent) {
     args.push('--silent');
   }
+  if (options.site) {
+    args.push('site', options.site);
+  }
   if (options.sitemap === false) {
     args.push('--no-sitemap');
   }

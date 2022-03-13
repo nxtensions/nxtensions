@@ -5,6 +5,7 @@ export interface BuildExecutorOptions {
   experimentalSsr?: boolean;
   legacyBuild?: boolean;
   silent?: boolean;
+  site?: string;
   sitemap?: boolean;
   verbose?: boolean;
 }

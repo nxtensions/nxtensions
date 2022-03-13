@@ -35,6 +35,10 @@
       "description": "Disable logging.",
       "default": false
     },
+    "site": {
+      "type": "string",
+      "description": "URL of the deployed application."
+    },
     "sitemap": {
       "type": "boolean",
       "description": "Enable sitemap generation.",
