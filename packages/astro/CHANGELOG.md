@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.1](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v2.1.0...@nxtensions/astro@v2.1.1) (2022-03-16)
+
+### Bug Fixes
+
+- **astro:** fix component generator schema ([#43](https://github.com/nxtensions/nxtensions/issues/43)) ([328a3e1](https://github.com/nxtensions/nxtensions/commit/328a3e12ce9a5c05928f23f1115f2d886eab2019))
+
 ## [2.1.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v2.0.0...@nxtensions/astro@v2.1.0) (2022-03-13)
 
 ### Features

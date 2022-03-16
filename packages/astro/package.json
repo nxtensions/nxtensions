@@ -1,6 +1,6 @@
 {
   "name": "@nxtensions/astro",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Nx plugin adding first-class support for Astro.",
   "homepage": "https://github.com/nxtensions/nxtensions/tree/main/packages/astro#readme",
   "repository": {
