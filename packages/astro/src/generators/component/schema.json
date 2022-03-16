@@ -35,7 +35,6 @@
       "x-prompt": {
         "message": "Which type of style do you want to use?",
         "type": "list",
-        "multiselect": true,
         "items": [
           {
             "label": "CSS",
