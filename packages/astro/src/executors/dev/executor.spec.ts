@@ -27,6 +27,8 @@ function emitChildProcessStdioData(
   childProcessStdioDataEventStore[stdio] = value;
 }
 
+const oldAstroServerStartedTerminalOutput =
+  '01:49 PM [astro] Server started                               64ms';
 const astroServerStartedTerminalOutput = `
   🚀 [42m[30m astro [39m[49m [32mv0.24.0[39m [2mstarted in 476ms[22m
 
@@ -80,6 +82,16 @@ describe('Dev Executor', () => {
 
   test('should run successfully', async () => {
     emitChildProcessStdioData('stdout', astroServerStartedTerminalOutput);
+
+    const resultIterator = devExecutor({}, context);
+
+    const result = (await resultIterator.next()).value;
+    expect(result.success).toBe(true);
+    expect(fork).toHaveBeenCalled();
+  });
+
+  test('should support the old Astro CLI output', async () => {
+    emitChildProcessStdioData('stdout', oldAstroServerStartedTerminalOutput);
 
     const resultIterator = devExecutor({}, context);
 
