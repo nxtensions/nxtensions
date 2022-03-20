@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.2](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v2.1.1...@nxtensions/astro@v2.1.2) (2022-03-20)
+
+### Bug Fixes
+
+- **astro:** support old cli terminal output ([#44](https://github.com/nxtensions/nxtensions/issues/44)) ([66fb7b9](https://github.com/nxtensions/nxtensions/commit/66fb7b9d9f252d0be1521f7e9a52047802f99d7d))
+
 ### [2.1.1](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v2.1.0...@nxtensions/astro@v2.1.1) (2022-03-16)
 
 ### Bug Fixes
