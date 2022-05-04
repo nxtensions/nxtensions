@@ -1,5 +1,4 @@
 {
-  "root": "packages/astro",
   "sourceRoot": "packages/astro/src",
   "projectType": "library",
   "targets": {
@@ -14,12 +13,12 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/astro"],
       "options": {
-        "jestConfig": "packages/astro/jest.config.js",
+        "jestConfig": "packages/astro/jest.config.ts",
         "passWithNoTests": true
       }
     },
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/astro",

@@ -1,5 +1,4 @@
 {
-  "root": "packages/tsconfig-paths-snowpack-plugin",
   "sourceRoot": "packages/tsconfig-paths-snowpack-plugin/src",
   "projectType": "library",
   "targets": {
@@ -11,7 +10,7 @@
       }
     },
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/tsconfig-paths-snowpack-plugin",
