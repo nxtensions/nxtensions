@@ -1,7 +1,4 @@
-import {
-  ProjectConfiguration,
-  Workspaces,
-} from '@nrwl/tao/src/shared/workspace';
+import { ProjectConfiguration, Workspaces } from '@nrwl/devkit';
 import { execSync } from 'child_process';
 import { existsSync } from 'fs';
 import { join } from 'path';
