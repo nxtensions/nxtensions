@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file. See [standa
 
 ## [2.2.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v2.1.2...@nxtensions/astro@v2.2.0) (2022-05-17)
 
+### Features
+
+- **astro:** support Nx 14.x.x ([#47](https://github.com/nxtensions/nxtensions/issues/47)) ([60070ab](https://github.com/nxtensions/nxtensions/commit/60070abc0565aec18cac376d1f593e450647e5fa))
+
 ### [2.1.2](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v2.1.1...@nxtensions/astro@v2.1.2) (2022-03-20)
 
 ### Bug Fixes
