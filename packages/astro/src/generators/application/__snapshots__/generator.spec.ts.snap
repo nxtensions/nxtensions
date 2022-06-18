@@ -2,6 +2,7 @@
 
 exports[`application generator should add project configuration 1`] = `
 Object {
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "root": "apps/app1",
   "sourceRoot": "apps/app1/src",
