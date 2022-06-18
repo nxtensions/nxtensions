@@ -1,4 +1,5 @@
 {
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "npmScope": "nxtensions",
   "affected": {
     "defaultBase": "main"
@@ -20,19 +21,13 @@
       }
     }
   },
-  "targetDependencies": {
-    "build": [
-      {
-        "target": "build",
-        "projects": "dependencies"
-      }
-    ]
+  "targetDefaults": {
+    "build": {
+      "dependsOn": ["^build"]
+    }
   },
   "workspaceLayout": {
     "appsDir": "",
     "libsDir": "packages"
-  },
-  "cli": {
-    "defaultCollection": "@nrwl/workspace"
   }
 }
