@@ -1,4 +1,3 @@
-import { parse } from '@astrojs/parser';
 import {
   FileData,
   ProjectFileMap,
@@ -13,10 +12,13 @@ import { readFileSync } from 'fs';
 import { extname, join } from 'path';
 import * as ts from 'typescript';
 
-export function processProjectGraph(
+let astroCompiler: typeof import('@astrojs/compiler');
+let astroCompilerUtils: typeof import('@astrojs/compiler/utils');
+
+export async function processProjectGraph(
   graph: ProjectGraph,
   context: ProjectGraphProcessorContext
-): ProjectGraph {
+): Promise<ProjectGraph> {
   const filesToProcess = getAstroFilesToProcess(context.filesToProcess);
 
   // return the unmodified project graph when there are no Astro files to process
@@ -24,49 +26,67 @@ export function processProjectGraph(
     return graph;
   }
 
-  const builder = new ProjectGraphBuilder(graph);
-
-  const importLocator = new TypeScriptImportLocator();
-  const targetProjectLocator = new TargetProjectLocator(
-    graph.nodes,
-    graph.externalNodes
-  );
-
-  filesToProcess.forEach(({ project, files }) => {
-    files.forEach((file) => {
+  let builder: ProjectGraphBuilder;
+  let importLocator: TypeScriptImportLocator;
+  let targetProjectLocator: TargetProjectLocator;
+  let wereDependenciesAdded = false;
+  for (const { project, files } of filesToProcess) {
+    for (const file of files) {
       const fileContent = readFileSync(join(workspaceRoot, file.file), 'utf-8');
 
+      astroCompiler ??= await new Function(
+        `return import('@astrojs/compiler');`
+      )();
+      astroCompilerUtils ??= await new Function(
+        `return import('@astrojs/compiler/utils');`
+      )();
+
       // parse the file to get the AST
-      const { module } = parse(fileContent);
+      const { ast } = await astroCompiler.parse(fileContent, {
+        position: false,
+      });
 
-      // nothing to do when module is not defined
-      if (!module) {
-        return;
-      }
+      astroCompilerUtils.walk(ast, (node) => {
+        if (!astroCompilerUtils.is.frontmatter(node)) {
+          return;
+        }
 
-      const sourceFile = ts.createSourceFile(
-        file.file,
-        module.content,
-        ts.ScriptTarget.Latest,
-        true
-      );
-      // locate imports
-      importLocator.fromNode(file.file, sourceFile, (importExpr, filePath) => {
-        // locate project containing the import
-        const target = targetProjectLocator.findProjectWithImport(
-          importExpr,
-          filePath
+        builder ??= new ProjectGraphBuilder(graph);
+        importLocator ??= new TypeScriptImportLocator();
+        targetProjectLocator ??= new TargetProjectLocator(
+          graph.nodes,
+          graph.externalNodes
         );
 
-        // add the explicit dependency when the target project was found
-        if (target) {
-          builder.addExplicitDependency(project, filePath, target);
-        }
-      });
-    });
-  });
+        const sourceFile = ts.createSourceFile(
+          file.file,
+          node.value,
+          ts.ScriptTarget.Latest,
+          true
+        );
+        // locate imports
+        importLocator.fromNode(
+          file.file,
+          sourceFile,
+          (importExpr, filePath) => {
+            // locate project containing the import
+            const target = targetProjectLocator.findProjectWithImport(
+              importExpr,
+              filePath
+            );
 
-  return builder.getUpdatedProjectGraph();
+            // add the explicit dependency when the target project was found
+            if (target) {
+              builder.addExplicitDependency(project, filePath, target);
+              wereDependenciesAdded = true;
+            }
+          }
+        );
+      });
+    }
+  }
+
+  return wereDependenciesAdded ? builder.getUpdatedProjectGraph() : graph;
 }
 
 function getAstroFilesToProcess(filesToProcess: ProjectFileMap): {

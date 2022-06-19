@@ -1,4 +1,0 @@
-{
-  "extends": "<%= offsetFromRoot %>tsconfig.base.json",
-  "moduleResolution": "node"
-}

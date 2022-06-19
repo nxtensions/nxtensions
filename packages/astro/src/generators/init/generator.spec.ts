@@ -1,7 +1,12 @@
 jest.mock('@nrwl/cypress');
 
 import { cypressInitGenerator } from '@nrwl/cypress';
-import { readJson, readWorkspaceConfiguration, Tree } from '@nrwl/devkit';
+import {
+  readJson,
+  readWorkspaceConfiguration,
+  Tree,
+  updateJson,
+} from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { initGenerator } from './generator';
 import { astroVersion } from './versions';
@@ -110,6 +115,33 @@ node_modules
 
     const { devDependencies } = readJson(tree, 'package.json');
     expect(devDependencies.astro).toBe(astroVersion);
+  });
+
+  test('should generate script to patch the nx cli', () => {
+    initGenerator(tree, {});
+
+    expect(tree.exists('tools/scripts/patch-nx-cli.js')).toBe(true);
+  });
+
+  test('should add a postinstall script to patch the nx cli', () => {
+    initGenerator(tree, {});
+
+    const { scripts } = readJson(tree, 'package.json');
+    expect(scripts.postinstall).toBe('node ./tools/scripts/patch-nx-cli.js');
+  });
+
+  test('should update the postinstall script to patch the nx cli', () => {
+    updateJson(tree, 'package.json', (json) => ({
+      ...json,
+      scripts: { postinstall: 'node ./some-important-script.js' },
+    }));
+
+    initGenerator(tree, {});
+
+    const { scripts } = readJson(tree, 'package.json');
+    expect(scripts.postinstall).toBe(
+      'node ./some-important-script.js && node ./tools/scripts/patch-nx-cli.js'
+    );
   });
 
   describe('--addCypressTests', () => {

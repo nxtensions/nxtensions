@@ -1,0 +1,9 @@
+import { defineConfig } from "astro/config";<% if (integrations.length > 0) { %>
+<%- integrations
+  .map(({ name, packageName }) =>`import ${name} from '${packageName}';`)
+  .join('\n') %><% } %>
+
+export default defineConfig({
+  outDir: '<%= offsetFromRoot %>dist/<%= projectRoot %>',<% if (integrations.length > 0) { %>
+  integrations: [<%= integrations.map(({ name }) => `${name}()`) %>],<% } %>
+});

@@ -4,7 +4,7 @@ import { GeneratorOptions } from './schema';
 import {
   addFiles,
   addProject,
-  installRenderers,
+  addIntegrationsPackages,
   normalizeOptions,
   setDefaultProject,
   setupE2ETests,
@@ -14,7 +14,7 @@ export async function applicationGenerator(
   tree: Tree,
   rawOptions: GeneratorOptions
 ): Promise<GeneratorCallback | void> {
-  const options = normalizeOptions(tree, rawOptions);
+  const options = await normalizeOptions(tree, rawOptions);
 
   const initTask = initGenerator(tree, {
     addCypressTests: options.addCypressTests,
@@ -32,9 +32,9 @@ export async function applicationGenerator(
     tasks.push(e2eTask);
   }
 
-  const renderersTask = installRenderers(tree, options.renderers);
-  if (renderersTask) {
-    tasks.push(renderersTask);
+  const integrationsTask = addIntegrationsPackages(tree, options.integrations);
+  if (integrationsTask) {
+    tasks.push(integrationsTask);
   }
 
   await formatFiles(tree);

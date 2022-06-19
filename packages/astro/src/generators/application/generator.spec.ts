@@ -1,3 +1,5 @@
+jest.mock('node-fetch');
+
 import * as devkit from '@nrwl/devkit';
 import {
   getProjects,
@@ -8,6 +10,7 @@ import {
   updateWorkspaceConfiguration,
 } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+import fetch from 'node-fetch';
 import { applicationGenerator } from './generator';
 import { GeneratorOptions } from './schema';
 
@@ -17,6 +20,7 @@ describe('application generator', () => {
 
   beforeEach(() => {
     tree = createTreeWithEmptyWorkspace(2);
+    jest.clearAllMocks();
   });
 
   test('should add project configuration', async () => {
@@ -137,20 +141,111 @@ describe('application generator', () => {
     });
   });
 
-  describe('--renderers', () => {
-    test('should install provided renderers', async () => {
-      const installRenderersTask = await applicationGenerator(tree, {
-        ...options,
-        renderers: ['@astrojs/renderer-preact', '@astrojs/renderer-solid'],
+  describe('--integrations', () => {
+    test('should add integrations to the astro config', async () => {
+      (fetch as unknown as jest.Mock).mockImplementation((url) => {
+        return Promise.resolve({
+          json: () =>
+            Promise.resolve(
+              url.includes('@astrojs/solid-js')
+                ? { name: '@astrojs/solid-js', version: '0.1.4' }
+                : url.includes('@astrojs/vue')
+                ? { name: '@astrojs/vue', version: '0.1.5' }
+                : { name: 'should-not-be-installed' }
+            ),
+        });
       });
 
-      expect(installRenderersTask).toBeTruthy();
+      await applicationGenerator(tree, {
+        ...options,
+        integrations: ['solid-js', 'vue'],
+      });
+
+      expect(
+        tree.read(`apps/${options.name}/astro.config.mjs`, 'utf-8')
+      ).toMatchSnapshot();
+    });
+
+    test('should install provided integrations and dependencies', async () => {
+      (fetch as unknown as jest.Mock).mockImplementation((url) => {
+        return Promise.resolve({
+          json: () =>
+            Promise.resolve(
+              url.includes('@astrojs/solid-js')
+                ? {
+                    name: '@astrojs/solid-js',
+                    version: '0.1.4',
+                    peerDependencies: { 'solid-js': '^1.3.6' },
+                  }
+                : url.includes('@astrojs/vue')
+                ? {
+                    name: '@astrojs/vue',
+                    version: '0.1.5',
+                    peerDependencies: { vue: '^3.2.30' },
+                  }
+                : { name: 'should-not-be-installed' }
+            ),
+        });
+      });
+
+      await applicationGenerator(tree, {
+        ...options,
+        integrations: ['solid-js', 'vue'],
+      });
+
       const { devDependencies } = readJson(tree, 'package.json');
-      expect(devDependencies['@astrojs/renderer-preact']).toBe('latest');
-      expect(devDependencies['@astrojs/renderer-solid']).toBe('latest');
-      expect(devDependencies['@astrojs/renderer-react']).toBeUndefined();
-      expect(devDependencies['@astrojs/renderer-svelte']).toBeUndefined();
-      expect(devDependencies['@astrojs/renderer-vue']).toBeUndefined();
+      expect(devDependencies['@astrojs/solid-js']).toBe('^0.1.4');
+      expect(devDependencies['solid-js']).toBe('^1.3.6');
+      expect(devDependencies['@astrojs/vue']).toBe('^0.1.5');
+      expect(devDependencies['vue']).toBe('^3.2.30');
+      expect(devDependencies['should-not-be-installed']).toBeUndefined();
+    });
+
+    test('should support extra integrations that are not listed scoped to @astrojs', async () => {
+      (fetch as unknown as jest.Mock).mockImplementation((url) => {
+        return Promise.resolve({
+          json: () =>
+            Promise.resolve(
+              url.includes('@astrojs/netlify')
+                ? { name: '@astrojs/netlify', version: '0.4.4' }
+                : { name: 'should-not-be-installed' }
+            ),
+        });
+      });
+
+      await applicationGenerator(tree, {
+        ...options,
+        integrations: ['netlify'],
+      });
+
+      const { devDependencies } = readJson(tree, 'package.json');
+      expect(devDependencies['@astrojs/netlify']).toBe('^0.4.4');
+      expect(devDependencies['should-not-be-installed']).toBeUndefined();
+    });
+
+    test('should support third-party integrations with a name starting with "astro-" and with or without scope', async () => {
+      (fetch as unknown as jest.Mock).mockImplementation((url) => {
+        return Promise.resolve({
+          json: () =>
+            Promise.resolve(
+              url.includes('astro-imagetools')
+                ? { name: 'astro-imagetools', version: '0.6.10' }
+                : url.includes('@lloydjatkinson/astro-snipcart')
+                ? { name: '@lloydjatkinson/astro-snipcart', version: '0.1.2' }
+                : { name: 'should-not-be-installed' }
+            ),
+        });
+      });
+
+      await applicationGenerator(tree, {
+        ...options,
+        integrations: ['astro-imagetools', '@lloydjatkinson/astro-snipcart'],
+      });
+
+      const { devDependencies } = readJson(tree, 'package.json');
+      expect(devDependencies['astro-imagetools']).toBe('^0.6.10');
+      expect(devDependencies['@lloydjatkinson/astro-snipcart']).toBe('^0.1.2');
+      expect(devDependencies['should-not-be-installed']).toBeUndefined();
     });
   });
 
