@@ -10,6 +10,7 @@ import {
   updateGitignore,
   addVSCodeRecommendedExtensions,
   addCheckToCacheableOperations,
+  patchNxCli,
 } from './utilities';
 import { astroVersion } from './versions';
 
@@ -21,6 +22,7 @@ export function initGenerator(
   addCheckToCacheableOperations(tree);
   updateGitignore(tree);
   addVSCodeRecommendedExtensions(tree);
+  patchNxCli(tree);
 
   const tasks: GeneratorCallback[] = [];
   if (options.addCypressTests !== false) {

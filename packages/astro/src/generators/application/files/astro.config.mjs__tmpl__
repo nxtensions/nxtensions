@@ -1,8 +1,0 @@
-// Full Astro Configuration API Documentation:
-// https://docs.astro.build/reference/configuration-reference
-
-// @ts-check
-export default /** @type {import('astro').AstroUserConfig} */ ({
-  dist: '<%= offsetFromRoot %>dist/<%= projectRoot %>',<% if (renderers.length > 0) { %>
-  renderers: [<%- renderers.map(renderer => `'${renderer}'`) %>],<% } %>
-});
