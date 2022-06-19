@@ -1,40 +1,26 @@
-name: Main checks
+name: CI
 
 on:
   push:
     branches:
       - main
+  pull_request:
 
 jobs:
   main:
-    runs-on: ubuntu-latest
-    name: main branch checks
-    steps:
-      - name: Checkout [main]
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
+    name: Nx Cloud - Main Job
+    uses: nrwl/ci/.github/workflows/nx-cloud-main.yml@v0.4
+    with:
+      parallel-commands: |
+        yarn nx-cloud record -- yarn nx workspace-lint
+        yarn nx-cloud record -- yarn nx format:check
+      parallel-commands-on-agents: |
+        yarn nx affected --target=lint --parallel=2
+        yarn nx affected --target=test --parallel=2 --ci --code-coverage
+        yarn nx affected --target=build --parallel=2
 
-      - name: Install Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16'
-          cache: 'yarn'
-
-      - name: Install packages
-        run: yarn install
-
-      - name: Derive appropriate SHAs for base and head for Nx affected commands
-        uses: nrwl/nx-set-shas@v2
-
-      - name: Check formatting
-        run: yarn nx format:check
-
-      - name: Lint affected projects
-        run: yarn nx affected --target=lint --parallel
-
-      - name: Build affected projects
-        run: yarn nx affected --target=build --parallel
-
-      - name: Test affected projects
-        run: npx nx affected --target=test --parallel
+  agents:
+    name: Nx Cloud - Agents
+    uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.4
+    with:
+      number-of-agents: 2
