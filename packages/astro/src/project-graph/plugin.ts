@@ -1,19 +1,22 @@
-import {
+import type { Node } from '@astrojs/compiler/types';
+import type {
   FileData,
   ProjectFileMap,
   ProjectGraph,
-  ProjectGraphBuilder,
   ProjectGraphProcessorContext,
-  workspaceRoot,
 } from '@nrwl/devkit';
+import { ProjectGraphBuilder, workspaceRoot } from '@nrwl/devkit';
+import { readFileSync } from 'fs';
 import { TypeScriptImportLocator } from 'nx/src/project-graph/build-dependencies/typescript-import-locator';
 import { TargetProjectLocator } from 'nx/src/utils/target-project-locator';
-import { readFileSync } from 'fs';
 import { extname, join } from 'path';
 import * as ts from 'typescript';
 
 let astroCompiler: typeof import('@astrojs/compiler');
 let astroCompilerUtils: typeof import('@astrojs/compiler/utils');
+let builder: ProjectGraphBuilder;
+let importLocator: TypeScriptImportLocator;
+let targetProjectLocator: TargetProjectLocator;
 
 export async function processProjectGraph(
   graph: ProjectGraph,
@@ -26,14 +29,9 @@ export async function processProjectGraph(
     return graph;
   }
 
-  let builder: ProjectGraphBuilder;
-  let importLocator: TypeScriptImportLocator;
-  let targetProjectLocator: TargetProjectLocator;
-  let wereDependenciesAdded = false;
   for (const { project, files } of filesToProcess) {
     for (const file of files) {
-      const fileContent = readFileSync(join(workspaceRoot, file.file), 'utf-8');
-
+      // we delay the creation of these until needed and then, we cache them
       astroCompiler ??= await new Function(
         `return import('@astrojs/compiler');`
       )();
@@ -41,52 +39,71 @@ export async function processProjectGraph(
         `return import('@astrojs/compiler/utils');`
       )();
 
+      const fileContent = readFileSync(join(workspaceRoot, file.file), 'utf-8');
       // parse the file to get the AST
       const { ast } = await astroCompiler.parse(fileContent, {
         position: false,
       });
 
-      astroCompilerUtils.walk(ast, (node) => {
-        if (!astroCompilerUtils.is.frontmatter(node)) {
-          return;
-        }
-
-        builder ??= new ProjectGraphBuilder(graph);
-        importLocator ??= new TypeScriptImportLocator();
-        targetProjectLocator ??= new TargetProjectLocator(
-          graph.nodes,
-          graph.externalNodes
-        );
-
-        const sourceFile = ts.createSourceFile(
-          file.file,
-          node.value,
-          ts.ScriptTarget.Latest,
-          true
-        );
-        // locate imports
-        importLocator.fromNode(
-          file.file,
-          sourceFile,
-          (importExpr, filePath) => {
-            // locate project containing the import
-            const target = targetProjectLocator.findProjectWithImport(
-              importExpr,
-              filePath
-            );
-
-            // add the explicit dependency when the target project was found
-            if (target) {
-              builder.addExplicitDependency(project, filePath, target);
-              wereDependenciesAdded = true;
-            }
-          }
-        );
-      });
+      // collect the dependencies
+      collectDependencies(ast, graph, project, file.file);
     }
   }
 
-  return wereDependenciesAdded ? builder.getUpdatedProjectGraph() : graph;
+  return builder.getUpdatedProjectGraph();
+}
+
+function collectDependencies(
+  node: Node,
+  graph: ProjectGraph,
+  project: string,
+  filePath: string
+): void {
+  if (astroCompilerUtils.is.frontmatter(node)) {
+    // we delay the creation of these until needed and then, we cache them
+    builder ??= new ProjectGraphBuilder(graph);
+    importLocator ??= new TypeScriptImportLocator();
+    targetProjectLocator ??= new TargetProjectLocator(
+      graph.nodes,
+      graph.externalNodes
+    );
+
+    const sourceFile = ts.createSourceFile(
+      filePath,
+      node.value,
+      ts.ScriptTarget.Latest,
+      true
+    );
+    // locate imports
+    importLocator.fromNode(filePath, sourceFile, (importExpr, filePath) => {
+      // locate project containing the import
+      const target = targetProjectLocator.findProjectWithImport(
+        importExpr,
+        filePath
+      );
+
+      // add the explicit dependency when the target project was found
+      if (target) {
+        builder.addExplicitDependency(project, filePath, target);
+      }
+    });
+
+    // bail out since the frontmatter has already been processed
+    return;
+  }
+
+  if (!astroCompilerUtils.is.parent(node)) {
+    return;
+  }
+
+  for (const child of node.children) {
+    collectDependencies(child, graph, project, filePath);
+
+    // the child is the frontmatter and at this point was already processed, bail out
+    if (astroCompilerUtils.is.frontmatter(child)) {
+      return;
+    }
+  }
 }
 
 function getAstroFilesToProcess(filesToProcess: ProjectFileMap): {
