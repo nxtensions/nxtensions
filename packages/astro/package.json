@@ -30,12 +30,12 @@
   "peerDependencies": {
     "@nrwl/devkit": "^14.1.0",
     "@nrwl/workspace": "^14.1.0",
-    "astro": "~1.0.0-beta.47",
+    "astro": "~1.0.0-beta.56",
     "nx": "^14.1.0",
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "@astrojs/compiler": "~0.15.2",
+    "@astrojs/compiler": "~0.17.0",
     "@nrwl/cypress": "^14.1.0",
     "@nrwl/linter": "^14.1.0",
     "@phenomnomnominal/tsquery": "~4.2.0",
