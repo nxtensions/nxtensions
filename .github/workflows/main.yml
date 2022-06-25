@@ -16,7 +16,7 @@ jobs:
         yarn nx-cloud record -- yarn nx format:check
       parallel-commands-on-agents: |
         yarn nx affected --target=lint --parallel=2
-        yarn nx affected --target=test --parallel=2 --ci --code-coverage
+        yarn nx affected --target=test --parallel=2 --ci
         yarn nx affected --target=build --parallel=2
 
   agents:
