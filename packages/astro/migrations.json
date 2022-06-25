@@ -37,6 +37,15 @@
           "alwaysAddToPackageJson": false
         }
       }
+    },
+    "2.3.0": {
+      "version": "2.3.0-beta.0",
+      "packages": {
+        "astro": {
+          "version": "~1.0.0-beta.56",
+          "alwaysAddToPackageJson": false
+        }
+      }
     }
   }
 }
