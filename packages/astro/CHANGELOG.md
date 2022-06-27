@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.3.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v2.2.0...@nxtensions/astro@v2.3.0) (2022-06-27)
+
+### ⚠ NOTICE
+
+This version adds support for the latest Astro beta version. If you're coming from a version of Astro earlier than 1.0.0-beta.0, please make sure to follow the [Astro Migration Guide](https://docs.astro.build/en/migrate/).
+
+Remember to update this plugin version in your workspace by running `nx migrate @nxtensions/astro@latest`.
+
+### Features
+
+- **astro:** add migration to generate script to patch the nx cli for esm module import support ([19c4649](https://github.com/nxtensions/nxtensions/commit/19c464924c404a86dc1cc15d1cd6c63ff7b26d0f))
+- **astro:** support latest version (1.0.0-beta.47) ([#50](https://github.com/nxtensions/nxtensions/issues/50)) ([f514c7a](https://github.com/nxtensions/nxtensions/commit/f514c7a2795a27b62a8e0366fbcc49fc967671c5))
+- **astro:** support latest version (1.0.0-beta.56) ([#52](https://github.com/nxtensions/nxtensions/issues/52)) ([c2a3449](https://github.com/nxtensions/nxtensions/commit/c2a3449269d328966ed92af11428c4c17b858511))
+
+### Bug Fixes
+
+- **astro:** add missing package update migration for astro package ([c87847f](https://github.com/nxtensions/nxtensions/commit/c87847fbab4165212d06eb65d49058837d3b927f))
+- **astro:** collect deps with a custom visitor to improve performance and fix some race conditions ([9a2a36f](https://github.com/nxtensions/nxtensions/commit/9a2a36ff7b41ec41553a735a80936aa7c83598dd))
+
 ## [2.2.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v2.1.2...@nxtensions/astro@v2.2.0) (2022-05-17)
 
 ### Features
