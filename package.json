@@ -46,7 +46,7 @@
     "eslint-config-prettier": "^8.1.0",
     "fs-extra": "~10.1.0",
     "husky": "~8.0.1",
-    "inquirer": "~8.2.0",
+    "inquirer": "~8.2.4",
     "jest": "27.5.1",
     "lint-staged": "~12.3.4",
     "node-fetch": "~2.6.7",
