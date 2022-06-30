@@ -9,10 +9,10 @@
   dependencies:
     "@jridgewell/trace-mapping" "^0.3.0"
 
-"@astrojs/compiler@^0.17.0", "@astrojs/compiler@~0.17.0":
-  version "0.17.0"
-  resolved "https://registry.yarnpkg.com/@astrojs/compiler/-/compiler-0.17.0.tgz#fb465bc942c18f1ae6db4f51d97130d457e14cdc"
-  integrity sha512-3q6Yw6CGDfUwheDS29cHjQxn57ql0X98DskU6ym3bw/FdD8RMbGi0Es1Evlh+WHig948LUcYq19EHAMZO3bP3w==
+"@astrojs/compiler@^0.17.0", "@astrojs/compiler@~0.17.1":
+  version "0.17.1"
+  resolved "https://registry.yarnpkg.com/@astrojs/compiler/-/compiler-0.17.1.tgz#0764eaa22961ca00b3de257a738bf7b14afced32"
+  integrity sha512-TawCnNbN00PXVHrps7zk/WwlcxaJQ8gVjk+tel57UQtSt3PmTsarlmq/uX165xKgn2/3Vz5inTNJxoDnr2pZBQ==
 
 "@astrojs/language-server@^0.13.4":
   version "0.13.4"

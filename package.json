@@ -17,7 +17,7 @@
     "tslib": "^2.0.0"
   },
   "devDependencies": {
-    "@astrojs/compiler": "~0.17.0",
+    "@astrojs/compiler": "~0.17.1",
     "@commitlint/cli": "~17.0.3",
     "@commitlint/config-conventional": "~17.0.3",
     "@commitlint/cz-commitlint": "~17.0.3",
