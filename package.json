@@ -27,7 +27,7 @@
     "@nrwl/js": "14.4.0",
     "@nrwl/linter": "14.4.0",
     "@nrwl/node": "14.4.0",
-    "@nrwl/nx-cloud": "14.1.3",
+    "@nrwl/nx-cloud": "14.2.0",
     "@nrwl/nx-plugin": "14.4.0",
     "@nrwl/workspace": "14.4.0",
     "@phenomnomnominal/tsquery": "~5.0.0",
