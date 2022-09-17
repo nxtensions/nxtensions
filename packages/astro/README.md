@@ -90,7 +90,7 @@ For more information on the Astro development server see https://docs.astro.buil
 To start a local static file server to serve a previously built Astro application run:
 
 ```bash
-nx dev my-app
+nx preview my-app
 ```
 
 For more information on the local static file server for Astro applications see https://docs.astro.build/en/reference/cli-reference/#astro-preview.
