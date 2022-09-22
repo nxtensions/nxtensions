@@ -10,7 +10,7 @@ describe('component generator', () => {
   const libProject = 'lib1';
 
   beforeEach(() => {
-    tree = createTreeWithEmptyWorkspace(2);
+    tree = createTreeWithEmptyWorkspace();
 
     addProjectConfiguration(tree, appProject, {
       root: `apps/${appProject}`,

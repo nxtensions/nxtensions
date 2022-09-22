@@ -15,7 +15,7 @@ describe('init generator', () => {
   let tree: Tree;
 
   beforeEach(() => {
-    tree = createTreeWithEmptyWorkspace(2);
+    tree = createTreeWithEmptyWorkspace();
     jest.clearAllMocks();
   });
 

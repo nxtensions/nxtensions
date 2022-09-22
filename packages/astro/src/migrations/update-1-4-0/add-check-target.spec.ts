@@ -14,7 +14,7 @@ describe('add-check-target migration', () => {
   let tree: Tree;
 
   beforeEach(() => {
-    tree = createTreeWithEmptyWorkspace(2);
+    tree = createTreeWithEmptyWorkspace();
 
     addProjectConfiguration(tree, 'astro-app', {
       root: 'apps/astro-app',

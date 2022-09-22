@@ -7,7 +7,7 @@ describe('Test Suite Name', () => {
   let tree: Tree;
 
   beforeEach(() => {
-    tree = createTreeWithEmptyWorkspace(2);
+    tree = createTreeWithEmptyWorkspace();
   });
 
   test('should generate script to patch the nx cli', async () => {

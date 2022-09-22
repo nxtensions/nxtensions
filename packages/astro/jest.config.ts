@@ -1,3 +1,4 @@
+/* eslint-disable */
 export default {
   displayName: 'astro',
   preset: '../../jest.preset.js',
