@@ -1,1 +1,1 @@
-export const astroVersion = '^1.2.8';
+export const astroVersion = '^1.3.0';
