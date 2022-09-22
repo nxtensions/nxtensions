@@ -19,16 +19,16 @@
   resolved "https://registry.yarnpkg.com/@astrojs/compiler/-/compiler-0.24.0.tgz#aeded097eb325dfdcead9079c2eeb4371289437f"
   integrity sha512-xZ81C/oMfExdF18I1Tyd2BKKzBqO+qYYctSy4iCwH4UWSo/4Y8A8MAzV1hG67uuE7hFRourSl6H5KUbhyChv/A==
 
-"@astrojs/language-server@^0.23.0":
-  version "0.23.3"
-  resolved "https://registry.yarnpkg.com/@astrojs/language-server/-/language-server-0.23.3.tgz#6133bccc22c27b356ef51a558a2be108f1dc51ff"
-  integrity sha512-ROoMKo37NZ76pE/A2xHfjDlgfsNnFmkhL4+Wifs0L855n73SUCbnXz7ZaQktIGAq2Te2TpSjAawiOx0q9L5qeg==
+"@astrojs/language-server@^0.26.2":
+  version "0.26.2"
+  resolved "https://registry.yarnpkg.com/@astrojs/language-server/-/language-server-0.26.2.tgz#0e685f2e1d76d06f682d9d0f93a9b35f0b5c23d8"
+  integrity sha512-9nkfdd6CMXLDIJojnwbYu5XrYfOI+g63JlktOlpFCwFjFNpm1u0e/+pXXmj6Zs+PkSTo0kV1UM77dRKRS5OC1Q==
   dependencies:
     "@vscode/emmet-helper" "^2.8.4"
+    events "^3.3.0"
     prettier "^2.7.1"
     prettier-plugin-astro "^0.5.3"
     source-map "^0.7.3"
-    typescript "~4.6.4"
     vscode-css-languageservice "^6.0.1"
     vscode-html-languageservice "^5.0.0"
     vscode-languageserver "^8.0.1"
@@ -3950,13 +3950,13 @@ astral-regex@^2.0.0:
   resolved "https://registry.yarnpkg.com/astral-regex/-/astral-regex-2.0.0.tgz#483143c567aeed4785759c0865786dc77d7d2e31"
   integrity sha512-Z7tMw1ytTXt5jqMcOP+OQteU1VuNK9Y02uuJtKQ1Sv69jXQKKg5cibLwGJow8yzZP+eAc18EmLGPal0bp36rvQ==
 
-astro@~1.2.8:
-  version "1.2.8"
-  resolved "https://registry.yarnpkg.com/astro/-/astro-1.2.8.tgz#be43b9dbf5d075f95cd0c5c016b56bd0eac7d9d7"
-  integrity sha512-KJkaOXN36tVvID2OOCn0kdAymwGtjHUDDb/bDbkMA8wMncrxzOOnppmytFHhKzeBhYsJVjj1Lc6H0FgSG2WwEg==
+astro@~1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/astro/-/astro-1.3.0.tgz#bbe8ccf17b64bb41abf5d102dd1533908a18075c"
+  integrity sha512-cWBtLkkUcj38J0knrTaZvyoVFJxjOAWPRbECIXFxvGZ/ASNr+FNumeUk/u3uAGIF0pbqEgc+5zAvmPoe0pCd9w==
   dependencies:
     "@astrojs/compiler" "^0.24.0"
-    "@astrojs/language-server" "^0.23.0"
+    "@astrojs/language-server" "^0.26.2"
     "@astrojs/markdown-remark" "^1.1.2"
     "@astrojs/telemetry" "^1.0.0"
     "@astrojs/webapi" "^1.0.0"
@@ -4007,6 +4007,7 @@ astro@~1.2.8:
     strip-ansi "^7.0.1"
     supports-esm "^1.0.0"
     tsconfig-resolver "^3.0.1"
+    typescript "*"
     unist-util-visit "^4.1.0"
     vfile "^5.3.2"
     vite "~3.1.3"
@@ -6606,7 +6607,7 @@ eventemitter3@^4.0.0, eventemitter3@^4.0.4:
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-4.0.7.tgz#2de9b68f6528d5644ef5c59526a1b4a07306169f"
   integrity sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==
 
-events@^3.2.0:
+events@^3.2.0, events@^3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/events/-/events-3.3.0.tgz#31a95ad0a924e2d2c419a813aeb2c4e878ea7400"
   integrity sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==
@@ -13527,6 +13528,11 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
+typescript@*:
+  version "4.8.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.8.3.tgz#d59344522c4bc464a65a730ac695007fdb66dd88"
+  integrity sha512-goMHfm00nWPa8UvR/CPSvykqf6dVV8x/dp0c5mFTMTIu0u0FlGWRioyy7Nn0PGAdHxpJZnuO/ut+PpQ8UiHAig==
+
 typescript@4.7.4, typescript@^4.6.4:
   version "4.7.4"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.7.4.tgz#1a88596d1cf47d59507a1bcdfb5b9dfe4d488235"
@@ -13536,11 +13542,6 @@ typescript@^4.4.3:
   version "4.4.4"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.4.4.tgz#2cd01a1a1f160704d3101fd5a58ff0f9fcb8030c"
   integrity sha512-DqGhF5IKoBl8WNf8C1gu8q0xZSInh9j1kJJMqT3a94w1JzVaBU4EXOSMrz9yDqMT0xt3selp83fuFMQ0uzv6qA==
-
-typescript@~4.6.4:
-  version "4.6.4"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.6.4.tgz#caa78bbc3a59e6a5c510d35703f6a09877ce45e9"
-  integrity sha512-9ia/jWHIEbo49HfjrLGfKbZSuWo9iTMwXO+Ca3pRsSpbsMbc7/IU8NKdCZVRRBafVPGnoJeFL76ZOAA84I9fEg==
 
 uglify-js@^3.1.4:
   version "3.14.3"
