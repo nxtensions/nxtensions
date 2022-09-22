@@ -9,7 +9,7 @@ describe('library generator', () => {
   const options: GeneratorOptions = { name: 'lib1' };
 
   beforeEach(() => {
-    tree = createTreeWithEmptyWorkspace(2);
+    tree = createTreeWithEmptyWorkspace();
   });
 
   test('should add project configuration', async () => {

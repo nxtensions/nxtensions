@@ -10,7 +10,7 @@ describe('remove-experimental-static-build migration', () => {
   let tree: Tree;
 
   beforeEach(() => {
-    tree = createTreeWithEmptyWorkspace(2);
+    tree = createTreeWithEmptyWorkspace();
   });
 
   describe('project configuration', () => {

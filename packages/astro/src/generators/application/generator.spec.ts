@@ -19,7 +19,7 @@ describe('application generator', () => {
   const options: GeneratorOptions = { name: 'app1' };
 
   beforeEach(() => {
-    tree = createTreeWithEmptyWorkspace(2);
+    tree = createTreeWithEmptyWorkspace();
     jest.clearAllMocks();
   });
 
