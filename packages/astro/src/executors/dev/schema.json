@@ -14,23 +14,9 @@
       "description": "Include markdown draft pages in the build.",
       "default": false
     },
-    "experimentalSsr": {
-      "type": "boolean",
-      "description": "Enable SSR compilation.",
-      "default": false
-    },
     "host": {
       "description": "Expose server on network.",
       "oneOf": [{ "type": "boolean" }, { "type": "string" }]
-    },
-    "hostname": {
-      "type": "string",
-      "description": "Server hostname to use."
-    },
-    "legacyBuild": {
-      "type": "boolean",
-      "description": "Use the build strategy prior to v0.24.0.",
-      "default": false
     },
     "port": {
       "type": "integer",
@@ -40,6 +26,10 @@
       "type": "boolean",
       "description": "Disable logging.",
       "default": false
+    },
+    "site": {
+      "type": "string",
+      "description": "URL of the deployed application."
     },
     "verbose": {
       "type": "boolean",

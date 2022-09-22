@@ -20,15 +20,9 @@
       "description": "Delete the output path before building.",
       "default": true
     },
-    "experimentalSsr": {
-      "type": "boolean",
-      "description": "Enable SSR compilation.",
-      "default": false
-    },
-    "legacyBuild": {
-      "type": "boolean",
-      "description": "Use the build strategy prior to v0.24.0.",
-      "default": false
+    "host": {
+      "description": "Expose server on network.",
+      "oneOf": [{ "type": "boolean" }, { "type": "string" }]
     },
     "silent": {
       "type": "boolean",
@@ -38,11 +32,6 @@
     "site": {
       "type": "string",
       "description": "URL of the deployed application."
-    },
-    "sitemap": {
-      "type": "boolean",
-      "description": "Enable sitemap generation.",
-      "default": true
     },
     "verbose": {
       "type": "boolean",

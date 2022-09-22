@@ -1,6 +1,5 @@
 import { ExecutorContext, logger } from '@nrwl/devkit';
 import { ChildProcess, fork } from 'child_process';
-import { join } from 'path';
 import stripAnsi from 'strip-ansi';
 import { PreviewExecutorOptions } from './schema';
 
@@ -10,13 +9,10 @@ export async function* previewExecutor(
   options: PreviewExecutorOptions,
   context: ExecutorContext
 ): AsyncGenerator<{ baseUrl?: string; success: boolean }> {
-  const projectRoot = join(
-    context.root,
-    context.workspace.projects[context.projectName].root
-  );
+  const projectRoot = context.workspace.projects[context.projectName].root;
 
   try {
-    const success = await runCliPreview(projectRoot, options);
+    const success = await runCliPreview(context.root, projectRoot, options);
 
     // TODO: build url from what's in the Astro config once the CLI API is available.
     // See https://github.com/snowpackjs/astro/issues/1483.
@@ -39,6 +35,7 @@ export async function* previewExecutor(
 export default previewExecutor;
 
 function runCliPreview(
+  workspaceRoot: string,
   projectRoot: string,
   options: PreviewExecutorOptions
 ): Promise<boolean> {
@@ -47,9 +44,9 @@ function runCliPreview(
     // See https://github.com/snowpackjs/astro/issues/1483.
     childProcess = fork(
       require.resolve('astro'),
-      ['preview', ...getAstroPreviewArgs(options)],
+      ['preview', ...getAstroPreviewArgs(projectRoot, options)],
       {
-        cwd: projectRoot,
+        cwd: workspaceRoot,
         env: { ...process.env, FORCE_COLOR: 'true' },
         stdio: 'pipe',
       }
@@ -85,11 +82,26 @@ function runCliPreview(
   });
 }
 
-function getAstroPreviewArgs(options: PreviewExecutorOptions): string[] {
-  const args: string[] = [];
+function getAstroPreviewArgs(
+  projectRoot: string,
+  options: PreviewExecutorOptions
+): string[] {
+  const args: string[] = ['--root', projectRoot];
 
+  if (options.config) {
+    args.push('--config', options.config);
+  }
+  if (options.host !== undefined) {
+    args.push('--host', options.host.toString());
+  }
+  if (options.port) {
+    args.push('--port', options.port.toString());
+  }
   if (options.silent) {
     args.push('--silent');
+  }
+  if (options.site) {
+    args.push('site', options.site);
   }
   if (options.verbose) {
     args.push('--verbose');

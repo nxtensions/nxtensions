@@ -1,8 +1,9 @@
-import { ExecutorContext, logger } from '@nrwl/devkit';
-import { ChildProcess, fork } from 'child_process';
-import { join } from 'path';
+import type { ExecutorContext } from '@nrwl/devkit';
+import { logger } from '@nrwl/devkit';
+import type { ChildProcess } from 'child_process';
+import { fork } from 'child_process';
 import stripAnsi from 'strip-ansi';
-import { DevExecutorOptions } from './schema';
+import type { DevExecutorOptions } from './schema';
 
 let childProcess: ChildProcess;
 
@@ -10,13 +11,10 @@ export async function* devExecutor(
   options: DevExecutorOptions,
   context: ExecutorContext
 ): AsyncGenerator<{ baseUrl?: string; success: boolean }> {
-  const projectRoot = join(
-    context.root,
-    context.workspace.projects[context.projectName].root
-  );
+  const projectRoot = context.workspace.projects[context.projectName].root;
 
   try {
-    const success = await runCliDev(projectRoot, options);
+    const success = await runCliDev(context.root, projectRoot, options);
 
     // TODO: build url from what's in the Astro config once the CLI API is available.
     // See https://github.com/snowpackjs/astro/issues/1483.
@@ -39,6 +37,7 @@ export async function* devExecutor(
 export default devExecutor;
 
 function runCliDev(
+  workspaceRoot: string,
   projectRoot: string,
   options: DevExecutorOptions
 ): Promise<boolean> {
@@ -47,9 +46,9 @@ function runCliDev(
     // See https://github.com/snowpackjs/astro/issues/1483.
     childProcess = fork(
       require.resolve('astro'),
-      ['dev', ...getAstroDevArgs(options)],
+      ['dev', ...getAstroDevArgs(projectRoot, options)],
       {
-        cwd: projectRoot,
+        cwd: workspaceRoot,
         env: { ...process.env, FORCE_COLOR: 'true' },
         stdio: 'pipe',
       }
@@ -87,8 +86,11 @@ function runCliDev(
   });
 }
 
-function getAstroDevArgs(options: DevExecutorOptions): string[] {
-  const args: string[] = [];
+function getAstroDevArgs(
+  projectRoot: string,
+  options: DevExecutorOptions
+): string[] {
+  const args: string[] = ['--root', projectRoot];
 
   if (options.config) {
     args.push('--config', options.config);
@@ -96,23 +98,17 @@ function getAstroDevArgs(options: DevExecutorOptions): string[] {
   if (options.drafts) {
     args.push('--drafts');
   }
-  if (options.experimentalSsr) {
-    args.push('--experimental-ssr');
-  }
   if (options.host !== undefined) {
     args.push('--host', options.host.toString());
-  }
-  if (options.hostname) {
-    args.push('--hostname', options.hostname);
-  }
-  if (options.legacyBuild) {
-    args.push('--legacy-build');
   }
   if (options.port) {
     args.push('--port', options.port.toString());
   }
   if (options.silent) {
     args.push('--silent');
+  }
+  if (options.site) {
+    args.push('site', options.site);
   }
   if (options.verbose) {
     args.push('--verbose');

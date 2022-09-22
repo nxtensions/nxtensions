@@ -1,6 +1,10 @@
 {
   "name": "<%= importPath %>",
   "version": "0.0.1",
-  "keywords": ["astro-component"],
-  "exports": "./src/index.js"
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": ["src"],
+  "keywords": ["astro-component"]
 }

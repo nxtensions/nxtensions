@@ -11,6 +11,7 @@ import {
   addVSCodeRecommendedExtensions,
   addCheckToCacheableOperations,
   patchNxCli,
+  setupNpmrc,
 } from './utilities';
 import { astroVersion } from './versions';
 
@@ -23,6 +24,7 @@ export function initGenerator(
   updateGitignore(tree);
   addVSCodeRecommendedExtensions(tree);
   patchNxCli(tree);
+  setupNpmrc(tree);
 
   const tasks: GeneratorCallback[] = [];
   if (options.addCypressTests !== false) {

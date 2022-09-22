@@ -144,6 +144,29 @@ node_modules
     );
   });
 
+  test('should add .npmrc when it does not exist', () => {
+    initGenerator(tree, {});
+
+    expect(tree.exists('.npmrc')).toBe(true);
+    expect(tree.read('.npmrc', 'utf-8')).toMatchSnapshot();
+  });
+
+  test('should update .npmrc when it exist', () => {
+    tree.write('.npmrc', '# Some initial content');
+
+    initGenerator(tree, {});
+
+    expect(tree.read('.npmrc', 'utf-8')).toMatchSnapshot();
+  });
+
+  test('should not duplicate .npmrc configuration when it exist', () => {
+    tree.write('.npmrc', 'shamefully-hoist=true');
+
+    initGenerator(tree, {});
+
+    expect(tree.read('.npmrc', 'utf-8')).toBe('shamefully-hoist=true');
+  });
+
   describe('--addCypressTests', () => {
     test('should not add cypress when --addCypressTests=false', () => {
       initGenerator(tree, { addCypressTests: false });
