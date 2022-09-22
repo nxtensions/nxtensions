@@ -10,13 +10,11 @@ import { readFileSync } from 'fs';
 import { TypeScriptImportLocator } from 'nx/src/project-graph/build-dependencies/typescript-import-locator';
 import { TargetProjectLocator } from 'nx/src/utils/target-project-locator';
 import { extname, join } from 'path';
-import * as ts from 'typescript';
 
 let astroCompiler: typeof import('@astrojs/compiler');
 let astroCompilerUtils: typeof import('@astrojs/compiler/utils');
-let builder: ProjectGraphBuilder;
 let importLocator: TypeScriptImportLocator;
-let targetProjectLocator: TargetProjectLocator;
+let ts: typeof import('typescript');
 
 export async function processProjectGraph(
   graph: ProjectGraph,
@@ -29,7 +27,12 @@ export async function processProjectGraph(
     return graph;
   }
 
+  const builder = new ProjectGraphBuilder(graph);
   for (const { project, files } of filesToProcess) {
+    if (!graph.nodes[project]) {
+      addNode(context, builder, project);
+    }
+
     for (const file of files) {
       // we delay the creation of these until needed and then, we cache them
       astroCompiler ??= await new Function(
@@ -46,14 +49,38 @@ export async function processProjectGraph(
       });
 
       // collect the dependencies
-      collectDependencies(ast, graph, project, file.file);
+      collectDependencies(builder, ast, graph, project, file.file);
     }
   }
 
   return builder.getUpdatedProjectGraph();
 }
 
+function addNode(
+  context: ProjectGraphProcessorContext,
+  builder: ProjectGraphBuilder,
+  projectName: string
+): void {
+  const project = context.workspace.projects[projectName];
+  const projectType =
+    project.projectType === 'application'
+      ? projectName.endsWith('-e2e')
+        ? 'e2e'
+        : 'app'
+      : 'lib';
+  builder.addNode({
+    data: {
+      ...project,
+      tags: project.tags ?? [],
+      files: context.fileMap[projectName],
+    },
+    name: projectName,
+    type: projectType,
+  });
+}
+
 function collectDependencies(
+  builder: ProjectGraphBuilder,
   node: Node,
   graph: ProjectGraph,
   project: string,
@@ -61,9 +88,9 @@ function collectDependencies(
 ): void {
   if (astroCompilerUtils.is.frontmatter(node)) {
     // we delay the creation of these until needed and then, we cache them
-    builder ??= new ProjectGraphBuilder(graph);
     importLocator ??= new TypeScriptImportLocator();
-    targetProjectLocator ??= new TargetProjectLocator(
+    ts = ts ?? require('typescript');
+    const targetProjectLocator = new TargetProjectLocator(
       graph.nodes,
       graph.externalNodes
     );
@@ -97,7 +124,7 @@ function collectDependencies(
   }
 
   for (const child of node.children) {
-    collectDependencies(child, graph, project, filePath);
+    collectDependencies(builder, child, graph, project, filePath);
 
     // the child is the frontmatter and at this point was already processed, bail out
     if (astroCompilerUtils.is.frontmatter(child)) {
