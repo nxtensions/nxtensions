@@ -2,10 +2,8 @@ export interface BuildExecutorOptions {
   config?: string;
   drafts?: boolean;
   deleteOutputPath?: boolean;
-  experimentalSsr?: boolean;
-  legacyBuild?: boolean;
+  host?: boolean | string;
   silent?: boolean;
   site?: string;
-  sitemap?: boolean;
   verbose?: boolean;
 }

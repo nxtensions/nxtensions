@@ -1,48 +1,106 @@
 ---
-// Component Imports
-import Tour from '../components/Tour.astro';
-// You can import components from any supported Framework here!
-
-// Component Script:
-// You can write any JavaScript/TypeScript that you'd like here.
-// It will run during the build, but never in the browser.
-// All variables are available to use in the HTML template below.
-let title = '<%= projectName %>';
-
-// Full Astro Component Syntax:
-// https://docs.astro.build/core-concepts/astro-components/
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
 ---
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width">
-  <title>{title}</title>
 
-  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+<Layout title="Welcome to Astro.">
+	<main>
+		<h1>Welcome to <span class="text-gradient">Astro</span></h1>
+		<p class="instructions">
+			Check out the <code>src/pages</code> directory to get started.<br />
+			<strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
+		</p>
+		<ul role="list" class="link-card-grid">
+			<Card
+				href="https://docs.astro.build/"
+				title="Documentation"
+				body="Learn how Astro works and explore the official API docs."
+			/>
+			<Card
+				href="https://astro.build/integrations/"
+				title="Integrations"
+				body="Supercharge your project with new frameworks and libraries."
+			/>
+			<Card
+				href="https://astro.build/themes/"
+				title="Themes"
+				body="Explore a galaxy of community-built starter themes."
+			/>
+			<Card
+				href="https://astro.build/chat/"
+				title="Astro Discord"
+				body="Come say hi in the Astro Discord community. ❤️"
+			/>
+			<Card
+				href="https://nx.dev/"
+				title="Nx"
+				body="Learn more about Nx."
+			/>
+			<Card
+				href="https://nrwlcommunity.slack.com/"
+				title="Nrwl Community Slack"
+				body="Come chat in the Nrwl Community Slack. ❤️"
+			/>
+		</ul>
+	</main>
+</Layout>
 
-  <link rel="stylesheet" href="/styles/global.css">
-  <link rel="stylesheet" href="/styles/home.css">
-</head>
+<style>
+	:root {
+		--astro-gradient: linear-gradient(0deg, #4f39fa, #da62c4);
+	}
 
-<body>
-  <main>
-    <header>
-      <div>
-        <img width="60" height="80" src="/assets/logo.svg" alt="Astro logo">
-        <h1>Welcome to {title}!</h1>
-      </div>
-    </header>
+	h1 {
+		margin: 2rem 0;
+	}
 
-    <Tour />
+	main {
+		margin: auto;
+		padding: 1em;
+		max-width: 60ch;
+	}
 
-    <!--
-      - You can also use imported framework components directly in your markup!
-      -
-      - Note: by default, these components are NOT interactive on the client.
-      - The `:visible` directive tells Astro to make it interactive.
-      -
-      - See https://docs.astro.build/core-concepts/component-hydration/
-    -->
-  </main>
-</body>
-</html>
+	.text-gradient {
+		font-weight: 900;
+		background-image: var(--astro-gradient);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-size: 100% 200%;
+		background-position-y: 100%;
+		border-radius: 0.4rem;
+		animation: pulse 4s ease-in-out infinite;
+	}
+
+	@keyframes pulse {
+		0%,
+		100% {
+			background-position-y: 0%;
+		}
+		50% {
+			background-position-y: 80%;
+		}
+	}
+
+	.instructions {
+		line-height: 1.6;
+		margin: 1rem 0;
+		background: #4f39fa;
+		padding: 1rem;
+		border-radius: 0.4rem;
+		color: var(--color-bg);
+	}
+
+	.instructions code {
+		font-size: 0.875em;
+		border: 0.1em solid var(--color-border);
+		border-radius: 4px;
+		padding: 0.15em 0.25em;
+	}
+
+	.link-card-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+		gap: 1rem;
+		padding: 0;
+	}
+</style>

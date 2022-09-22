@@ -1,16 +1,26 @@
 {
   "extends": "<%= offsetFromRoot %>tsconfig.base.json",
   "compilerOptions": {
-    // Enable top-level await, and other modern ESM features.
+    // Enable top-level await, and other modern ESM features
     "target": "ESNext",
     "module": "ESNext",
-    // Enable node-style module resolution, for things like npm package imports.
+    // Enable node-style module resolution, for things like npm package imports
     "moduleResolution": "node",
-    // Enable JSON imports.
+    // Enable JSON imports
     "resolveJsonModule": true,
-    // Enable stricter transpilation for better output.
+    // Enable stricter transpilation for better output
     "isolatedModules": true,
-    // Add type definitions for our Vite runtime.
-    "types": ["vite/client"]
+    // Astro directly run TypeScript code, no transpilation needed
+    "noEmit": true,
+    // Report an error when importing a file using a casing different from the casing on disk
+    "forceConsistentCasingInFileNames": true,
+    // Properly support importing CJS modules in ESM
+    "esModuleInterop": true,
+    // Enable strict mode
+    "strict": true,
+    // Error when a value import is only used as a type
+    "importsNotUsedAsValues": "error",
+    // Add Vite's client types
+    "types": ["astro/client"]
   }
 }

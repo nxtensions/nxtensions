@@ -38,5 +38,20 @@ export async function setupE2ETests(
   delete e2eProject.targets.e2e.configurations;
   updateProjectConfiguration(tree, e2eProjectName, e2eProject);
 
+  tree.write(
+    `${e2eProject.sourceRoot}/e2e/app.cy.ts`,
+    `import { getGreeting } from '../support/app.po';
+
+describe('${options.projectName}', () => {
+  beforeEach(() => cy.visit('/'));
+
+  it('should display welcome message', () => {
+    cy.login('my-email@something.com', 'myPassword');
+
+    getGreeting().contains('Welcome to Astro');
+  });
+});`
+  );
+
   return cypressTask;
 }

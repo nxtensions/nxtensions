@@ -5,10 +5,26 @@
   "title": "Astro preview executor",
   "type": "object",
   "properties": {
+    "config": {
+      "type": "string",
+      "description": "Specify the path, relative to the project root, to the Astro config file."
+    },
+    "host": {
+      "description": "Expose server on network.",
+      "oneOf": [{ "type": "boolean" }, { "type": "string" }]
+    },
+    "port": {
+      "type": "integer",
+      "description": "Server port to run on."
+    },
     "silent": {
       "type": "boolean",
       "description": "Disable logging.",
       "default": false
+    },
+    "site": {
+      "type": "string",
+      "description": "URL of the deployed application."
     },
     "verbose": {
       "type": "boolean",

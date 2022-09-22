@@ -51,19 +51,12 @@ describe('application generator', () => {
   test('should generate files', async () => {
     await applicationGenerator(tree, options);
 
+    expect(tree.exists(`apps/${options.name}/public/favicon.svg`)).toBeTruthy();
     expect(
-      tree.exists(`apps/${options.name}/public/assets/logo.svg`)
+      tree.exists(`apps/${options.name}/src/components/Card.astro`)
     ).toBeTruthy();
     expect(
-      tree.exists(`apps/${options.name}/public/styles/global.css`)
-    ).toBeTruthy();
-    expect(
-      tree.exists(`apps/${options.name}/public/styles/home.css`)
-    ).toBeTruthy();
-    expect(tree.exists(`apps/${options.name}/public/favicon.ico`)).toBeTruthy();
-    expect(tree.exists(`apps/${options.name}/public/robots.txt`)).toBeTruthy();
-    expect(
-      tree.exists(`apps/${options.name}/src/components/Tour.astro`)
+      tree.exists(`apps/${options.name}/src/layouts/Layout.astro`)
     ).toBeTruthy();
     expect(
       tree.exists(`apps/${options.name}/src/pages/index.astro`)
@@ -99,25 +92,16 @@ describe('application generator', () => {
       await applicationGenerator(tree, { ...options, directory });
 
       expect(
-        tree.exists(`apps/${directory}/${options.name}/public/assets/logo.svg`)
+        tree.exists(`apps/${directory}/${options.name}/public/favicon.svg`)
       ).toBeTruthy();
       expect(
         tree.exists(
-          `apps/${directory}/${options.name}/public/styles/global.css`
+          `apps/${directory}/${options.name}/src/components/Card.astro`
         )
       ).toBeTruthy();
       expect(
-        tree.exists(`apps/${directory}/${options.name}/public/styles/home.css`)
-      ).toBeTruthy();
-      expect(
-        tree.exists(`apps/${directory}/${options.name}/public/favicon.ico`)
-      ).toBeTruthy();
-      expect(
-        tree.exists(`apps/${directory}/${options.name}/public/robots.txt`)
-      ).toBeTruthy();
-      expect(
         tree.exists(
-          `apps/${directory}/${options.name}/src/components/Tour.astro`
+          `apps/${directory}/${options.name}/src/layouts/Layout.astro`
         )
       ).toBeTruthy();
       expect(

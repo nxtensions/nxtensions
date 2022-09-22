@@ -1,8 +1,9 @@
-import { ExecutorContext, logger } from '@nrwl/devkit';
-import { ChildProcess, fork } from 'child_process';
+import type { ExecutorContext } from '@nrwl/devkit';
+import { logger } from '@nrwl/devkit';
+import type { ChildProcess } from 'child_process';
+import { fork } from 'child_process';
 import { removeSync } from 'fs-extra';
-import { join } from 'path';
-import { BuildExecutorOptions } from './schema';
+import type { BuildExecutorOptions } from './schema';
 
 let childProcess: ChildProcess;
 
@@ -12,10 +13,7 @@ export async function buildExecutor(
 ): Promise<{ success: boolean }> {
   options = normalizeOptions(options);
 
-  const projectRoot = join(
-    context.root,
-    context.workspace.projects[context.projectName].root
-  );
+  const projectRoot = context.workspace.projects[context.projectName].root;
 
   // TODO: use what's in the Astro config once the CLI API is available.
   // See https://github.com/snowpackjs/astro/issues/1483.
@@ -26,7 +24,7 @@ export async function buildExecutor(
   }
 
   try {
-    const exitCode = await runCliBuild(projectRoot, options);
+    const exitCode = await runCliBuild(context.root, projectRoot, options);
 
     return { success: exitCode === 0 };
   } catch (e) {
@@ -42,15 +40,19 @@ export async function buildExecutor(
 
 export default buildExecutor;
 
-function runCliBuild(projectRoot: string, options: BuildExecutorOptions) {
+function runCliBuild(
+  workspaceRoot: string,
+  projectRoot: string,
+  options: BuildExecutorOptions
+) {
   return new Promise((resolve, reject) => {
     // TODO: use Astro CLI API once it's available.
     // See https://github.com/snowpackjs/astro/issues/1483.
     childProcess = fork(
       require.resolve('astro'),
-      ['build', ...getAstroBuildArgs(options)],
+      ['build', ...getAstroBuildArgs(projectRoot, options)],
       {
-        cwd: projectRoot,
+        cwd: workspaceRoot,
         stdio: 'inherit',
       }
     );
@@ -73,15 +75,14 @@ function runCliBuild(projectRoot: string, options: BuildExecutorOptions) {
 }
 
 function normalizeOptions(options: BuildExecutorOptions): BuildExecutorOptions {
-  return {
-    deleteOutputPath: true,
-    sitemap: true,
-    ...options,
-  };
+  return { deleteOutputPath: true, ...options };
 }
 
-function getAstroBuildArgs(options: BuildExecutorOptions): string[] {
-  const args: string[] = [];
+function getAstroBuildArgs(
+  projectRoot: string,
+  options: BuildExecutorOptions
+): string[] {
+  const args: string[] = ['--root', projectRoot];
 
   if (options.config) {
     args.push('--config', options.config);
@@ -89,20 +90,14 @@ function getAstroBuildArgs(options: BuildExecutorOptions): string[] {
   if (options.drafts) {
     args.push('--drafts');
   }
-  if (options.experimentalSsr) {
-    args.push('--experimental-ssr');
-  }
-  if (options.legacyBuild) {
-    args.push('--legacy-build');
+  if (options.host !== undefined) {
+    args.push('--host', options.host.toString());
   }
   if (options.silent) {
     args.push('--silent');
   }
   if (options.site) {
     args.push('site', options.site);
-  }
-  if (options.sitemap === false) {
-    args.push('--no-sitemap');
   }
   if (options.verbose) {
     args.push('--verbose');
