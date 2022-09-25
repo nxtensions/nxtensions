@@ -1,0 +1,16 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "e2e/e2e-utils/src",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["e2e/e2e-utils/**/*.ts"]
+      }
+    }
+  },
+  "tags": ["scope:shared", "type:e2e-utils"],
+  "implicitDependencies": []
+}
