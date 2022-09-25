@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file. See [standa
 
 ## [3.0.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v2.3.0...@nxtensions/astro@v3.0.0) (2022-09-25)
 
+### ⚠ NOTICE
+
+This version adds support for the stable Astro version 1.x.x. If you're coming from a version of Astro earlier than 1.0.0, please make sure to follow the [Astro Migration Guide](https://docs.astro.build/en/migrate/).
+
+Remember to update this plugin version in your workspace by running `nx migrate @nxtensions/astro@latest`.
+
 ### Features
 
 - **astro:** support latest astro stable version (1.2.8) ([#165](https://github.com/nxtensions/nxtensions/issues/165)) ([a38e9ce](https://github.com/nxtensions/nxtensions/commit/a38e9ce6d024d9a04f6eb2b34256911f894dc582))
