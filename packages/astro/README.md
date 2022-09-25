@@ -16,7 +16,9 @@
 
 ## Prerequisites
 
-To use the plugin an [Nx workspace](https://nx.dev/l/r/getting-started/nx-setup) is required. First, install the `@nxtensions/astro` package in the workspace by running:
+To use the plugin an [Nx workspace](https://nx.dev/getting-started/intro) is required.
+
+In an Nx workspace, start by installing the `@nxtensions/astro` package in the workspace running:
 
 ```bash
 # npm
@@ -39,7 +41,7 @@ nx migrate @nxtensions/astro@latest
 
 Then follow the intructions provided when the above command finishes running.
 
-For more information on the `nx migrate` command see https://nx.dev/cli/migrate.
+For more information on the `nx migrate` command see https://nx.dev/nx/migrate.
 
 ## Generate an application
 
@@ -110,7 +112,7 @@ For more information see https://docs.astro.build/en/reference/cli-reference/#as
 To visualize the workspace graph of dependencies run:
 
 ```bash
-nx dep-graph
+nx graph
 ```
 
 ## Further reference
