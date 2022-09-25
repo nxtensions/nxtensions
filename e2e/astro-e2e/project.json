@@ -9,8 +9,15 @@
         "target": "astro:build",
         "jestConfig": "e2e/astro-e2e/jest.config.js"
       }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["e2e/astro-e2e/**/*.ts"]
+      }
     }
   },
-  "tags": [],
+  "tags": ["scope:astro", "type:e2e"],
   "implicitDependencies": ["astro"]
 }

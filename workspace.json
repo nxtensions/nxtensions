@@ -4,6 +4,7 @@
   "projects": {
     "astro": "packages/astro",
     "astro-e2e": "e2e/astro-e2e",
+    "e2e-utils": "e2e/e2e-utils",
     "tsconfig-paths-snowpack-plugin": "packages/tsconfig-paths-snowpack-plugin"
   }
 }

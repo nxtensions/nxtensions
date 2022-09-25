@@ -15,6 +15,10 @@
               {
                 "sourceTag": "scope:astro",
                 "onlyDependOnLibsWithTags": ["scope:astro", "scope:shared"]
+              },
+              {
+                "sourceTag": "type:e2e",
+                "onlyDependOnLibsWithTags": ["type:e2e-utils"]
               }
             ]
           }
