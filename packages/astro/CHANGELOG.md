@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v2.3.0...@nxtensions/astro@v3.0.0) (2022-09-25)
+
+### Features
+
+- **astro:** support latest astro stable version (1.2.8) ([#165](https://github.com/nxtensions/nxtensions/issues/165)) ([a38e9ce](https://github.com/nxtensions/nxtensions/commit/a38e9ce6d024d9a04f6eb2b34256911f894dc582))
+- **astro:** update astro to latest (1.3.0) ([#169](https://github.com/nxtensions/nxtensions/issues/169)) ([570d9b6](https://github.com/nxtensions/nxtensions/commit/570d9b6185dd4b492f3e5f98f6bf6d1c82e58bc9))
+
+### Bug Fixes
+
+- **astro:** handle new projects correctly in project graph plugin ([#168](https://github.com/nxtensions/nxtensions/issues/168)) ([d2f7ec4](https://github.com/nxtensions/nxtensions/commit/d2f7ec4b38103844f91ab9722dc7e9b91df81417))
+
 ## [2.3.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v2.2.0...@nxtensions/astro@v2.3.0) (2022-06-27)
 
 ### ⚠ NOTICE
