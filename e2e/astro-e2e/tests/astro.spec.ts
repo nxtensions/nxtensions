@@ -125,6 +125,8 @@ import { ${libComponentName} } from '@proj/${lib}';
 
       // assert the lib has been added as a dependency to the app in the project graph
       projectGraph = await readProjectGraph();
+      console.log(projectGraph.nodes);
+      console.log(projectGraph.dependencies);
       expect(
         projectGraph.dependencies[app1].some((dep) => dep.target === lib1)
       ).toBe(true);
