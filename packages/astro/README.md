@@ -1,5 +1,8 @@
 <p align="center">
-  <image src="https://user-images.githubusercontent.com/12051310/139603151-de031c74-8ccf-482a-b3d9-588c78cef9db.png" alt="Nx + Astro logo"/>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/nxtensions/nxtensions/main/assets/nx-astro-dark.png">
+    <img alt="Nx + Astro logo" src="https://raw.githubusercontent.com/nxtensions/nxtensions/main/assets/nx-astro-light.png">
+  </picture>
 </p>
 
 # @nxtensions/astro
