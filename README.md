@@ -1,5 +1,8 @@
 <p align="center">
-  <image src="https://user-images.githubusercontent.com/12051310/139595349-e479b7dc-e857-44b9-ad13-292f8404a56e.png" alt="Nxtensions logo"/>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/nxtensions/nxtensions/main/assets/nxtensions-dark.png">
+    <img alt="Nxtensions logo" src="https://raw.githubusercontent.com/nxtensions/nxtensions/main/assets/nxtensions-light.png">
+  </picture>
 </p>
 
 # Nxtensions
