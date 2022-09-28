@@ -7,11 +7,16 @@ import {
   uniq,
   updateFile,
 } from '@nrwl/nx-plugin/testing';
-import { killPorts, readProjectGraph } from '@nxtensions/e2e-utils';
+import {
+  initializeGitRepo,
+  killPorts,
+  readProjectGraph,
+} from '@nxtensions/e2e-utils';
 
 describe('astro e2e', () => {
   beforeAll(() => {
     ensureNxProject('@nxtensions/astro', 'dist/packages/astro');
+    initializeGitRepo();
   }, 600_000);
 
   it('should generate app and build correctly', async () => {
