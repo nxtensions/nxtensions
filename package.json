@@ -21,7 +21,7 @@
     "@commitlint/cli": "~17.0.3",
     "@commitlint/config-conventional": "~17.0.3",
     "@commitlint/cz-commitlint": "~17.0.3",
-    "@nrwl/cypress": "14.7.6",
+    "@nrwl/cypress": "14.8.1",
     "@nrwl/eslint-plugin-nx": "14.7.6",
     "@nrwl/jest": "14.7.6",
     "@nrwl/js": "14.7.6",
