@@ -1,5 +1,10 @@
 import * as devkit from '@nrwl/devkit';
-import { readJson, readProjectConfiguration, Tree } from '@nrwl/devkit';
+import {
+  readJson,
+  readProjectConfiguration,
+  Tree,
+  writeJson,
+} from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { libraryGenerator } from './generator';
 import { GeneratorOptions } from './schema';
@@ -153,6 +158,8 @@ describe('library generator', () => {
     });
 
     test('should not create a project.json when standaloneConfig is false', async () => {
+      writeJson(tree, 'workspace.json', { projects: {} });
+
       await libraryGenerator(tree, { ...options, standaloneConfig: false });
 
       expect(tree.exists(`libs/${options.name}/project.json`)).toBeFalsy();

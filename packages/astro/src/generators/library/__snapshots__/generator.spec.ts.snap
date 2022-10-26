@@ -3,6 +3,7 @@
 exports[`library generator should add project configuration 1`] = `
 Object {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "lib1",
   "projectType": "library",
   "root": "libs/lib1",
   "sourceRoot": "libs/lib1",

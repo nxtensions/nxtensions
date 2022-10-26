@@ -12,7 +12,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/astro"],
+      "outputs": ["{workspaceRoot}/coverage/packages/astro"],
       "options": {
         "jestConfig": "packages/astro/jest.config.ts",
         "passWithNoTests": true
@@ -43,7 +43,8 @@
             "glob": "{executors,generators,migrations}.json",
             "output": "."
           }
-        ]
+        ],
+        "updateBuildableProjectDepsInPackageJson": false
       }
     }
   },

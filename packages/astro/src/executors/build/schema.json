@@ -1,4 +1,6 @@
 {
+  "version": 2,
+  "outputCapture": "direct-nodejs",
   "$schema": "http://json-schema.org/schema",
   "$id": "NxAstroBuildExecutor",
   "cli": "nx",
@@ -22,7 +24,14 @@
     },
     "host": {
       "description": "Expose server on network.",
-      "oneOf": [{ "type": "boolean" }, { "type": "string" }]
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "string"
+        }
+      ]
     },
     "silent": {
       "type": "boolean",
