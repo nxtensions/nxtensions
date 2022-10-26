@@ -8,6 +8,7 @@ import {
   readWorkspaceConfiguration,
   Tree,
   updateWorkspaceConfiguration,
+  writeJson,
 } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import fetch from 'node-fetch';
@@ -241,6 +242,8 @@ describe('application generator', () => {
     });
 
     test('should not create a project.json when standaloneConfig is false', async () => {
+      writeJson(tree, 'workspace.json', { projects: {} });
+
       await applicationGenerator(tree, { ...options, standaloneConfig: false });
 
       expect(tree.exists(`apps/${options.name}/project.json`)).toBeFalsy();
