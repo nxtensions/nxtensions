@@ -1,20 +1,21 @@
 {
+  "name": "e2e-astro",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "sourceRoot": "e2e/astro-e2e/tests",
+  "sourceRoot": "e2e/astro/tests",
   "targets": {
     "e2e": {
       "executor": "@nrwl/nx-plugin:e2e",
       "options": {
         "target": "astro:build",
-        "jestConfig": "e2e/astro-e2e/jest.config.js"
+        "jestConfig": "e2e/astro/jest.config.js"
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["e2e/astro-e2e/**/*.ts"]
+        "lintFilePatterns": ["e2e/astro/**/*.ts"]
       }
     }
   },

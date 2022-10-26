@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'astro-e2e',
+  displayName: 'e2e-astro',
   preset: '../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -11,5 +11,5 @@ module.exports = {
     '^.+\\.[tj]s$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../coverage/e2e/astro-e2e',
+  coverageDirectory: '../../coverage/e2e/astro',
 };
