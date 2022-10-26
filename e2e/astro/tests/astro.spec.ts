@@ -12,6 +12,7 @@ import {
   killPorts,
   readProjectGraph,
 } from '@nxtensions/e2e-utils';
+import stripAnsi from 'strip-ansi';
 
 describe('astro e2e', () => {
   beforeAll(() => {
@@ -27,7 +28,7 @@ describe('astro e2e', () => {
 
     const output = await runNxCommandAsync(`build ${app}`);
 
-    expect(output.stdout).toContain(
+    expect(stripAnsi(output.stdout)).toContain(
       `Successfully ran target build for project ${app}`
     );
     expect(() => checkFilesExist(`dist/apps/${app}/index.html`)).not.toThrow();
@@ -56,7 +57,7 @@ import { ${libComponentName} } from '@proj/${lib}';
 
     const output = await runNxCommandAsync(`run ${app}:build`);
 
-    expect(output.stdout).toContain(
+    expect(stripAnsi(output.stdout)).toContain(
       `Successfully ran target build for project ${app}`
     );
     expect(() => checkFilesExist(`dist/apps/${app}`)).not.toThrow();
@@ -80,11 +81,11 @@ import { ${libComponentName} } from '@proj/${lib}';
 
     await runNxCommandAsync(`run ${app}:build`);
     const appRun = await runNxCommandAsync(`run ${app}:check`);
-    expect(appRun.stdout).toContain(
+    expect(stripAnsi(appRun.stdout)).toContain(
       `Successfully ran target check for project ${app}`
     );
     const libRun = await runNxCommandAsync(`run ${lib}:check`);
-    expect(libRun.stdout).toContain(
+    expect(stripAnsi(libRun.stdout)).toContain(
       `Successfully ran target check for project ${lib}`
     );
   }, 300_000);
@@ -95,8 +96,8 @@ import { ${libComponentName} } from '@proj/${lib}';
     await runNxCommandAsync(`generate @nxtensions/astro:app ${app}`);
     const output = await runNxCommandAsync(`run ${app}-e2e:e2e --no-watch`);
 
-    expect(output.stdout).toContain('All specs passed!');
-    expect(output.stdout).toContain(
+    expect(stripAnsi(output.stdout)).toContain('All specs passed!');
+    expect(stripAnsi(output.stdout)).toContain(
       `Successfully ran target e2e for project ${app}`
     );
 

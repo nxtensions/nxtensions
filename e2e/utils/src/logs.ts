@@ -1,4 +1,4 @@
-import * as chalk from 'chalk';
+import chalk from 'chalk';
 
 export function logInfo(title: string, body?: string): void {
   const message = `${chalk.reset.inverse.bold.white(
