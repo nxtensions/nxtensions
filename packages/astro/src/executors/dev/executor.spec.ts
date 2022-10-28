@@ -44,7 +44,7 @@ describe('Dev Executor', () => {
       projectName: 'app1',
       root: 'root',
       target: {
-        outputs: ['dist/apps/app1'],
+        outputs: ['{workspaceRoot}/dist/apps/app1'],
       },
       workspace: {
         projects: {

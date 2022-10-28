@@ -25,7 +25,7 @@ Object {
       "executor": "@nxtensions/astro:build",
       "options": Object {},
       "outputs": Array [
-        "dist/apps/app1",
+        "{workspaceRoot}/dist/apps/app1",
       ],
     },
     "check": Object {
