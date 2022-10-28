@@ -16,7 +16,7 @@ export async function applicationGenerator(
 ): Promise<GeneratorCallback | void> {
   const options = await normalizeOptions(tree, rawOptions);
 
-  const initTask = initGenerator(tree, {
+  const initTask = await initGenerator(tree, {
     addCypressTests: options.addCypressTests,
   });
 

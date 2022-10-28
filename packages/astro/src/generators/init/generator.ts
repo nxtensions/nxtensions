@@ -1,9 +1,9 @@
-import { cypressInitGenerator } from '@nrwl/cypress';
 import {
   addDependenciesToPackageJson,
   GeneratorCallback,
   Tree,
 } from '@nrwl/devkit';
+import { importNrwlCypress } from '../utilities/cypress';
 import { GeneratorOptions } from './schema';
 import {
   addProjectGraphPlugin,
@@ -15,10 +15,10 @@ import {
 } from './utilities';
 import { astroVersion } from './versions';
 
-export function initGenerator(
+export async function initGenerator(
   tree: Tree,
   options: GeneratorOptions
-): GeneratorCallback {
+): Promise<GeneratorCallback> {
   addProjectGraphPlugin(tree);
   addCheckToCacheableOperations(tree);
   updateGitignore(tree);
@@ -28,6 +28,7 @@ export function initGenerator(
 
   const tasks: GeneratorCallback[] = [];
   if (options.addCypressTests !== false) {
+    const { cypressInitGenerator } = await importNrwlCypress();
     const cypressTask = cypressInitGenerator(tree, {});
     tasks.push(cypressTask);
   }

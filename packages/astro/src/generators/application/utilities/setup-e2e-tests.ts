@@ -1,4 +1,3 @@
-import { cypressProjectGenerator } from '@nrwl/cypress';
 import {
   GeneratorCallback,
   names,
@@ -7,6 +6,7 @@ import {
   updateProjectConfiguration,
 } from '@nrwl/devkit';
 import { Linter } from '@nrwl/linter';
+import { importNrwlCypress } from '../../utilities/cypress';
 import { NormalizedGeneratorOptions } from '../schema';
 
 export async function setupE2ETests(
@@ -23,6 +23,7 @@ export async function setupE2ETests(
     : name;
   const e2eProjectName = directory.replace(/\//g, '-');
 
+  const { cypressProjectGenerator } = await importNrwlCypress();
   const cypressTask = await cypressProjectGenerator(tree, {
     name,
     project: options.projectName,

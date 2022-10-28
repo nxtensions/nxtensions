@@ -3,6 +3,7 @@ import { logger } from '@nrwl/devkit';
 import type { ChildProcess } from 'child_process';
 import { fork } from 'child_process';
 import { removeSync } from 'fs-extra';
+import { resolve } from 'path';
 import type { BuildExecutorOptions } from './schema';
 
 let childProcess: ChildProcess;
@@ -17,7 +18,14 @@ export async function buildExecutor(
 
   // TODO: use what's in the Astro config once the CLI API is available.
   // See https://github.com/snowpackjs/astro/issues/1483.
-  const outputPath = context.target?.outputs?.[0] ?? `dist/${projectRoot}`;
+  let outputPath = `dist/${projectRoot}`;
+  if (context.target?.outputs?.[0]) {
+    outputPath = resolve(
+      context.target.outputs[0]
+        .replace('{workspaceRoot}', context.root)
+        .replace('{projectRoot}', projectRoot)
+    );
+  }
 
   if (options.deleteOutputPath) {
     removeSync(outputPath);

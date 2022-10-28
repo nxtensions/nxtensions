@@ -29,7 +29,7 @@ describe('Build Executor', () => {
       projectName: 'app1',
       root: 'root',
       target: {
-        outputs: ['dist/apps/app1'],
+        outputs: ['{workspaceRoot}/dist/apps/app1'],
       },
       workspace: {
         projects: {
@@ -83,7 +83,9 @@ describe('Build Executor', () => {
 
     await buildExecutor({ deleteOutputPath: true }, context);
 
-    expect(fsExtra.removeSync).toHaveBeenCalledWith(context.target.outputs[0]);
+    expect(fsExtra.removeSync).toHaveBeenCalledWith(
+      expect.stringContaining('dist/apps/app1')
+    );
   });
 
   test('should not delete output path when "deleteOuputPath" is set to false', async () => {

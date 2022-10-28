@@ -1,10 +1,20 @@
-import { addProjectConfiguration, Tree } from '@nrwl/devkit';
-import { NormalizedGeneratorOptions } from '../schema';
+import type { Tree } from '@nrwl/devkit';
+import { addProjectConfiguration, joinPathFragments } from '@nrwl/devkit';
+import { gte } from 'semver';
+import type { NormalizedGeneratorOptions } from '../schema';
 
 export function addProject(
   tree: Tree,
   options: NormalizedGeneratorOptions
 ): void {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const { version: nxVersion } = require('nx/package.json');
+  const outputDirectory = joinPathFragments(
+    gte(nxVersion, '15.0.0') ? '{workspaceRoot}' : '',
+    'dist',
+    options.projectRoot
+  );
+
   addProjectConfiguration(
     tree,
     options.projectName,
@@ -14,7 +24,7 @@ export function addProject(
       sourceRoot: `${options.projectRoot}/src`,
       targets: {
         build: {
-          outputs: [`dist/${options.projectRoot}`],
+          outputs: [outputDirectory],
           executor: '@nxtensions/astro:build',
           options: {},
         },
