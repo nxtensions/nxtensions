@@ -1,5 +1,6 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "tsconfig-paths-snowpack-plugin",
   "sourceRoot": "packages/tsconfig-paths-snowpack-plugin/src",
   "projectType": "library",
   "targets": {
