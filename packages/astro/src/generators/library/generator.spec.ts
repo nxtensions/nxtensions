@@ -27,6 +27,17 @@ describe('library generator', () => {
   test('should generate files', async () => {
     await libraryGenerator(tree, options);
 
+    expect(tree.exists(`${options.name}/src/index.js`)).toBeTruthy();
+    expect(tree.exists(`${options.name}/src/lib/Lib1.astro`)).toBeTruthy();
+    expect(tree.exists(`${options.name}/README.md`)).toBeTruthy();
+    expect(tree.exists(`${options.name}/tsconfig.json`)).toBeTruthy();
+  });
+
+  test('should generate files in a monorepo layout', async () => {
+    tree.write('libs/.gitkeep', '');
+
+    await libraryGenerator(tree, options);
+
     expect(tree.exists(`libs/${options.name}/src/index.js`)).toBeTruthy();
     expect(tree.exists(`libs/${options.name}/src/lib/Lib1.astro`)).toBeTruthy();
     expect(tree.exists(`libs/${options.name}/README.md`)).toBeTruthy();
@@ -38,7 +49,7 @@ describe('library generator', () => {
 
     const { compilerOptions } = readJson(tree, 'tsconfig.base.json');
     expect(compilerOptions.paths[`@proj/${options.name}`]).toStrictEqual([
-      `libs/${options.name}/src/index.js`,
+      `${options.name}/src/index.js`,
     ]);
   });
 
@@ -67,6 +78,25 @@ describe('library generator', () => {
       await libraryGenerator(tree, { ...options, directory });
 
       expect(
+        tree.exists(`${directory}/${options.name}/src/index.js`)
+      ).toBeTruthy();
+      expect(
+        tree.exists(`${directory}/${options.name}/src/lib/Lib1.astro`)
+      ).toBeTruthy();
+      expect(
+        tree.exists(`${directory}/${options.name}/README.md`)
+      ).toBeTruthy();
+      expect(
+        tree.exists(`${directory}/${options.name}/tsconfig.json`)
+      ).toBeTruthy();
+    });
+
+    test('should generate files in the right directory in a monorepo layout', async () => {
+      tree.write('libs/.gitkeep', '');
+
+      await libraryGenerator(tree, { ...options, directory });
+
+      expect(
         tree.exists(`libs/${directory}/${options.name}/src/index.js`)
       ).toBeTruthy();
       expect(
@@ -88,7 +118,7 @@ describe('library generator', () => {
         compilerOptions.paths[
           `@proj/some-directory-sub-directory-${options.name}`
         ]
-      ).toStrictEqual([`libs/${directory}/${options.name}/src/index.js`]);
+      ).toStrictEqual([`${directory}/${options.name}/src/index.js`]);
     });
   });
 
@@ -105,7 +135,7 @@ describe('library generator', () => {
     test('should not generate a package.json when publishable is false', async () => {
       await libraryGenerator(tree, { ...options, publishable: false });
 
-      expect(tree.exists(`libs/${options.name}/package.json`)).toBeFalsy();
+      expect(tree.exists(`${options.name}/package.json`)).toBeFalsy();
     });
 
     test('should throw when publishable is true and importPath was not specified', async () => {
@@ -121,7 +151,7 @@ describe('library generator', () => {
         importPath: 'lib1',
       });
 
-      expect(tree.exists(`libs/${options.name}/package.json`)).toBeTruthy();
+      expect(tree.exists(`${options.name}/package.json`)).toBeTruthy();
     });
   });
 
@@ -135,7 +165,7 @@ describe('library generator', () => {
         publishable: true,
       });
 
-      expect(readJson(tree, `libs/${options.name}/package.json`).name).toBe(
+      expect(readJson(tree, `${options.name}/package.json`).name).toBe(
         importPath
       );
     });
@@ -145,7 +175,7 @@ describe('library generator', () => {
 
       const { compilerOptions } = readJson(tree, 'tsconfig.base.json');
       expect(compilerOptions.paths[importPath]).toStrictEqual([
-        `libs/${options.name}/src/index.js`,
+        `${options.name}/src/index.js`,
       ]);
     });
   });
@@ -154,7 +184,7 @@ describe('library generator', () => {
     test('should create a project.json when standaloneConfig is true', async () => {
       await libraryGenerator(tree, { ...options, standaloneConfig: true });
 
-      expect(tree.exists(`libs/${options.name}/project.json`)).toBeTruthy();
+      expect(tree.exists(`${options.name}/project.json`)).toBeTruthy();
     });
 
     test('should not create a project.json when standaloneConfig is false', async () => {
@@ -162,7 +192,7 @@ describe('library generator', () => {
 
       await libraryGenerator(tree, { ...options, standaloneConfig: false });
 
-      expect(tree.exists(`libs/${options.name}/project.json`)).toBeFalsy();
+      expect(tree.exists(`${options.name}/project.json`)).toBeFalsy();
       const project = readProjectConfiguration(tree, options.name);
       expect(project).toBeTruthy();
     });

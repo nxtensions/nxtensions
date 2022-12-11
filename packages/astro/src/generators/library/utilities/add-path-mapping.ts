@@ -1,5 +1,6 @@
-import { Tree, updateJson } from '@nrwl/devkit';
-import { NormalizedGeneratorOptions } from '../schema';
+import type { Tree } from '@nrwl/devkit';
+import { joinPathFragments, updateJson } from '@nrwl/devkit';
+import type { NormalizedGeneratorOptions } from '../schema';
 
 export function addPathMapping(
   tree: Tree,
@@ -14,7 +15,9 @@ export function addPathMapping(
   updateJson(tree, rootTsConfigPath, (json) => {
     const c = json.compilerOptions;
     c.paths = c.paths ?? {};
-    c.paths[options.importPath] = [`${options.projectRoot}/src/index.js`];
+    c.paths[options.importPath] = [
+      joinPathFragments(options.projectRoot, 'src/index.js'),
+    ];
 
     return json;
   });
