@@ -1,11 +1,12 @@
 jest.mock('@nrwl/cypress');
 
 import { cypressInitGenerator } from '@nrwl/cypress';
+import type { Tree } from '@nrwl/devkit';
 import {
   readJson,
   readWorkspaceConfiguration,
-  Tree,
   updateJson,
+  updateWorkspaceConfiguration,
 } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { initGenerator } from './generator';
@@ -33,6 +34,20 @@ describe('init generator', () => {
     expect(
       workspace.tasksRunnerOptions.default.options.cacheableOperations
     ).toContain('check');
+  });
+
+  test('should add the check target defaults', async () => {
+    let workspace = readWorkspaceConfiguration(tree);
+    workspace.namedInputs ??= { production: [] };
+    workspace.targetDefaults ??= {};
+    updateWorkspaceConfiguration(tree, workspace);
+
+    await initGenerator(tree, {});
+
+    workspace = readWorkspaceConfiguration(tree);
+    expect(workspace.targetDefaults.check).toStrictEqual({
+      inputs: ['production', '^production'],
+    });
   });
 
   test('should correct node_modules entry in .gitignore file when only targeting root', async () => {
