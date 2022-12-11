@@ -1,17 +1,14 @@
-import {
-  addDependenciesToPackageJson,
-  GeneratorCallback,
-  Tree,
-} from '@nrwl/devkit';
+import type { GeneratorCallback, Tree } from '@nrwl/devkit';
+import { addDependenciesToPackageJson } from '@nrwl/devkit';
 import { importNrwlCypress } from '../utilities/cypress';
-import { GeneratorOptions } from './schema';
+import type { GeneratorOptions } from './schema';
 import {
   addProjectGraphPlugin,
-  updateGitignore,
   addVSCodeRecommendedExtensions,
-  addCheckToCacheableOperations,
   patchNxCli,
   setupNpmrc,
+  updateGitignore,
+  updateWorkspaceConfiguration,
 } from './utilities';
 import { astroVersion } from './versions';
 
@@ -20,7 +17,7 @@ export async function initGenerator(
   options: GeneratorOptions
 ): Promise<GeneratorCallback> {
   addProjectGraphPlugin(tree);
-  addCheckToCacheableOperations(tree);
+  updateWorkspaceConfiguration(tree);
   updateGitignore(tree);
   addVSCodeRecommendedExtensions(tree);
   patchNxCli(tree);
