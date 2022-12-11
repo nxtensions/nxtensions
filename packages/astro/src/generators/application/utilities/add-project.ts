@@ -9,11 +9,9 @@ export function addProject(
 ): void {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const { version: nxVersion } = require('nx/package.json');
-  const outputDirectory = joinPathFragments(
-    gte(nxVersion, '15.0.0') ? '{workspaceRoot}' : '',
-    'dist',
-    options.projectRoot
-  );
+  const outputDirectory = gte(nxVersion, '15.0.0')
+    ? joinPathFragments('{workspaceRoot}', 'dist', '{projectRoot}')
+    : joinPathFragments('dist', options.projectRoot);
 
   addProjectConfiguration(
     tree,
@@ -21,7 +19,7 @@ export function addProject(
     {
       root: options.projectRoot,
       projectType: 'application',
-      sourceRoot: `${options.projectRoot}/src`,
+      sourceRoot: joinPathFragments(options.projectRoot, 'src'),
       targets: {
         build: {
           outputs: [outputDirectory],

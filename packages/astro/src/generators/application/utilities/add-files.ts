@@ -1,16 +1,18 @@
+import type { Tree } from '@nrwl/devkit';
 import {
   generateFiles,
   joinPathFragments,
   names,
   offsetFromRoot,
-  Tree,
 } from '@nrwl/devkit';
-import { NormalizedGeneratorOptions } from '../schema';
+import type { NormalizedGeneratorOptions } from '../schema';
 
 export function addFiles(
   tree: Tree,
   options: NormalizedGeneratorOptions
 ): void {
+  const rootOffset = offsetFromRoot(options.projectRoot);
+
   generateFiles(
     tree,
     joinPathFragments(__dirname, '..', 'files', 'project'),
@@ -18,7 +20,8 @@ export function addFiles(
     {
       ...options,
       ...names(options.name),
-      offsetFromRoot: offsetFromRoot(options.projectRoot),
+      offsetFromRoot: rootOffset,
+      outDir: joinPathFragments(rootOffset, 'dist', options.projectRoot),
       tmpl: '',
     }
   );

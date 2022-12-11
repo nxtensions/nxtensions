@@ -6,7 +6,7 @@ import solid from '@astrojs/solid-js';
 import vue from '@astrojs/vue';
 
 export default defineConfig({
-  outDir: '../../dist/apps/app1',
+  outDir: '../dist/app1',
   integrations: [solid(),vue()],
 });
 "
@@ -14,18 +14,18 @@ export default defineConfig({
 
 exports[`application generator should add project configuration 1`] = `
 Object {
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
   "name": "app1",
   "projectType": "application",
-  "root": "apps/app1",
-  "sourceRoot": "apps/app1/src",
+  "root": "app1",
+  "sourceRoot": "app1/src",
   "tags": Array [],
   "targets": Object {
     "build": Object {
       "executor": "@nxtensions/astro:build",
       "options": Object {},
       "outputs": Array [
-        "{workspaceRoot}/dist/apps/app1",
+        "{workspaceRoot}/dist/{projectRoot}",
       ],
     },
     "check": Object {

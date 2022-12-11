@@ -1,6 +1,7 @@
-import { getWorkspaceLayout, names, Tree } from '@nrwl/devkit';
+import type { Tree } from '@nrwl/devkit';
+import { getWorkspaceLayout, joinPathFragments, names } from '@nrwl/devkit';
 import fetch from 'node-fetch';
-import {
+import type {
   GeneratorOptions,
   IntegrationInfo,
   NormalizedGeneratorOptions,
@@ -17,7 +18,7 @@ export async function normalizeOptions(
     ? `${names(options.directory).fileName}/${name}`
     : name;
   const projectName = directory.replace(/\//g, '-');
-  const projectRoot = `${appsDir}/${directory}`;
+  const projectRoot = joinPathFragments(appsDir, directory);
   const tags = options.tags
     ? options.tags.split(',').map((tag) => tag.trim())
     : [];

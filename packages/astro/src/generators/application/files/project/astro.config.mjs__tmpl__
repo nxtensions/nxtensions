@@ -4,6 +4,6 @@ import { defineConfig } from "astro/config";<% if (integrations.length > 0) { %>
   .join('\n') %><% } %>
 
 export default defineConfig({
-  outDir: '<%= offsetFromRoot %>dist/<%= projectRoot %>',<% if (integrations.length > 0) { %>
+  outDir: '<%= outDir %>',<% if (integrations.length > 0) { %>
   integrations: [<%= integrations.map(({ name }) => `${name}()`) %>],<% } %>
 });

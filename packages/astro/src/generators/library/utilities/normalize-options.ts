@@ -1,5 +1,6 @@
-import { getWorkspaceLayout, names, Tree } from '@nrwl/devkit';
-import { GeneratorOptions, NormalizedGeneratorOptions } from '../schema';
+import type { Tree } from '@nrwl/devkit';
+import { getWorkspaceLayout, joinPathFragments, names } from '@nrwl/devkit';
+import type { GeneratorOptions, NormalizedGeneratorOptions } from '../schema';
 
 export function normalizeOptions(
   tree: Tree,
@@ -12,7 +13,7 @@ export function normalizeOptions(
     ? `${names(options.directory).fileName}/${name}`
     : name;
   const projectName = directory.replace(new RegExp('/', 'g'), '-');
-  const projectRoot = `${libsDir}/${directory}`;
+  const projectRoot = joinPathFragments(libsDir, directory);
   const importPath = options.importPath || `@${npmScope}/${projectName}`;
   const tags = options.tags ? options.tags.split(',').map((s) => s.trim()) : [];
 

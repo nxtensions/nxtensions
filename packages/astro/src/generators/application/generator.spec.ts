@@ -52,6 +52,23 @@ describe('application generator', () => {
   test('should generate files', async () => {
     await applicationGenerator(tree, options);
 
+    expect(tree.exists(`${options.name}/public/favicon.svg`)).toBeTruthy();
+    expect(
+      tree.exists(`${options.name}/src/components/Card.astro`)
+    ).toBeTruthy();
+    expect(
+      tree.exists(`${options.name}/src/layouts/Layout.astro`)
+    ).toBeTruthy();
+    expect(tree.exists(`${options.name}/src/pages/index.astro`)).toBeTruthy();
+    expect(tree.exists(`${options.name}/astro.config.mjs`)).toBeTruthy();
+    expect(tree.exists(`${options.name}/tsconfig.json`)).toBeTruthy();
+  });
+
+  test('should generate files in the right location in a monorepo layout', async () => {
+    tree.write('apps/.gitkeep', '');
+
+    await applicationGenerator(tree, options);
+
     expect(tree.exists(`apps/${options.name}/public/favicon.svg`)).toBeTruthy();
     expect(
       tree.exists(`apps/${options.name}/src/components/Card.astro`)
@@ -88,6 +105,32 @@ describe('application generator', () => {
     });
 
     test('should generate files in the right directory', async () => {
+      const directory = 'some-directory/sub-directory';
+
+      await applicationGenerator(tree, { ...options, directory });
+
+      expect(
+        tree.exists(`${directory}/${options.name}/public/favicon.svg`)
+      ).toBeTruthy();
+      expect(
+        tree.exists(`${directory}/${options.name}/src/components/Card.astro`)
+      ).toBeTruthy();
+      expect(
+        tree.exists(`${directory}/${options.name}/src/layouts/Layout.astro`)
+      ).toBeTruthy();
+      expect(
+        tree.exists(`${directory}/${options.name}/src/pages/index.astro`)
+      ).toBeTruthy();
+      expect(
+        tree.exists(`${directory}/${options.name}/astro.config.mjs`)
+      ).toBeTruthy();
+      expect(
+        tree.exists(`${directory}/${options.name}/tsconfig.json`)
+      ).toBeTruthy();
+    });
+
+    test('should generate files in the right directory in a monorepo layout', async () => {
+      tree.write('apps/.gitkeep', '');
       const directory = 'some-directory/sub-directory';
 
       await applicationGenerator(tree, { ...options, directory });
@@ -147,7 +190,7 @@ describe('application generator', () => {
       });
 
       expect(
-        tree.read(`apps/${options.name}/astro.config.mjs`, 'utf-8')
+        tree.read(`${options.name}/astro.config.mjs`, 'utf-8')
       ).toMatchSnapshot();
     });
 
@@ -238,7 +281,7 @@ describe('application generator', () => {
     test('should create a project.json when standaloneConfig is true', async () => {
       await applicationGenerator(tree, { ...options, standaloneConfig: true });
 
-      expect(tree.exists(`apps/${options.name}/project.json`)).toBeTruthy();
+      expect(tree.exists(`${options.name}/project.json`)).toBeTruthy();
     });
 
     test('should not create a project.json when standaloneConfig is false', async () => {
@@ -246,7 +289,7 @@ describe('application generator', () => {
 
       await applicationGenerator(tree, { ...options, standaloneConfig: false });
 
-      expect(tree.exists(`apps/${options.name}/project.json`)).toBeFalsy();
+      expect(tree.exists(`${options.name}/project.json`)).toBeFalsy();
       const project = readProjectConfiguration(tree, options.name);
       expect(project).toBeTruthy();
     });
@@ -258,7 +301,7 @@ describe('application generator', () => {
 
       await applicationGenerator(tree, { ...options, addCypressTests: false });
 
-      expect(tree.exists(`apps/${e2eProjectName}`)).toBeFalsy();
+      expect(tree.exists(`${e2eProjectName}`)).toBeFalsy();
       const projects = getProjects(tree);
       expect(projects.has(e2eProjectName)).toBeFalsy();
     });
@@ -268,7 +311,7 @@ describe('application generator', () => {
 
       await applicationGenerator(tree, options);
 
-      expect(tree.exists(`apps/${e2eProjectName}`)).toBeTruthy();
+      expect(tree.exists(`${e2eProjectName}`)).toBeTruthy();
       expect(readProjectConfiguration(tree, e2eProjectName)).toBeTruthy();
     });
 
@@ -277,7 +320,7 @@ describe('application generator', () => {
 
       await applicationGenerator(tree, { ...options, addCypressTests: true });
 
-      expect(tree.exists(`apps/${e2eProjectName}`)).toBeTruthy();
+      expect(tree.exists(`${e2eProjectName}`)).toBeTruthy();
       expect(readProjectConfiguration(tree, e2eProjectName)).toBeTruthy();
     });
 
@@ -304,7 +347,7 @@ describe('application generator', () => {
         addCypressTests: true,
       });
 
-      expect(tree.exists(`apps/${directory}/${options.name}-e2e`)).toBeTruthy();
+      expect(tree.exists(`${directory}/${options.name}-e2e`)).toBeTruthy();
       const e2eProject = readProjectConfiguration(tree, e2eProjectName);
       expect(e2eProject.targets.e2e).toBeTruthy();
     });
