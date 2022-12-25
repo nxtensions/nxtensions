@@ -27,6 +27,11 @@
       "aliases": ["lib"],
       "x-type": "library",
       "description": "Generates an Astro library."
+    },
+    "preset": {
+      "factory": "./src/generators/preset/generator",
+      "schema": "./src/generators/preset/schema.json",
+      "description": "Preset generator to be used with `create-nx-workspace` to generate a workspace with an Astro application."
     }
   }
 }
