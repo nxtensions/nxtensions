@@ -11,17 +11,28 @@
 
 ## Features
 
+- Nx preset to create a workspace with an Astro application.
 - Generators for scaffolding Astro applications and libraries.
 - Generators for scaffolding Astro components.
 - Cypress tests for Astro applications.
 - Executors to run builds, start the Astro development server, start a local static file server to preview built applications, and run diagnostic checks against projects.
 - Nx project graph plugin to visualize Astro project dependencies.
 
-## Prerequisites
+## Create a new Nx workspace with an Astro application
 
-To use the plugin an [Nx workspace](https://nx.dev/getting-started/intro) is required.
+To create a new Nx workspace with an Astro application you can run:
 
-In an Nx workspace, start by installing the `@nxtensions/astro` package in the workspace running:
+```bash
+npx create-nx-workspace@latest --preset=@nxtensions/astro
+```
+
+And follow the instructions.
+
+> **Note**: By default, the above command will use `npm` as the package manager. You can provide the `--pm` flag with a value of `yarn` or `pnpm` if you prefer using one of those instead.
+
+## Add the plugin to an existing Nx workspace
+
+In an existing Nx workspace, install the `@nxtensions/astro` package in the workspace by running:
 
 ```bash
 # npm
