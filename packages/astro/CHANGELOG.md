@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v3.1.0...@nxtensions/astro@v3.2.0) (2022-12-25)
+
+### Features
+
+- **astro:** add a preset generator ([#270](https://github.com/nxtensions/nxtensions/issues/270)) ([235ac6b](https://github.com/nxtensions/nxtensions/commit/235ac6bf7d3e90ac27f4196467e7cbbe63d6db23))
+- **astro:** generate check target defaults ([#253](https://github.com/nxtensions/nxtensions/issues/253)) ([37278df](https://github.com/nxtensions/nxtensions/commit/37278df758b07e283936903b0a45861d2a19064f))
+
 ## [3.1.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v3.0.0...@nxtensions/astro@v3.1.0) (2022-10-28)
 
 ### Features
