@@ -6,5 +6,8 @@
     ".": "./src/index.ts"
   },
   "files": ["src"],
-  "keywords": ["astro-component"]
+  "keywords": ["astro-component"],
+  "peerDependencies": {
+    "astro": "^1.0.0"
+  }
 }
