@@ -1,5 +1,8 @@
 import type { GeneratorCallback, Tree } from '@nrwl/devkit';
-import { addDependenciesToPackageJson } from '@nrwl/devkit';
+import {
+  addDependenciesToPackageJson,
+  readWorkspaceConfiguration,
+} from '@nrwl/devkit';
 import { importNrwlCypress } from '../utilities/cypress';
 import type { GeneratorOptions } from './schema';
 import {
@@ -16,6 +19,12 @@ export async function initGenerator(
   tree: Tree,
   options: GeneratorOptions
 ): Promise<GeneratorCallback> {
+  const workspace = readWorkspaceConfiguration(tree);
+  if (workspace.plugins?.includes('@nxtensions/astro')) {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    return () => {};
+  }
+
   addProjectGraphPlugin(tree);
   updateWorkspaceConfiguration(tree);
   updateGitignore(tree);
