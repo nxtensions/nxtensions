@@ -20,6 +20,11 @@
       "implementation": "./src/executors/preview/executor",
       "schema": "./src/executors/preview/schema.json",
       "description": "Starts a local static file server to serve the application built artifacts."
+    },
+    "sync": {
+      "implementation": "./src/executors/sync/executor",
+      "schema": "./src/executors/sync/schema.json",
+      "description": "Generates TypeScript types for all Astro modules. Note: only available in Astro v1.8.0."
     }
   }
 }

@@ -45,6 +45,9 @@ Object {
       "executor": "@nxtensions/astro:preview",
       "options": Object {},
     },
+    "sync": Object {
+      "executor": "@nxtensions/astro:sync",
+    },
   },
 }
 `;
