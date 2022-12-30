@@ -121,6 +121,18 @@ nx check my-app
 
 For more information see https://docs.astro.build/en/reference/cli-reference/#astro-check.
 
+## Sync
+
+> **Note**: This is available for Astro versions equal or greater than 1.8.0.
+
+To generate TypeScript types for all Astro modules for a project, run:
+
+```bash
+nx sync my-app
+```
+
+For more information see https://docs.astro.build/en/reference/cli-reference/#astro-sync.
+
 ## Project graph
 
 To visualize the workspace graph of dependencies run:
