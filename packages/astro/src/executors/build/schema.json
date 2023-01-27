@@ -9,8 +9,7 @@
   "properties": {
     "config": {
       "type": "string",
-      "description": "Specify the path, relative to the project root, to the Astro config file.",
-      "default": "astro.config.mjs"
+      "description": "Specify the path, relative to the project root, to the Astro config file."
     },
     "drafts": {
       "type": "boolean",
