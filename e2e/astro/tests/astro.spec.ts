@@ -90,7 +90,7 @@ import { ${libComponentName} } from '@proj/${lib}';
     );
   }, 300_000);
 
-  it('should generate TypeScript types for Astro modules correctly', async () => {
+  it('should generate TypeScript types for content collections correctly', async () => {
     const app = uniq('app');
 
     await runNxCommandAsync(`generate @nxtensions/astro:app ${app}`);
@@ -100,9 +100,6 @@ import { ${libComponentName} } from '@proj/${lib}';
 
       export default defineConfig({
         outDir: '../../dist/apps/${app}',
-        experimental: {
-          contentCollections: true,
-        },
       });`
     );
     updateFile(
@@ -110,10 +107,11 @@ import { ${libComponentName} } from '@proj/${lib}';
       `import { z, defineCollection } from 'astro:content';
 
       const blog = defineCollection({
-        schema: {
+        schema: z.object({
           title: z.string(),
-          version: z.number(),
-        },
+          tags: z.array(z.string()),
+          image: z.string().optional(),
+        }),
       });
 
       export const collections = { blog };`
@@ -125,6 +123,9 @@ import { ${libComponentName} } from '@proj/${lib}';
       `Successfully ran target sync for project ${app}`
     );
     checkFilesExist(`apps/${app}/.astro/types.d.ts`);
+    expect(readFile(`apps/${app}/src/env.d.ts`)).toContain(
+      '/// <reference path="../.astro/types.d.ts" />'
+    );
   }, 300_000);
 
   it('should generate e2e tests for an app and test correctly', async () => {
