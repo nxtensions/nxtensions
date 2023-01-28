@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.3.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v3.2.0...@nxtensions/astro@v3.3.0) (2023-01-28)
+
+### Features
+
+- **astro:** add support for astro v2 ([#297](https://github.com/nxtensions/nxtensions/issues/297)) ([3a333d9](https://github.com/nxtensions/nxtensions/commit/3a333d9b3b5d9a9337fa73884fc861bd14ce352a))
+- **astro:** add sync executor ([#277](https://github.com/nxtensions/nxtensions/issues/277)) ([0a9931c](https://github.com/nxtensions/nxtensions/commit/0a9931cd2b224ef6ef74f3f47fb032594ed23393))
+- **astro:** generate astro as a peer dependency for publishable libraries ([#276](https://github.com/nxtensions/nxtensions/issues/276)) ([e3e3c38](https://github.com/nxtensions/nxtensions/commit/e3e3c3855fa3b4ee64e9c348ca1eef44a1ab83e7))
+- **astro:** generate new workspaces with astro ^1.8.0 ([#278](https://github.com/nxtensions/nxtensions/issues/278)) ([9dac5c1](https://github.com/nxtensions/nxtensions/commit/9dac5c18b80eeaf1db947a399a76868fd9866656))
+
+### Bug Fixes
+
+- **astro:** ensure the plugin is not initialized multiple times ([#279](https://github.com/nxtensions/nxtensions/issues/279)) ([73cc94f](https://github.com/nxtensions/nxtensions/commit/73cc94fbb8c1a15cc42937e7c9c46b2b90c812c9))
+- **astro:** fix build executor support for astro supported config file types ([#294](https://github.com/nxtensions/nxtensions/issues/294)) ([dbc98f3](https://github.com/nxtensions/nxtensions/commit/dbc98f31986ad5b60b6a0230abc3ae4548bc1bec))
+
 ## [3.2.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v3.1.0...@nxtensions/astro@v3.2.0) (2022-12-25)
 
 ### Features
