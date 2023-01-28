@@ -4,10 +4,10 @@ import * as devkit from '@nrwl/devkit';
 import {
   getProjects,
   readJson,
+  readNxJson,
   readProjectConfiguration,
-  readWorkspaceConfiguration,
   Tree,
-  updateWorkspaceConfiguration,
+  updateNxJson,
   writeJson,
 } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
@@ -32,20 +32,20 @@ describe('application generator', () => {
   });
 
   test('should not set the default project when it is already set', async () => {
-    let config = readWorkspaceConfiguration(tree);
+    let config = readNxJson(tree);
     config.defaultProject = 'other-app';
-    updateWorkspaceConfiguration(tree, config);
+    updateNxJson(tree, config);
 
     await applicationGenerator(tree, options);
 
-    config = readWorkspaceConfiguration(tree);
+    config = readNxJson(tree);
     expect(config.defaultProject).toBe('other-app');
   });
 
   test('should set the default project when it is not set', async () => {
     await applicationGenerator(tree, options);
 
-    const config = readWorkspaceConfiguration(tree);
+    const config = readNxJson(tree);
     expect(config.defaultProject).toBe(options.name);
   });
 

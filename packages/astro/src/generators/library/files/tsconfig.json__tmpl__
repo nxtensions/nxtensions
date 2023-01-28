@@ -16,11 +16,11 @@
     "forceConsistentCasingInFileNames": true,
     // Properly support importing CJS modules in ESM
     "esModuleInterop": true,
+    // Skip typechecking libraries and .d.ts files
+    "skipLibCheck": true,
     // Enable strict mode
     "strict": true,
     // Error when a value import is only used as a type
-    "importsNotUsedAsValues": "error",
-    // Add Vite's client types
-    "types": ["astro/client"]
+    "importsNotUsedAsValues": "error"
   }
 }
