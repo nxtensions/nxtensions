@@ -1,11 +1,11 @@
 import * as devkit from '@nrwl/devkit';
 import {
   addProjectConfiguration,
+  readNxJson,
   readProjectConfiguration,
-  readWorkspaceConfiguration,
   removeProjectConfiguration,
   Tree,
-  updateWorkspaceConfiguration,
+  updateNxJson,
 } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import addCheckTarget from './add-check-target';
@@ -87,23 +87,23 @@ describe('add-check-target migration', () => {
   test('should add the check target to the cacheable operations', async () => {
     await addCheckTarget(tree);
 
-    const workspace = readWorkspaceConfiguration(tree);
+    const workspace = readNxJson(tree);
     expect(
       workspace.tasksRunnerOptions.default.options.cacheableOperations
     ).toContain('check');
   });
 
   test('should add the check target to multiple runners', async () => {
-    let workspace = readWorkspaceConfiguration(tree);
+    let workspace = readNxJson(tree);
     workspace.tasksRunnerOptions.runner2 = {
       runner: 'some-awesome-runner',
       options: { cacheableOperations: ['build', 'lint', 'test', 'e2e'] },
     };
-    updateWorkspaceConfiguration(tree, workspace);
+    updateNxJson(tree, workspace);
 
     await addCheckTarget(tree);
 
-    workspace = readWorkspaceConfiguration(tree);
+    workspace = readNxJson(tree);
     expect(
       workspace.tasksRunnerOptions.default.options.cacheableOperations
     ).toContain('check');
@@ -113,15 +113,15 @@ describe('add-check-target migration', () => {
   });
 
   test('should not add the check target twice when it is already in the cacheable operations', async () => {
-    let workspace = readWorkspaceConfiguration(tree);
+    let workspace = readNxJson(tree);
     workspace.tasksRunnerOptions.default.options.cacheableOperations.push(
       'check'
     );
-    updateWorkspaceConfiguration(tree, workspace);
+    updateNxJson(tree, workspace);
 
     await addCheckTarget(tree);
 
-    workspace = readWorkspaceConfiguration(tree);
+    workspace = readNxJson(tree);
     expect(
       workspace.tasksRunnerOptions.default.options.cacheableOperations
     ).toStrictEqual(['build', 'lint', 'test', 'e2e', 'check']);

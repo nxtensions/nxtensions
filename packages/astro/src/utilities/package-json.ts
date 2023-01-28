@@ -43,7 +43,10 @@ export function readModulePackageJson(
       paths: requirePaths,
     });
   } catch {
-    packageJsonPath = foo(moduleSpecifier, requirePaths);
+    packageJsonPath = findPackageJsonPathFromModuleSpecifier(
+      moduleSpecifier,
+      requirePaths
+    );
   }
 
   if (!packageJsonPath) {
@@ -60,7 +63,10 @@ export function readModulePackageJson(
   return packageJson;
 }
 
-function foo(moduleSpecifier: string, requirePaths: string[]): string | null {
+function findPackageJsonPathFromModuleSpecifier(
+  moduleSpecifier: string,
+  requirePaths: string[]
+): string | null {
   try {
     const entryPoint = require.resolve(moduleSpecifier, {
       paths: requirePaths,

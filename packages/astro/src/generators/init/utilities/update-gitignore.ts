@@ -14,4 +14,9 @@ export function updateGitignore(tree: Tree): void {
     gitignore += '\nnode_modules\n';
     tree.write('.gitignore', gitignore);
   }
+
+  if (!/^\.astro$/gm.test(gitignore)) {
+    gitignore += '\n.astro\n';
+    tree.write('.gitignore', gitignore);
+  }
 }

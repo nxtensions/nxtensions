@@ -124,7 +124,7 @@ import { ${libComponentName} } from '@proj/${lib}';
     expect(stripAnsi(output.stdout)).toContain(
       `Successfully ran target sync for project ${app}`
     );
-    checkFilesExist(`apps/${app}/src/content/types.generated.d.ts`);
+    checkFilesExist(`apps/${app}/.astro/types.d.ts`);
   }, 300_000);
 
   it('should generate e2e tests for an app and test correctly', async () => {
