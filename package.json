@@ -44,7 +44,7 @@
     "@typescript-eslint/parser": "5.41.0",
     "astro": "~2.0.2",
     "commitizen": "~4.3.0",
-    "eslint": "8.19.0",
+    "eslint": "8.33.0",
     "eslint-config-prettier": "~8.6.0",
     "fs-extra": "~11.1.0",
     "husky": "~8.0.3",
