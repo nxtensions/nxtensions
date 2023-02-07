@@ -40,7 +40,7 @@
     "@types/node-fetch": "~2.6.2",
     "@types/standard-version": "~7.0.1",
     "@types/tcp-port-used": "~1.0.1",
-    "@typescript-eslint/eslint-plugin": "5.41.0",
+    "@typescript-eslint/eslint-plugin": "5.51.0",
     "@typescript-eslint/parser": "5.41.0",
     "astro": "~2.0.2",
     "commitizen": "~4.3.0",
