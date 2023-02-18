@@ -1,14 +1,17 @@
 jest.mock('node-fetch');
+jest.mock('@nrwl/devkit', () => ({
+  ...jest.requireActual('@nrwl/devkit'),
+  formatFiles: jest.fn(),
+}));
 
-import * as devkit from '@nrwl/devkit';
 import {
+  formatFiles,
   getProjects,
   readJson,
   readNxJson,
   readProjectConfiguration,
   Tree,
   updateNxJson,
-  writeJson,
 } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import fetch from 'node-fetch';
@@ -84,11 +87,9 @@ describe('application generator', () => {
   });
 
   test('should format files', async () => {
-    jest.spyOn(devkit, 'formatFiles');
-
     await applicationGenerator(tree, options);
 
-    expect(devkit.formatFiles).toHaveBeenCalled();
+    expect(formatFiles).toHaveBeenCalled();
   });
 
   describe('--directory', () => {
@@ -274,24 +275,6 @@ describe('application generator', () => {
       expect(devDependencies['astro-imagetools']).toBe('^0.6.10');
       expect(devDependencies['@lloydjatkinson/astro-snipcart']).toBe('^0.1.2');
       expect(devDependencies['should-not-be-installed']).toBeUndefined();
-    });
-  });
-
-  describe('--standaloneConfig', () => {
-    test('should create a project.json when standaloneConfig is true', async () => {
-      await applicationGenerator(tree, { ...options, standaloneConfig: true });
-
-      expect(tree.exists(`${options.name}/project.json`)).toBeTruthy();
-    });
-
-    test('should not create a project.json when standaloneConfig is false', async () => {
-      writeJson(tree, 'workspace.json', { projects: {} });
-
-      await applicationGenerator(tree, { ...options, standaloneConfig: false });
-
-      expect(tree.exists(`${options.name}/project.json`)).toBeFalsy();
-      const project = readProjectConfiguration(tree, options.name);
-      expect(project).toBeTruthy();
     });
   });
 

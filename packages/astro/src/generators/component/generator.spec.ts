@@ -1,5 +1,14 @@
-import { addProjectConfiguration, readJson, Tree } from '@nrwl/devkit';
-import * as devkit from '@nrwl/devkit';
+jest.mock('@nrwl/devkit', () => ({
+  ...jest.requireActual('@nrwl/devkit'),
+  formatFiles: jest.fn(),
+}));
+
+import {
+  addProjectConfiguration,
+  formatFiles,
+  readJson,
+  Tree,
+} from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { componentGenerator } from './generator';
 import { Style } from './schema';
@@ -54,11 +63,9 @@ describe('component generator', () => {
   );
 
   test('should format files', async () => {
-    jest.spyOn(devkit, 'formatFiles');
-
     await componentGenerator(tree, { name: 'foo', project: appProject });
 
-    expect(devkit.formatFiles).toHaveBeenCalled();
+    expect(formatFiles).toHaveBeenCalled();
   });
 
   describe('--directory', () => {
