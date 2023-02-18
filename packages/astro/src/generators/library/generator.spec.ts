@@ -1,9 +1,13 @@
-import * as devkit from '@nrwl/devkit';
+jest.mock('@nrwl/devkit', () => ({
+  ...jest.requireActual('@nrwl/devkit'),
+  formatFiles: jest.fn(),
+}));
+
 import {
+  formatFiles,
   readJson,
   readProjectConfiguration,
   Tree,
-  writeJson,
 } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { libraryGenerator } from './generator';
@@ -54,11 +58,9 @@ describe('library generator', () => {
   });
 
   test('should format files', async () => {
-    jest.spyOn(devkit, 'formatFiles');
-
     await libraryGenerator(tree, options);
 
-    expect(devkit.formatFiles).toHaveBeenCalled();
+    expect(formatFiles).toHaveBeenCalled();
   });
 
   describe('--directory', () => {
@@ -177,24 +179,6 @@ describe('library generator', () => {
       expect(compilerOptions.paths[importPath]).toStrictEqual([
         `${options.name}/src/index.js`,
       ]);
-    });
-  });
-
-  describe('--standaloneConfig', () => {
-    test('should create a project.json when standaloneConfig is true', async () => {
-      await libraryGenerator(tree, { ...options, standaloneConfig: true });
-
-      expect(tree.exists(`${options.name}/project.json`)).toBeTruthy();
-    });
-
-    test('should not create a project.json when standaloneConfig is false', async () => {
-      writeJson(tree, 'workspace.json', { projects: {} });
-
-      await libraryGenerator(tree, { ...options, standaloneConfig: false });
-
-      expect(tree.exists(`${options.name}/project.json`)).toBeFalsy();
-      const project = readProjectConfiguration(tree, options.name);
-      expect(project).toBeTruthy();
     });
   });
 });

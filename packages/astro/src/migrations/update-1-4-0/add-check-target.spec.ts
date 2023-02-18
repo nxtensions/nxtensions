@@ -1,4 +1,12 @@
-import * as devkit from '@nrwl/devkit';
+jest.mock('@nrwl/devkit', () => ({
+  ...jest.requireActual('@nrwl/devkit'),
+  updateProjectConfiguration: jest
+    .fn()
+    .mockImplementation(
+      jest.requireActual('@nrwl/devkit').updateProjectConfiguration
+    ),
+}));
+
 import {
   addProjectConfiguration,
   readNxJson,
@@ -6,6 +14,7 @@ import {
   removeProjectConfiguration,
   Tree,
   updateNxJson,
+  updateProjectConfiguration,
 } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import addCheckTarget from './add-check-target';
@@ -54,13 +63,12 @@ describe('add-check-target migration', () => {
   });
 
   test('should do nothing when there are no astro projects', async () => {
-    jest.spyOn(devkit, 'updateProjectConfiguration');
     removeProjectConfiguration(tree, 'astro-app');
     removeProjectConfiguration(tree, 'astro-lib');
 
     await addCheckTarget(tree);
 
-    expect(devkit.updateProjectConfiguration).not.toHaveBeenCalled();
+    expect(updateProjectConfiguration).not.toHaveBeenCalled();
     let project = readProjectConfiguration(tree, 'non-astro-app');
     expect(project.targets.check).toBeFalsy();
     project = readProjectConfiguration(tree, 'non-astro-lib');
