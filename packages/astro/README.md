@@ -75,7 +75,7 @@ nx generate @nxtensions/astro:lib my-lib
 
 ## Generate a component
 
-To generate an Astro library run:
+To generate an Astro component run:
 
 ```bash
 nx generate @nxtensions/astro:component my-component
