@@ -99,8 +99,8 @@ function getAstroDevArgs(
     args.push('--drafts');
   }
   if (options.host !== undefined) {
-    if (typeof options.host === 'boolean' && options.host === true) {
-      args.push('--host');
+    if (typeof options.host === 'boolean') {
+      args.push(options.host === true ? '--host' : '--no-host');
     } else {
       args.push('--host', options.host.toString());
     }
