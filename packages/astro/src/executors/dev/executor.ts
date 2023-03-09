@@ -99,7 +99,11 @@ function getAstroDevArgs(
     args.push('--drafts');
   }
   if (options.host !== undefined) {
-    args.push('--host', options.host.toString());
+    if (typeof options.host === 'boolean') {
+      args.push(options.host === true ? '--host' : '--no-host');
+    } else {
+      args.push('--host', options.host.toString());
+    }
   }
   if (options.port) {
     args.push('--port', options.port.toString());
