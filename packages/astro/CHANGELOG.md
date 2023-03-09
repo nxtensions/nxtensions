@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.3.1](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v3.3.0...@nxtensions/astro@v3.3.1) (2023-03-09)
+
+### Bug Fixes
+
+- **astro:** handle —host boolean value correctly in dev executor ([#327](https://github.com/nxtensions/nxtensions/issues/327)) ([45679c9](https://github.com/nxtensions/nxtensions/commit/45679c982ce821bd97a67af3b6cfda0c28446f79))
+
 ## [3.3.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v3.2.0...@nxtensions/astro@v3.3.0) (2023-01-28)
 
 ### Features
