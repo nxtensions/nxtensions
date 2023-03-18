@@ -35,7 +35,7 @@ export async function initGenerator(
   const tasks: GeneratorCallback[] = [];
   if (options.addCypressTests !== false) {
     const { cypressInitGenerator } = await importNrwlCypress();
-    const cypressTask = cypressInitGenerator(tree, {});
+    const cypressTask = await cypressInitGenerator(tree, {});
     tasks.push(cypressTask);
   }
 

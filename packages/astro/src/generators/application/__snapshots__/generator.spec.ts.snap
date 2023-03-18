@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`application generator --integrations should add integrations to the astro config 1`] = `
-"import { defineConfig } from \\"astro/config\\";
+"import { defineConfig } from "astro/config";
 import solid from '@astrojs/solid-js';
 import vue from '@astrojs/vue';
 
@@ -13,39 +13,39 @@ export default defineConfig({
 `;
 
 exports[`application generator should add project configuration 1`] = `
-Object {
+{
   "$schema": "../node_modules/nx/schemas/project-schema.json",
   "name": "app1",
   "projectType": "application",
   "root": "app1",
   "sourceRoot": "app1/src",
-  "tags": Array [],
-  "targets": Object {
-    "build": Object {
+  "tags": [],
+  "targets": {
+    "build": {
       "executor": "@nxtensions/astro:build",
-      "options": Object {},
-      "outputs": Array [
+      "options": {},
+      "outputs": [
         "{workspaceRoot}/dist/{projectRoot}",
       ],
     },
-    "check": Object {
+    "check": {
       "executor": "@nxtensions/astro:check",
     },
-    "dev": Object {
+    "dev": {
       "executor": "@nxtensions/astro:dev",
-      "options": Object {},
+      "options": {},
     },
-    "preview": Object {
-      "dependsOn": Array [
-        Object {
+    "preview": {
+      "dependsOn": [
+        {
           "projects": "self",
           "target": "build",
         },
       ],
       "executor": "@nxtensions/astro:preview",
-      "options": Object {},
+      "options": {},
     },
-    "sync": Object {
+    "sync": {
       "executor": "@nxtensions/astro:sync",
     },
   },
