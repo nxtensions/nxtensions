@@ -62,6 +62,12 @@
           }
         ]
       }
+    },
+    "capitalizeName": {
+      "type": "boolean",
+      "description": "Whether to capitalize the component filename.",
+      "alias": "c",
+      "default": true
     }
   },
   "required": ["name", "project"]

@@ -147,4 +147,28 @@ describe('component generator', () => {
       }
     );
   });
+
+  describe('--capitalize-name', () => {
+    test('should not capitalize the filename when adding it to an application', async () => {
+      await componentGenerator(tree, {
+        name: 'foo',
+        project: appProject,
+        capitalizeName: false,
+      });
+
+      expect(
+        tree.exists(`apps/${appProject}/src/components/foo.astro`)
+      ).toBeTruthy();
+    });
+
+    test('should not capitalize the filename when adding it to a library', async () => {
+      await componentGenerator(tree, {
+        name: 'foo',
+        project: libProject,
+        capitalizeName: false,
+      });
+
+      expect(tree.exists(`libs/${libProject}/src/lib/foo.astro`)).toBeTruthy();
+    });
+  });
 });
