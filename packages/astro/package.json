@@ -37,7 +37,7 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "@astrojs/compiler": "~1.1.1",
+    "@astrojs/compiler": "^1.2.1",
     "@phenomnomnominal/tsquery": "~5.0.0",
     "fs-extra": "^11.1.0",
     "node-fetch": "~2.6.7",
