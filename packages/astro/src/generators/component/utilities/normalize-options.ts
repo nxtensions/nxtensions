@@ -22,6 +22,7 @@ export function normalizeOptions(
 
   return {
     ...options,
+    capitalizeName: options.capitalizeName ?? true,
     directory,
     style: options.style ?? 'css',
   };
