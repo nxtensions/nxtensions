@@ -1,15 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`library generator should add project configuration 1`] = `
-Object {
+{
   "$schema": "../node_modules/nx/schemas/project-schema.json",
   "name": "lib1",
   "projectType": "library",
   "root": "lib1",
   "sourceRoot": "lib1",
-  "tags": Array [],
-  "targets": Object {
-    "check": Object {
+  "tags": [],
+  "targets": {
+    "check": {
       "executor": "@nxtensions/astro:check",
     },
   },

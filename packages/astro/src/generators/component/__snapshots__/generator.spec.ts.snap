@@ -24,7 +24,7 @@ exports[`component generator --styles should create the component with the right
 
 <p>Foo works!</p>
 
-<style lang=\\"less\\">
+<style lang="less">
 p {
   color: #ff5c01;
 }
@@ -52,7 +52,7 @@ exports[`component generator --styles should create the component with the right
 
 <p>Foo works!</p>
 
-<style lang=\\"sass\\">
+<style lang="sass">
 p
   color: #ff5c01
 </style>
@@ -67,7 +67,7 @@ exports[`component generator --styles should create the component with the right
 
 <p>Foo works!</p>
 
-<style lang=\\"scss\\">
+<style lang="scss">
 p {
   color: #ff5c01;
 }
@@ -83,7 +83,7 @@ exports[`component generator --styles should create the component with the right
 
 <p>Foo works!</p>
 
-<style lang=\\"styl\\">
+<style lang="styl">
 p {
   color: #ff5c01;
 }

@@ -1,12 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`init generator should add .npmrc when it does not exist 1`] = `
-"# Expose Astro dependencies for \\\\\`pnpm\\\\\` users
+"# Expose Astro dependencies for \\\`pnpm\\\` users
 shamefully-hoist=true"
 `;
 
 exports[`init generator should update .npmrc when it exist 1`] = `
 "# Some initial content
-# Expose Astro dependencies for \\\\\`pnpm\\\\\` users
+# Expose Astro dependencies for \\\`pnpm\\\` users
 shamefully-hoist=true"
 `;
