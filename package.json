@@ -54,7 +54,7 @@
     "lint-staged": "~13.2.0",
     "node-fetch": "~2.6.9",
     "nx": "15.8.7",
-    "prettier": "~2.8.4",
+    "prettier": "~2.8.6",
     "semver": "~7.3.8",
     "snowpack": "~3.8.8",
     "strip-ansi": "~6.0.1",
