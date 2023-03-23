@@ -39,7 +39,7 @@ export async function applicationGenerator(
 
   await formatFiles(tree);
 
-  return () => tasks.forEach((task) => task());
+  return () => tasks.forEach((task) => task && task());
 }
 
 export default applicationGenerator;

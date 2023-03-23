@@ -46,7 +46,7 @@ export async function initGenerator(
   );
   tasks.push(depsTask);
 
-  return () => tasks.forEach((task) => task());
+  return () => tasks.forEach((task) => task && task());
 }
 
 export default initGenerator;
