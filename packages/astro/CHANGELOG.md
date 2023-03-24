@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.4.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v3.3.1...@nxtensions/astro@v3.4.0) (2023-03-24)
+
+### Features
+
+- **astro:** allow opting-out of component filename capitalization ([#338](https://github.com/nxtensions/nxtensions/issues/338)) ([d898485](https://github.com/nxtensions/nxtensions/commit/d898485358cf7cef18cf9e97043f97e90c5888df))
+
 ### [3.3.1](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v3.3.0...@nxtensions/astro@v3.3.1) (2023-03-09)
 
 ### Bug Fixes
