@@ -1,4 +1,4 @@
-import { createGlobPatternsForDependencies as workspaceGenerateGlobs } from '@nrwl/workspace/src/utilities/generate-globs';
+import { isNxVersion } from '../src/utilities/versions';
 
 /**
  * Generates a set of glob patterns based off the source root of the app and its dependencies
@@ -10,7 +10,9 @@ export function createGlobPatternsForDependencies(
   fileGlobPattern = '/**/!(*.stories|*.spec).{astro,html,js,jsx,md,svelte,ts,tsx,vue}'
 ) {
   try {
-    return workspaceGenerateGlobs(dirPath, fileGlobPattern);
+    const generateGlobs = getNxGlobGeneratorHelper();
+
+    return generateGlobs(dirPath, fileGlobPattern);
   } catch {
     /**
      * It should not be possible to reach this point when the utility is invoked as part of the normal
@@ -26,4 +28,22 @@ export function createGlobPatternsForDependencies(
     );
     return [];
   }
+}
+
+function getNxGlobGeneratorHelper(): typeof import('@nrwl/js/src/utils/generate-globs').createGlobPatternsForDependencies {
+  if (isNxVersion('15.9.0')) {
+    const {
+      createGlobPatternsForDependencies,
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+    } = require('@nrwl/js/src/utils/generate-globs');
+
+    return createGlobPatternsForDependencies;
+  }
+
+  const {
+    createGlobPatternsForDependencies,
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+  } = require('@nrwl/workspace/src/utilities/generate-globs');
+
+  return createGlobPatternsForDependencies;
 }

@@ -3,6 +3,7 @@ import {
   addDependenciesToPackageJson,
   readWorkspaceConfiguration,
 } from '@nrwl/devkit';
+import { isNxVersion } from '../../utilities/versions';
 import { importNrwlCypress } from '../utilities/cypress';
 import type { GeneratorOptions } from './schema';
 import {
@@ -23,6 +24,11 @@ export async function initGenerator(
   if (workspace.plugins?.includes('@nxtensions/astro')) {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     return () => {};
+  }
+
+  if (isNxVersion('15.8.0')) {
+    const { initGenerator: jsInitGenerator } = await import('@nrwl/js');
+    await jsInitGenerator(tree, { skipFormat: true });
   }
 
   addProjectGraphPlugin(tree);

@@ -30,6 +30,7 @@
   "peerDependencies": {
     "@nrwl/cypress": "^14.1.0 || ^15.0.0",
     "@nrwl/devkit": "^14.1.0 || ^15.0.0",
+    "@nrwl/js": "^14.1.0 || ^15.0.0",
     "@nrwl/linter": "^14.1.0 || ^15.0.0",
     "@nrwl/workspace": "^14.1.0 || ^15.0.0",
     "astro": "^1.6.0 || ^2.0.0",
