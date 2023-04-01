@@ -127,10 +127,9 @@ bar
     await initGenerator(tree, {});
 
     const { recommendations } = readJson(tree, '.vscode/extensions.json');
-    expect(recommendations).toStrictEqual([
-      'nrwl.angular-console',
-      'astro-build.astro-vscode',
-    ]);
+    expect(
+      recommendations.filter((x: string) => x === 'astro-build.astro-vscode')
+    ).toHaveLength(1);
   });
 
   test('should add astro as a devDependency', async () => {

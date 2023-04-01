@@ -2,8 +2,10 @@ import type { ExecutorContext } from '@nrwl/devkit';
 import { logger } from '@nrwl/devkit';
 import type { ChildProcess } from 'child_process';
 import { fork } from 'child_process';
-import { lt } from 'semver';
-import { getInstalledAstroVersion } from '../../utilities/versions';
+import {
+  getInstalledAstroVersion,
+  isAstroVersion,
+} from '../../utilities/versions';
 import type { SyncExecutorOptions } from './schema';
 
 let childProcess: ChildProcess;
@@ -12,8 +14,8 @@ export async function syncExecutor(
   _options: SyncExecutorOptions,
   context: ExecutorContext
 ): Promise<{ success: boolean }> {
-  const astroVersion = getInstalledAstroVersion();
-  if (astroVersion && lt(astroVersion, '1.8.0')) {
+  if (!isAstroVersion('1.8.0')) {
+    const astroVersion = getInstalledAstroVersion();
     throw new Error(
       `The Astro "sync" CLI command is only available from version 1.8.0. Your installed version is "${astroVersion}".`
     );

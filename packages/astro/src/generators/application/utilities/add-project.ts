@@ -1,7 +1,7 @@
 import type { Tree } from '@nrwl/devkit';
 import { addProjectConfiguration, joinPathFragments } from '@nrwl/devkit';
 import { gte } from 'semver';
-import { getInstalledAstroVersion } from '../../../utilities/versions';
+import { isAstroVersion } from '../../../utilities/versions';
 import type { NormalizedGeneratorOptions } from '../schema';
 
 export function addProject(
@@ -13,7 +13,6 @@ export function addProject(
   const outputDirectory = gte(nxVersion, '15.0.0')
     ? joinPathFragments('{workspaceRoot}', 'dist', '{projectRoot}')
     : joinPathFragments('dist', options.projectRoot);
-  const astroVersion = getInstalledAstroVersion();
 
   addProjectConfiguration(
     tree,
@@ -45,10 +44,9 @@ export function addProject(
         check: {
           executor: '@nxtensions/astro:check',
         },
-        sync:
-          !astroVersion || gte(astroVersion, '1.8.0')
-            ? { executor: '@nxtensions/astro:sync' }
-            : undefined,
+        sync: isAstroVersion('1.8.0')
+          ? { executor: '@nxtensions/astro:sync' }
+          : undefined,
       },
       tags: options.tags,
     },

@@ -3,13 +3,16 @@ import type {
   FileData,
   ProjectFileMap,
   ProjectGraph,
+  ProjectGraphExternalNode,
   ProjectGraphProcessorContext,
+  ProjectGraphProjectNode,
 } from '@nrwl/devkit';
 import { ProjectGraphBuilder, workspaceRoot } from '@nrwl/devkit';
 import { readFileSync } from 'fs';
-import { TypeScriptImportLocator } from 'nx/src/project-graph/build-dependencies/typescript-import-locator';
-import { TargetProjectLocator } from 'nx/src/utils/target-project-locator';
+import type { TargetProjectLocator } from 'nx/src/plugins/js/project-graph/build-dependencies/target-project-locator';
+import type { TypeScriptImportLocator } from 'nx/src/plugins/js/project-graph/build-dependencies/typescript-import-locator';
 import { extname, join } from 'path';
+import { isNxVersion } from '../utilities/versions';
 
 let astroCompiler: typeof import('@astrojs/compiler');
 let astroCompilerUtils: typeof import('@astrojs/compiler/utils');
@@ -49,7 +52,7 @@ export async function processProjectGraph(
       });
 
       // collect the dependencies
-      collectDependencies(builder, ast, graph, project, file.file);
+      await collectDependencies(builder, ast, graph, project, file.file);
     }
   }
 
@@ -79,18 +82,18 @@ function addNode(
   });
 }
 
-function collectDependencies(
+async function collectDependencies(
   builder: ProjectGraphBuilder,
   node: Node,
   graph: ProjectGraph,
   project: string,
   filePath: string
-): void {
+): Promise<void> {
   if (astroCompilerUtils.is.frontmatter(node)) {
     // we delay the creation of these until needed and then, we cache them
-    importLocator ??= new TypeScriptImportLocator();
+    importLocator ??= await getTypeScriptImportLocator();
     ts = ts ?? require('typescript');
-    const targetProjectLocator = new TargetProjectLocator(
+    const targetProjectLocator = await getTargetProjectLocator(
       graph.nodes,
       graph.externalNodes
     );
@@ -102,18 +105,22 @@ function collectDependencies(
       true
     );
     // locate imports
-    importLocator.fromNode(filePath, sourceFile, (importExpr, filePath) => {
-      // locate project containing the import
-      const target = targetProjectLocator.findProjectWithImport(
-        importExpr,
-        filePath
-      );
+    importLocator.fromNode(
+      filePath,
+      sourceFile,
+      (importExpr, filePath, type) => {
+        // locate project containing the import
+        const target = targetProjectLocator.findProjectWithImport(
+          importExpr,
+          filePath
+        );
 
-      // add the explicit dependency when the target project was found
-      if (target) {
-        builder.addExplicitDependency(project, filePath, target);
+        // add the explicit dependency when the target project was found
+        if (target) {
+          addDependencyToGraph(builder, project, target, filePath, type);
+        }
       }
-    });
+    );
 
     // bail out since the frontmatter has already been processed
     return;
@@ -124,7 +131,7 @@ function collectDependencies(
   }
 
   for (const child of node.children) {
-    collectDependencies(builder, child, graph, project, filePath);
+    await collectDependencies(builder, child, graph, project, filePath);
 
     // the child is the frontmatter and at this point was already processed, bail out
     if (astroCompilerUtils.is.frontmatter(child)) {
@@ -151,4 +158,63 @@ function getAstroFilesToProcess(filesToProcess: ProjectFileMap): {
       return undefined;
     })
     .filter(Boolean);
+}
+
+async function addDependencyToGraph(
+  builder: ProjectGraphBuilder,
+  sourceProject: string,
+  targetProject: string,
+  sourceFilePath: string,
+  dependencyType: import('@nrwl/devkit').DependencyType
+): Promise<void> {
+  if (isNxVersion('15.8.0')) {
+    const { DependencyType } = await import('@nrwl/devkit');
+    if (dependencyType === DependencyType.static) {
+      builder.addStaticDependency(sourceProject, targetProject, sourceFilePath);
+    } else {
+      builder.addDynamicDependency(
+        sourceProject,
+        targetProject,
+        sourceFilePath
+      );
+    }
+  }
+
+  builder.addExplicitDependency(sourceProject, sourceFilePath, targetProject);
+  return;
+}
+
+async function getTypeScriptImportLocator(): Promise<TypeScriptImportLocator> {
+  if (isNxVersion('15.9.0')) {
+    const { TypeScriptImportLocator } = await import(
+      'nx/src/plugins/js/project-graph/build-dependencies/typescript-import-locator'
+    );
+    return new TypeScriptImportLocator();
+  }
+
+  const { TypeScriptImportLocator } = await import(
+    // @ts-expect-error this is available in supported Nx versions lower than 15.9.0
+    'nx/src/project-graph/build-dependencies/typescript-import-locator'
+  );
+
+  return new TypeScriptImportLocator();
+}
+
+async function getTargetProjectLocator(
+  nodes: Record<string, ProjectGraphProjectNode>,
+  externalNodes: Record<string, ProjectGraphExternalNode>
+): Promise<TargetProjectLocator> {
+  if (isNxVersion('15.9.0')) {
+    const { TargetProjectLocator } = await import(
+      'nx/src/plugins/js/project-graph/build-dependencies/target-project-locator'
+    );
+    return new TargetProjectLocator(nodes, externalNodes);
+  }
+
+  const { TargetProjectLocator } = await import(
+    // @ts-expect-error this is available in supported Nx versions lower than 15.9.0
+    'nx/src/utils/target-project-locator'
+  );
+
+  return new TargetProjectLocator(nodes, externalNodes);
 }
