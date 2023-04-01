@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.5.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v3.4.0...@nxtensions/astro@v3.5.0) (2023-04-01)
+
+### Features
+
+- **astro:** support nx v15.9.0 ([#351](https://github.com/nxtensions/nxtensions/issues/351)) ([77fdf0c](https://github.com/nxtensions/nxtensions/commit/77fdf0c814ddca7f1a510888a6c71c0397f5850b))
+
 ## [3.4.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v3.3.1...@nxtensions/astro@v3.4.0) (2023-03-24)
 
 ### Features
