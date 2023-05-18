@@ -14,7 +14,7 @@
   "dependencies": {
     "@nrwl/devkit": "15.9.2",
     "standard-version": "~9.5.0",
-    "tslib": "~2.4.0"
+    "tslib": "~2.5.1"
   },
   "devDependencies": {
     "@astrojs/compiler": "~1.2.1",
