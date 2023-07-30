@@ -13,10 +13,3 @@ export function isAstroVersion(version: string): boolean {
 
   return astroVersion && gte(astroVersion, version);
 }
-
-let nxVersion: string | null;
-export function isNxVersion(version: string): boolean {
-  nxVersion ??= readModulePackageJson('nx')?.version;
-
-  return nxVersion && gte(nxVersion, version);
-}

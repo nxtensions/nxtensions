@@ -1,4 +1,4 @@
-import { readJsonFile, workspaceRoot } from '@nrwl/devkit';
+import { readJsonFile, workspaceRoot } from '@nx/devkit';
 import { existsSync } from 'fs';
 import { dirname, join } from 'path';
 

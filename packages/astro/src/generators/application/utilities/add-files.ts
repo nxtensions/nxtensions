@@ -1,10 +1,10 @@
-import type { Tree } from '@nrwl/devkit';
+import type { Tree } from '@nx/devkit';
 import {
   generateFiles,
   joinPathFragments,
   names,
   offsetFromRoot,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import type { NormalizedGeneratorOptions } from '../schema';
 
 export function addFiles(

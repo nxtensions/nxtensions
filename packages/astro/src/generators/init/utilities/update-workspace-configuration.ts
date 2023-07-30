@@ -1,12 +1,8 @@
-import type { Tree } from '@nrwl/devkit';
-import {
-  readWorkspaceConfiguration,
-  updateWorkspaceConfiguration as writeWorkspaceConfiguration,
-} from '@nrwl/devkit';
-import { gte } from 'semver';
+import type { Tree } from '@nx/devkit';
+import { readNxJson, updateNxJson } from '@nx/devkit';
 
 export function updateWorkspaceConfiguration(tree: Tree): void {
-  const workspace = readWorkspaceConfiguration(tree);
+  const workspace = readNxJson(tree);
 
   if (workspace.tasksRunnerOptions) {
     Object.keys(workspace.tasksRunnerOptions).forEach((taskRunnerName) => {
@@ -23,11 +19,7 @@ export function updateWorkspaceConfiguration(tree: Tree): void {
     });
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const { version: nxVersion } = require('nx/package.json');
-  // inputs config started to be generated in Nx v14.7.0
   if (
-    gte(nxVersion, '14.7.0') &&
     workspace.targetDefaults &&
     workspace.namedInputs?.production &&
     !workspace.targetDefaults.check
@@ -35,5 +27,5 @@ export function updateWorkspaceConfiguration(tree: Tree): void {
     workspace.targetDefaults.check = { inputs: ['production', '^production'] };
   }
 
-  writeWorkspaceConfiguration(tree, workspace);
+  updateNxJson(tree, workspace);
 }

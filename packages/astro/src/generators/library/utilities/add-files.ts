@@ -4,7 +4,7 @@ import {
   names,
   offsetFromRoot,
   Tree,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import { NormalizedGeneratorOptions } from '../schema';
 
 export function addFiles(tree: Tree, options: NormalizedGeneratorOptions) {

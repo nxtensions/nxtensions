@@ -1,6 +1,6 @@
-import type { ProjectGraph } from '@nrwl/devkit';
-import { readJsonFile } from '@nrwl/devkit';
-import { runNxCommandAsync, tmpProjPath } from '@nrwl/nx-plugin/testing';
+import type { ProjectGraph } from '@nx/devkit';
+import { readJsonFile } from '@nx/devkit';
+import { runNxCommandAsync, tmpProjPath } from '@nx/plugin/testing';
 import { rm } from 'fs-extra';
 import { join } from 'path';
 

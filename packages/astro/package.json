@@ -28,14 +28,14 @@
   "executors": "./executors.json",
   "nx-migrations": "./migrations.json",
   "peerDependencies": {
-    "@nrwl/cypress": "^14.1.0 || ^15.0.0",
-    "@nrwl/devkit": "^14.1.0 || ^15.0.0",
-    "@nrwl/js": "^14.1.0 || ^15.0.0",
-    "@nrwl/linter": "^14.1.0 || ^15.0.0",
-    "@nrwl/workspace": "^14.1.0 || ^15.0.0",
+    "@nx/cypress": "^16.0.0",
+    "@nx/devkit": "^16.0.0",
+    "@nx/js": "^16.0.0",
+    "@nx/linter": "^16.0.0",
+    "@nx/workspace": "^16.0.0",
     "astro": "^1.6.0 || ^2.0.0",
-    "nx": "^14.1.0 || ^15.0.0",
-    "typescript": "^4.3.5"
+    "nx": "^16.0.0",
+    "typescript": ">=4.6.2"
   },
   "dependencies": {
     "@astrojs/compiler": "^1.2.1",

@@ -3,7 +3,6 @@
   "version": 2,
   "$id": "NxAstroSyncExecutor",
   "outputCapture": "direct-nodejs",
-  "cli": "nx",
   "title": "Astro sync executor",
   "description": "Generates TypeScript types for all Astro modules.",
   "type": "object",

@@ -1,6 +1,6 @@
-import type { Tree } from '@nrwl/devkit';
-import { readJson, updateJson } from '@nrwl/devkit';
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+import type { Tree } from '@nx/devkit';
+import { readJson, updateJson } from '@nx/devkit';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import migration from './add-script-to-patch-nx-cli';
 
 describe('Test Suite Name', () => {

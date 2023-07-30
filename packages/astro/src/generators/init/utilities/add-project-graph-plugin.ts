@@ -1,14 +1,10 @@
-import {
-  readWorkspaceConfiguration,
-  Tree,
-  updateWorkspaceConfiguration,
-} from '@nrwl/devkit';
+import { readNxJson, Tree, updateNxJson } from '@nx/devkit';
 
 export function addProjectGraphPlugin(tree: Tree): void {
-  const workspace = readWorkspaceConfiguration(tree);
+  const workspace = readNxJson(tree);
   workspace.plugins ??= [];
   if (!workspace.plugins.includes('@nxtensions/astro')) {
     workspace.plugins.push('@nxtensions/astro');
-    updateWorkspaceConfiguration(tree, workspace);
+    updateNxJson(tree, workspace);
   }
 }

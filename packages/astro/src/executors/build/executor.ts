@@ -1,5 +1,5 @@
-import type { ExecutorContext } from '@nrwl/devkit';
-import { logger } from '@nrwl/devkit';
+import type { ExecutorContext } from '@nx/devkit';
+import { logger } from '@nx/devkit';
 import type { ChildProcess } from 'child_process';
 import { fork } from 'child_process';
 import { removeSync } from 'fs-extra';

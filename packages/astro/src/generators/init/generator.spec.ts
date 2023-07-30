@@ -1,9 +1,9 @@
-jest.mock('@nrwl/cypress');
+jest.mock('@nx/cypress');
 
-import { cypressInitGenerator } from '@nrwl/cypress';
-import type { Tree } from '@nrwl/devkit';
-import { readJson, readNxJson, updateJson, updateNxJson } from '@nrwl/devkit';
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+import { cypressInitGenerator } from '@nx/cypress';
+import type { Tree } from '@nx/devkit';
+import { readJson, readNxJson, updateJson, updateNxJson } from '@nx/devkit';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { initGenerator } from './generator';
 import { astroVersion } from './versions';
 

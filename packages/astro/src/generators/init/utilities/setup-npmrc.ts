@@ -1,4 +1,4 @@
-import { stripIndents, Tree } from '@nrwl/devkit';
+import { stripIndents, Tree } from '@nx/devkit';
 
 export function setupNpmrc(tree: Tree): void {
   const shamefullyHoist = 'shamefully-hoist=true';

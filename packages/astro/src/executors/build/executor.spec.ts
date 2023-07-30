@@ -4,7 +4,7 @@ jest.mock('fs-extra', () => ({
   removeSync: jest.fn(),
 }));
 
-import { ExecutorContext } from '@nrwl/devkit';
+import { ExecutorContext } from '@nx/devkit';
 import { fork } from 'child_process';
 import * as fsExtra from 'fs-extra';
 import { buildExecutor } from './executor';

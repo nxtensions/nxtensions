@@ -4,7 +4,7 @@ import {
   ProjectConfiguration,
   Tree,
   updateProjectConfiguration,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import { tsquery } from '@phenomnomnominal/tsquery';
 
 export default async function (tree: Tree) {

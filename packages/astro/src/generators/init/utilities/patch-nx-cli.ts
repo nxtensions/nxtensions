@@ -1,9 +1,4 @@
-import {
-  generateFiles,
-  joinPathFragments,
-  Tree,
-  updateJson,
-} from '@nrwl/devkit';
+import { generateFiles, joinPathFragments, Tree, updateJson } from '@nx/devkit';
 
 const patchScriptPath = 'tools/scripts/patch-nx-cli.js';
 const patchCommand = `node ./${patchScriptPath}`;

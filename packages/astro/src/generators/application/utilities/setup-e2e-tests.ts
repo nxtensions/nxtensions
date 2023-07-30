@@ -4,8 +4,8 @@ import {
   readProjectConfiguration,
   Tree,
   updateProjectConfiguration,
-} from '@nrwl/devkit';
-import { Linter } from '@nrwl/linter';
+} from '@nx/devkit';
+import { Linter } from '@nx/linter';
 import { importNrwlCypress } from '../../utilities/cypress';
 import { NormalizedGeneratorOptions } from '../schema';
 

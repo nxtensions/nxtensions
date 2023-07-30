@@ -1,8 +1,4 @@
-import {
-  Tree,
-  readProjectConfiguration,
-  joinPathFragments,
-} from '@nrwl/devkit';
+import { Tree, readProjectConfiguration, joinPathFragments } from '@nx/devkit';
 import { GeneratorOptions, NormalizedGeneratorOptions } from '../schema';
 
 export function normalizeOptions(
