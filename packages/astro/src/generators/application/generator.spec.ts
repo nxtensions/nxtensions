@@ -1,6 +1,6 @@
 jest.mock('node-fetch');
-jest.mock('@nrwl/devkit', () => ({
-  ...jest.requireActual('@nrwl/devkit'),
+jest.mock('@nx/devkit', () => ({
+  ...jest.requireActual('@nx/devkit'),
   formatFiles: jest.fn(),
 }));
 
@@ -12,8 +12,8 @@ import {
   readProjectConfiguration,
   Tree,
   updateNxJson,
-} from '@nrwl/devkit';
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+} from '@nx/devkit';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import fetch from 'node-fetch';
 import { applicationGenerator } from './generator';
 import { GeneratorOptions } from './schema';

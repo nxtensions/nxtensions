@@ -1,6 +1,5 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "cli": "nx",
   "$id": "NxtensionsAstroApplicationGenerator",
   "title": "Astro Application Generator",
   "description": "Generates an Astro application.",
@@ -36,16 +35,46 @@
         "type": "list",
         "multiselect": true,
         "items": [
-          { "label": "Lit", "value": "lit" },
-          { "label": "Preact", "value": "preact" },
-          { "label": "React", "value": "react" },
-          { "label": "Solid", "value": "solid-js" },
-          { "label": "Svelte", "value": "svelte" },
-          { "label": "Vue", "value": "vue" },
-          { "label": "Partytown", "value": "partytown" },
-          { "label": "Sitemap", "value": "sitemap" },
-          { "label": "Tailwind CSS", "value": "tailwind" },
-          { "label": "Turbolinks", "value": "turbolinks" }
+          {
+            "label": "Lit",
+            "value": "lit"
+          },
+          {
+            "label": "Preact",
+            "value": "preact"
+          },
+          {
+            "label": "React",
+            "value": "react"
+          },
+          {
+            "label": "Solid",
+            "value": "solid-js"
+          },
+          {
+            "label": "Svelte",
+            "value": "svelte"
+          },
+          {
+            "label": "Vue",
+            "value": "vue"
+          },
+          {
+            "label": "Partytown",
+            "value": "partytown"
+          },
+          {
+            "label": "Sitemap",
+            "value": "sitemap"
+          },
+          {
+            "label": "Tailwind CSS",
+            "value": "tailwind"
+          },
+          {
+            "label": "Turbolinks",
+            "value": "turbolinks"
+          }
         ]
       }
     },

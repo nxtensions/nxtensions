@@ -1,13 +1,9 @@
-import {
-  readWorkspaceConfiguration,
-  Tree,
-  updateWorkspaceConfiguration,
-} from '@nrwl/devkit';
+import { readNxJson, Tree, updateNxJson } from '@nx/devkit';
 
 export function setDefaultProject(tree: Tree, projectName: string): void {
-  const workspace = readWorkspaceConfiguration(tree);
+  const workspace = readNxJson(tree);
   if (!workspace.defaultProject) {
     workspace.defaultProject = projectName;
-    updateWorkspaceConfiguration(tree, workspace);
+    updateNxJson(tree, workspace);
   }
 }

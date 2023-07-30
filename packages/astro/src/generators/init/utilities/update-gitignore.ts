@@ -1,4 +1,4 @@
-import { Tree } from '@nrwl/devkit';
+import { Tree } from '@nx/devkit';
 
 export function updateGitignore(tree: Tree): void {
   if (!tree.exists('.gitignore')) {

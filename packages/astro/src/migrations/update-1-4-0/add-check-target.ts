@@ -2,11 +2,11 @@ import {
   formatFiles,
   getProjects,
   ProjectConfiguration,
-  readWorkspaceConfiguration,
+  readNxJson,
   Tree,
+  updateNxJson,
   updateProjectConfiguration,
-  updateWorkspaceConfiguration,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import { extname, join } from 'path';
 
 export default async function (tree: Tree) {
@@ -35,7 +35,7 @@ export default async function (tree: Tree) {
 }
 
 function addCacheableOperation(tree: Tree) {
-  const workspace = readWorkspaceConfiguration(tree);
+  const workspace = readNxJson(tree);
   if (!workspace.tasksRunnerOptions) {
     return;
   }
@@ -50,7 +50,7 @@ function addCacheableOperation(tree: Tree) {
     };
   });
 
-  updateWorkspaceConfiguration(tree, workspace);
+  updateNxJson(tree, workspace);
 }
 
 function isAstroProject(tree: Tree, project: ProjectConfiguration): boolean {

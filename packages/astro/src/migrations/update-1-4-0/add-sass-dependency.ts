@@ -7,7 +7,7 @@ import {
   ProjectConfiguration,
   readJson,
   Tree,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import { extname, join } from 'path';
 
 let astroCompiler: typeof import('@astrojs/compiler');

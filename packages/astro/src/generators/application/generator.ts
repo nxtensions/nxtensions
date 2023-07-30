@@ -1,4 +1,4 @@
-import { formatFiles, GeneratorCallback, Tree } from '@nrwl/devkit';
+import { formatFiles, GeneratorCallback, Tree } from '@nx/devkit';
 import { initGenerator } from '../init/generator';
 import { GeneratorOptions } from './schema';
 import {

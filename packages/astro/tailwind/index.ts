@@ -1,4 +1,4 @@
-import { isNxVersion } from '../src/utilities/versions';
+import { createGlobPatternsForDependencies as jsGenerateGlobs } from '@nx/js/src/utils/generate-globs';
 
 /**
  * Generates a set of glob patterns based off the source root of the app and its dependencies
@@ -7,13 +7,11 @@ import { isNxVersion } from '../src/utilities/versions';
  */
 export function createGlobPatternsForDependencies(
   dirPath: string,
-  fileGlobPattern = '/**/!(*.stories|*.spec).{astro,html,js,jsx,md,svelte,ts,tsx,vue}'
+  fileGlobPattern = '/**/!(*.stories|*.spec).{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'
 ) {
   try {
-    const generateGlobs = getNxGlobGeneratorHelper();
-
-    return generateGlobs(dirPath, fileGlobPattern);
-  } catch {
+    return jsGenerateGlobs(dirPath, fileGlobPattern);
+  } catch (e) {
     /**
      * It should not be possible to reach this point when the utility is invoked as part of the normal
      * lifecycle of Nx executors. However, other tooling, such as the VSCode Tailwind IntelliSense plugin
@@ -24,26 +22,9 @@ export function createGlobPatternsForDependencies(
      * fundamently unavailable in this tailwind-specific context.
      */
     console.warn(
-      '\n[createGlobPatternsForDependencies] WARNING: There was no ProjectGraph available to read from, returning an empty array of glob patterns\n'
+      '\nWARNING: There was an error creating glob patterns, returning an empty array\n' +
+        `${e.message}\n`
     );
     return [];
   }
-}
-
-function getNxGlobGeneratorHelper(): typeof import('@nrwl/js/src/utils/generate-globs').createGlobPatternsForDependencies {
-  if (isNxVersion('15.9.0')) {
-    const {
-      createGlobPatternsForDependencies,
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-    } = require('@nrwl/js/src/utils/generate-globs');
-
-    return createGlobPatternsForDependencies;
-  }
-
-  const {
-    createGlobPatternsForDependencies,
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-  } = require('@nrwl/workspace/src/utilities/generate-globs');
-
-  return createGlobPatternsForDependencies;
 }

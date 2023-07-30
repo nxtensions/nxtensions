@@ -1,11 +1,11 @@
 export async function importNrwlCypress(): Promise<
-  typeof import('@nrwl/cypress')
+  typeof import('@nx/cypress')
 > {
   try {
-    return await import('@nrwl/cypress');
+    return await import('@nx/cypress');
   } catch {
     throw new Error(
-      `The "@nrwl/cypress" package is missing and it's required to generate an E2E project. Please install it and try again.`
+      `The "@nx/cypress" package is missing and it's required to generate an E2E project. Please install it and try again.`
     );
   }
 }

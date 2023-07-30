@@ -3,16 +3,13 @@ import type {
   FileData,
   ProjectFileMap,
   ProjectGraph,
-  ProjectGraphExternalNode,
   ProjectGraphProcessorContext,
-  ProjectGraphProjectNode,
-} from '@nrwl/devkit';
-import { ProjectGraphBuilder, workspaceRoot } from '@nrwl/devkit';
+} from '@nx/devkit';
+import { DependencyType, ProjectGraphBuilder, workspaceRoot } from '@nx/devkit';
 import { readFileSync } from 'fs';
-import type { TargetProjectLocator } from 'nx/src/plugins/js/project-graph/build-dependencies/target-project-locator';
-import type { TypeScriptImportLocator } from 'nx/src/plugins/js/project-graph/build-dependencies/typescript-import-locator';
+import { TargetProjectLocator } from 'nx/src/plugins/js/project-graph/build-dependencies/target-project-locator';
+import { TypeScriptImportLocator } from 'nx/src/plugins/js/project-graph/build-dependencies/typescript-import-locator';
 import { extname, join } from 'path';
-import { isNxVersion } from '../utilities/versions';
 
 let astroCompiler: typeof import('@astrojs/compiler');
 let astroCompilerUtils: typeof import('@astrojs/compiler/utils');
@@ -64,7 +61,7 @@ function addNode(
   builder: ProjectGraphBuilder,
   projectName: string
 ): void {
-  const project = context.workspace.projects[projectName];
+  const project = context.projectsConfigurations.projects[projectName];
   const projectType =
     project.projectType === 'application'
       ? projectName.endsWith('-e2e')
@@ -72,11 +69,7 @@ function addNode(
         : 'app'
       : 'lib';
   builder.addNode({
-    data: {
-      ...project,
-      tags: project.tags ?? [],
-      files: context.fileMap[projectName],
-    },
+    data: { ...project, tags: project.tags ?? [] },
     name: projectName,
     type: projectType,
   });
@@ -91,9 +84,9 @@ async function collectDependencies(
 ): Promise<void> {
   if (astroCompilerUtils.is.frontmatter(node)) {
     // we delay the creation of these until needed and then, we cache them
-    importLocator ??= await getTypeScriptImportLocator();
+    importLocator ??= new TypeScriptImportLocator();
     ts = ts ?? require('typescript');
-    const targetProjectLocator = await getTargetProjectLocator(
+    const targetProjectLocator = new TargetProjectLocator(
       graph.nodes,
       graph.externalNodes
     );
@@ -144,7 +137,7 @@ function getAstroFilesToProcess(filesToProcess: ProjectFileMap): {
   project: string;
   files: FileData[];
 }[] {
-  const astroExtensions = ['.astro', '.md'];
+  const astroExtensions = ['.astro', '.md', '.mdx'];
 
   return Object.entries(filesToProcess)
     .map(([project, files]) => {
@@ -165,56 +158,13 @@ async function addDependencyToGraph(
   sourceProject: string,
   targetProject: string,
   sourceFilePath: string,
-  dependencyType: import('@nrwl/devkit').DependencyType
+  dependencyType: DependencyType
 ): Promise<void> {
-  if (isNxVersion('15.8.0')) {
-    const { DependencyType } = await import('@nrwl/devkit');
-    if (dependencyType === DependencyType.static) {
-      builder.addStaticDependency(sourceProject, targetProject, sourceFilePath);
-    } else {
-      builder.addDynamicDependency(
-        sourceProject,
-        targetProject,
-        sourceFilePath
-      );
-    }
+  if (dependencyType === DependencyType.static) {
+    builder.addStaticDependency(sourceProject, targetProject, sourceFilePath);
+  } else if (dependencyType === DependencyType.dynamic) {
+    builder.addDynamicDependency(sourceProject, targetProject, sourceFilePath);
+  } else {
+    builder.addImplicitDependency(sourceProject, targetProject);
   }
-
-  builder.addExplicitDependency(sourceProject, sourceFilePath, targetProject);
-  return;
-}
-
-async function getTypeScriptImportLocator(): Promise<TypeScriptImportLocator> {
-  if (isNxVersion('15.9.0')) {
-    const { TypeScriptImportLocator } = await import(
-      'nx/src/plugins/js/project-graph/build-dependencies/typescript-import-locator'
-    );
-    return new TypeScriptImportLocator();
-  }
-
-  const { TypeScriptImportLocator } = await import(
-    // @ts-expect-error this is available in supported Nx versions lower than 15.9.0
-    'nx/src/project-graph/build-dependencies/typescript-import-locator'
-  );
-
-  return new TypeScriptImportLocator();
-}
-
-async function getTargetProjectLocator(
-  nodes: Record<string, ProjectGraphProjectNode>,
-  externalNodes: Record<string, ProjectGraphExternalNode>
-): Promise<TargetProjectLocator> {
-  if (isNxVersion('15.9.0')) {
-    const { TargetProjectLocator } = await import(
-      'nx/src/plugins/js/project-graph/build-dependencies/target-project-locator'
-    );
-    return new TargetProjectLocator(nodes, externalNodes);
-  }
-
-  const { TargetProjectLocator } = await import(
-    // @ts-expect-error this is available in supported Nx versions lower than 15.9.0
-    'nx/src/utils/target-project-locator'
-  );
-
-  return new TargetProjectLocator(nodes, externalNodes);
 }

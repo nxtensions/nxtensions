@@ -1,5 +1,5 @@
-import type { Tree } from '@nrwl/devkit';
-import { getWorkspaceLayout, joinPathFragments, names } from '@nrwl/devkit';
+import type { Tree } from '@nx/devkit';
+import { getWorkspaceLayout, joinPathFragments, names } from '@nx/devkit';
 import fetch from 'node-fetch';
 import type {
   GeneratorOptions,

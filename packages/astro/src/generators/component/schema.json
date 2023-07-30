@@ -1,6 +1,5 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "cli": "nx",
   "$id": "NxtensionsAstroComponentGenerator",
   "title": "Astro Component Generator",
   "description": "Generates an Astro or Markdown component.",

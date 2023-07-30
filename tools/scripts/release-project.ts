@@ -1,4 +1,4 @@
-import { ProjectConfiguration, Workspaces } from '@nrwl/devkit';
+import { ProjectConfiguration, Workspaces } from '@nx/devkit';
 import { execSync } from 'child_process';
 import { existsSync } from 'fs';
 import { join } from 'path';

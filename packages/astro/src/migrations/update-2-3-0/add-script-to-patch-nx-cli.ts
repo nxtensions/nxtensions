@@ -1,10 +1,10 @@
-import type { Tree } from '@nrwl/devkit';
+import type { Tree } from '@nx/devkit';
 import {
   formatFiles,
   getPackageManagerCommand,
   logger,
   updateJson,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 

@@ -1,6 +1,6 @@
 jest.mock('child_process');
 
-import { ExecutorContext } from '@nrwl/devkit';
+import { ExecutorContext } from '@nx/devkit';
 import { fork } from 'child_process';
 import { syncExecutor } from './executor';
 

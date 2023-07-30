@@ -1,9 +1,9 @@
-jest.mock('@nrwl/devkit', () => ({
-  ...jest.requireActual('@nrwl/devkit'),
+jest.mock('@nx/devkit', () => ({
+  ...jest.requireActual('@nx/devkit'),
   updateProjectConfiguration: jest
     .fn()
     .mockImplementation(
-      jest.requireActual('@nrwl/devkit').updateProjectConfiguration
+      jest.requireActual('@nx/devkit').updateProjectConfiguration
     ),
 }));
 
@@ -15,8 +15,8 @@ import {
   Tree,
   updateNxJson,
   updateProjectConfiguration,
-} from '@nrwl/devkit';
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+} from '@nx/devkit';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import addCheckTarget from './add-check-target';
 
 describe('add-check-target migration', () => {
