@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file. See [standa
 
 ## [16.0.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v3.5.0...@nxtensions/astro@v16.0.0) (2023-07-30)
 
+### ⚠ BREAKING CHANGES
+
+- **astro:** Support for Nx 16.x.x was added and support for lower version of Nx has been dropped. Make sure to upgrade Nx to 16.x.x before upgrading to this version. Starting with this version and moving forward, the major version of this package will be in sync with the major version of Nx it supports.
+
 ### Features
 
 - **astro:** support nx v16 ([#425](https://github.com/nxtensions/nxtensions/issues/425)) ([eca49b2](https://github.com/nxtensions/nxtensions/commit/eca49b27fe6b15aaf678f41c32b80954dacb3869))
