@@ -27,7 +27,7 @@
     "@nx/js": "16.5.5",
     "@nx/linter": "16.5.5",
     "@nx/node": "16.5.5",
-    "@nx/plugin": "16.5.5",
+    "@nx/plugin": "16.6.0",
     "@nx/workspace": "16.5.5",
     "@phenomnomnominal/tsquery": "~5.0.1",
     "@swc-node/register": "~1.6.6",
