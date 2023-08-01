@@ -21,7 +21,7 @@
     "@commitlint/cli": "~17.6.7",
     "@commitlint/config-conventional": "~17.6.7",
     "@commitlint/cz-commitlint": "~17.6.7",
-    "@nx/cypress": "16.5.5",
+    "@nx/cypress": "16.6.0",
     "@nx/eslint-plugin": "16.5.5",
     "@nx/jest": "16.5.5",
     "@nx/js": "16.5.5",
