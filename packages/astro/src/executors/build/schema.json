@@ -40,6 +40,15 @@
       "type": "string",
       "description": "URL of the deployed application."
     },
+    "generatePackageJson": {
+      "description": "Generate a package.json for the build output.",
+      "type": "boolean",
+      "default": false
+    },
+    "includeDevDependenciesInPackageJson": {
+      "description": "Include devDependencies in the generated package.json.",
+      "type": "boolean"
+    },
     "verbose": {
       "type": "boolean",
       "description": "Enable verbose logging.",

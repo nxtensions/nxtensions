@@ -6,4 +6,6 @@ export interface BuildExecutorOptions {
   silent?: boolean;
   site?: string;
   verbose?: boolean;
+  generatePackageJson?: boolean;
+  includeDevDependenciesInPackageJson?: boolean;
 }

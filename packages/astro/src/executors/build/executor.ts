@@ -1,8 +1,9 @@
 import type { ExecutorContext } from '@nx/devkit';
-import { logger } from '@nx/devkit';
+import { logger, stripIndents, writeJsonFile } from '@nx/devkit';
+import { createLockFile, createPackageJson, getLockFileName } from '@nx/js';
 import type { ChildProcess } from 'child_process';
 import { fork } from 'child_process';
-import { removeSync } from 'fs-extra';
+import { removeSync, writeFileSync } from 'fs-extra';
 import { resolve } from 'path';
 import type { BuildExecutorOptions } from './schema';
 
@@ -13,6 +14,16 @@ export async function buildExecutor(
   context: ExecutorContext
 ): Promise<{ success: boolean }> {
   options = normalizeOptions(options);
+
+  if (!context.workspace) {
+    throw new Error('Workspace is not defined');
+  }
+  if (!context.projectName) {
+    throw new Error('Project name is not defined');
+  }
+  if (!context.projectGraph) {
+    throw new Error('Project graph is not defined');
+  }
 
   const projectRoot = context.workspace.projects[context.projectName].root;
 
@@ -33,6 +44,37 @@ export async function buildExecutor(
 
   try {
     const exitCode = await runCliBuild(context.root, projectRoot, options);
+    const success = exitCode === 0;
+
+    if (success) {
+      if (options.generatePackageJson) {
+        if (context.projectGraph.nodes[context.projectName].type !== 'app') {
+          logger.warn(
+            stripIndents`The project ${context.projectName} is using the 'generatePackageJson' option which is deprecated for library projects. It should only be used for applications.
+              For libraries, configure the project to use the '@nx/dependency-checks' ESLint rule instead (https://nx.dev/packages/eslint-plugin/documents/dependency-checks).`
+          );
+        }
+
+        const builtPackageJson = createPackageJson(
+          context.projectName,
+          context.projectGraph,
+          {
+            target: context.targetName,
+            root: context.root,
+            isProduction: !options.includeDevDependenciesInPackageJson, // By default we remove devDependencies since this is a production build.
+          }
+        );
+
+        builtPackageJson.type = 'module';
+
+        writeJsonFile(`${outputPath}/package.json`, builtPackageJson);
+
+        const lockFile = createLockFile(builtPackageJson);
+        writeFileSync(`${outputPath}/${getLockFileName()}`, lockFile, {
+          encoding: 'utf-8',
+        });
+      }
+    }
 
     return { success: exitCode === 0 };
   } catch (e) {
