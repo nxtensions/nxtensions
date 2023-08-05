@@ -19,8 +19,7 @@
         "tsConfig": "packages/tsconfig-paths-snowpack-plugin/tsconfig.json",
         "packageJson": "packages/tsconfig-paths-snowpack-plugin/package.json",
         "main": "packages/tsconfig-paths-snowpack-plugin/src/index.ts",
-        "assets": ["packages/tsconfig-paths-snowpack-plugin/*.md"],
-        "updateBuildableProjectDepsInPackageJson": false
+        "assets": ["packages/tsconfig-paths-snowpack-plugin/*.md"]
       }
     }
   },

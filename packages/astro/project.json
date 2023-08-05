@@ -44,8 +44,7 @@
             "glob": "{executors,generators,migrations}.json",
             "output": "."
           }
-        ],
-        "updateBuildableProjectDepsInPackageJson": false
+        ]
       }
     }
   },
