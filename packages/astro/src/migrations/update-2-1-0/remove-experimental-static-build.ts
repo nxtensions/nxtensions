@@ -62,15 +62,13 @@ function updateAstroConfiguration(
       'PropertyAssignment:has(Identifier[name="buildOptions"]) PropertyAssignment:has(Identifier[name="experimentalStaticBuild"])';
     const [experimentalStaticBuildAssignment] = tsquery(
       astroConfigAst,
-      experimentalStaticBuildAssignmentSelector,
-      { visitAllChildren: true }
+      experimentalStaticBuildAssignmentSelector
     );
 
     if (experimentalStaticBuildAssignment) {
       const [falseKeyword] = tsquery(
         experimentalStaticBuildAssignment,
-        'Identifier ~ FalseKeyword',
-        { visitAllChildren: true }
+        'Identifier ~ FalseKeyword'
       );
 
       const experimentalStaticBuildAssignmentEnd =
