@@ -10,13 +10,14 @@ import {
   readJson,
   readNxJson,
   readProjectConfiguration,
-  Tree,
+  updateJson,
   updateNxJson,
+  type Tree,
 } from '@nx/devkit';
 import fetch from 'node-fetch';
 import { createTreeWithEmptyWorkspace } from '../utilities/testing';
 import { applicationGenerator } from './generator';
-import { GeneratorOptions } from './schema';
+import type { GeneratorOptions } from './schema';
 
 describe('application generator', () => {
   let tree: Tree;
@@ -90,6 +91,25 @@ describe('application generator', () => {
     await applicationGenerator(tree, options);
 
     expect(formatFiles).toHaveBeenCalled();
+  });
+
+  test('should ignore typescript 5 deprecation warnings', async () => {
+    await applicationGenerator(tree, options);
+
+    const { compilerOptions } = readJson(tree, `${options.name}/tsconfig.json`);
+    expect(compilerOptions.ignoreDeprecations).toBe('5.0');
+  });
+
+  test('should not ignore typescript 5 deprecation warnings when typescript 5 is not installed', async () => {
+    updateJson(tree, 'package.json', (json) => {
+      json.devDependencies.typescript = '~4.9.5';
+      return json;
+    });
+
+    await applicationGenerator(tree, options);
+
+    const { compilerOptions } = readJson(tree, `${options.name}/tsconfig.json`);
+    expect(compilerOptions.ignoreDeprecations).toBeUndefined();
   });
 
   describe('--directory', () => {
