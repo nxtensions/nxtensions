@@ -1,5 +1,6 @@
 import type { GeneratorCallback, Tree } from '@nx/devkit';
-import { addDependenciesToPackageJson, readNxJson } from '@nx/devkit';
+import { readNxJson } from '@nx/devkit';
+import { addDependenciesToPackageJson } from '../../utilities/package-json';
 import { importNrwlCypress } from '../utilities/cypress';
 import type { GeneratorOptions } from './schema';
 import {
