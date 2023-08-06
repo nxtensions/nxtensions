@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [16.1.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v16.0.0...@nxtensions/astro@v16.1.0) (2023-08-06)
+
+### Features
+
+- **astro:** pin generated astro version to 2.9.6 ([#451](https://github.com/nxtensions/nxtensions/issues/451)) ([19f3b42](https://github.com/nxtensions/nxtensions/commit/19f3b425ad97fcf085caee427aedd47d0bfccc30))
+- **astro:** set @nx/cypress and @nx/linter as optional peer dependencies ([#455](https://github.com/nxtensions/nxtensions/issues/455)) ([86eb49c](https://github.com/nxtensions/nxtensions/commit/86eb49c225d7c1cab9fb678ecd68899af5ed57e2))
+- **astro:** update dependencies ([#450](https://github.com/nxtensions/nxtensions/issues/450)) ([3879519](https://github.com/nxtensions/nxtensions/commit/38795195ab36d2213f342670507b53f2c7e4d603))
+
+### Bug Fixes
+
+- **astro:** do not overwrite existing dependencies in generators ([#454](https://github.com/nxtensions/nxtensions/issues/454)) ([d5093b7](https://github.com/nxtensions/nxtensions/commit/d5093b7e8430e77f18fe08d738f675fc297664ad))
+- **astro:** generate correct tailwind integration config ([#453](https://github.com/nxtensions/nxtensions/issues/453)) ([a9d083e](https://github.com/nxtensions/nxtensions/commit/a9d083e3f1a015e32f52de726de99a93d37e58a0))
+- **astro:** sync generated tsconfig with astro defaults ([#456](https://github.com/nxtensions/nxtensions/issues/456)) ([51e50a7](https://github.com/nxtensions/nxtensions/commit/51e50a7db814f53d486b121aaf82abd005a5b56c))
+
 ## [16.0.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v3.5.0...@nxtensions/astro@v16.0.0) (2023-07-30)
 
 ### ⚠ BREAKING CHANGES
