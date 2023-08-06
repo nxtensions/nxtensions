@@ -4,6 +4,7 @@ import {
   ensureNxProject,
   readFile,
   runNxCommandAsync,
+  tmpProjPath,
   uniq,
   updateFile,
 } from '@nx/plugin/testing';
@@ -12,6 +13,8 @@ import {
   killPorts,
   readProjectGraph,
 } from '@nxtensions/e2e-utils';
+import { readdirSync, statSync } from 'fs';
+import { join } from 'path';
 import stripAnsi from 'strip-ansi';
 
 describe('astro e2e', () => {
@@ -142,6 +145,52 @@ import { ${libComponentName} } from '@proj/${lib}';
     expect(await killPorts(3000)).toBeTruthy();
   }, 300_000);
 
+  it('should generate app and a dependent lib with Tailwind CSS and build correctly', async () => {
+    const app = uniq('app');
+    const lib = uniq('lib');
+
+    await runNxCommandAsync(
+      `generate @nxtensions/astro:app ${app} --integrations tailwind`
+    );
+    await runNxCommandAsync(`generate @nxtensions/astro:lib ${lib}`);
+
+    const libComponentName = names(lib).className;
+    // update app index to use text-4xl and text-center and the lib
+    updateFile(
+      `apps/${app}/src/pages/index.astro`,
+      `---
+import { ${libComponentName} } from '@proj/${lib}';
+---
+
+<h1 class="text-4xl text-center">Welcome to ${app}!</h1>
+
+<${libComponentName} />
+`
+    );
+    // update lib component to use text-2xl
+    updateFile(
+      `libs/${lib}/src/lib/${libComponentName}.astro`,
+      `<h2 class="text-2xl">Welcome to ${lib}!</h2>`
+    );
+
+    const output = await runNxCommandAsync(`build ${app}`);
+
+    expect(stripAnsi(output.stdout)).toContain(
+      `Successfully ran target build for project ${app}`
+    );
+
+    const stylesheetPath = findAstroBuiltStylesheet(app);
+    expect(stylesheetPath).toBeTruthy();
+    const stylesheet = readFile(stylesheetPath);
+    // Tailwind CSS classes from the app
+    expect(stylesheet).toContain('text-4xl');
+    expect(stylesheet).toContain('text-center');
+    // Tailwind CSS classes from the lib
+    expect(stylesheet).toContain('text-2xl');
+    // Tailwind CSS classes not used, should not be included
+    expect(stylesheet).not.toContain('text-xl');
+  }, 300_000);
+
   describe('project graph plugin', () => {
     it('should add projects and dependencies correctly to project graph', async () => {
       const app1 = uniq('app');
@@ -160,11 +209,11 @@ import { ${libComponentName} } from '@proj/${lib}';
       updateFile(
         `apps/${app1}/src/pages/index.astro`,
         `---
-  import { ${lib1ComponentName} } from '@proj/${lib1}';
-  ---
+    import { ${lib1ComponentName} } from '@proj/${lib1}';
+    ---
 
-  <${lib1ComponentName} />
-  `
+    <${lib1ComponentName} />
+    `
       );
 
       // assert the lib has been added as a dependency to the app in the project graph
@@ -181,11 +230,11 @@ import { ${libComponentName} } from '@proj/${lib}';
       updateFile(
         `libs/${lib1}/src/lib/${lib1ComponentName}.astro`,
         `---
-  import { ${lib2ComponentName} } from '@proj/${lib2}';
-  ---
+    import { ${lib2ComponentName} } from '@proj/${lib2}';
+    ---
 
-  <${lib2ComponentName} />
-  `
+    <${lib2ComponentName} />
+    `
       );
 
       // assert the second lib node was added and it's set as a dependency to
@@ -198,3 +247,26 @@ import { ${libComponentName} } from '@proj/${lib}';
     }, 300_000);
   });
 });
+
+function findAstroBuiltStylesheet(project: string, dir = ''): string | null {
+  const outputDir = tmpProjPath(join('dist', 'apps', project, dir));
+  const stylesheetPath = readdirSync(outputDir).find(
+    (f) => f.startsWith('index') && f.endsWith('.css')
+  );
+
+  if (stylesheetPath) {
+    return join(outputDir, stylesheetPath);
+  }
+
+  const subDirs = readdirSync(outputDir).filter((f) =>
+    statSync(join(outputDir, f)).isDirectory()
+  );
+  for (const subDir of subDirs) {
+    const stylesheet = findAstroBuiltStylesheet(project, subDir);
+    if (stylesheet) {
+      return stylesheet;
+    }
+  }
+
+  return null;
+}

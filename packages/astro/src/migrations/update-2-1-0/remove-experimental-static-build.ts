@@ -5,7 +5,7 @@ import {
   Tree,
   updateProjectConfiguration,
 } from '@nx/devkit';
-import { tsquery } from '@phenomnomnominal/tsquery';
+import { ast, query } from '@phenomnomnominal/tsquery';
 
 export default async function (tree: Tree) {
   const executorsToMigrate = [
@@ -57,16 +57,16 @@ function updateAstroConfiguration(
     }
 
     const astroConfig = tree.read(configPath, 'utf-8');
-    const astroConfigAst = tsquery.ast(astroConfig);
+    const astroConfigAst = ast(astroConfig);
     const experimentalStaticBuildAssignmentSelector =
       'PropertyAssignment:has(Identifier[name="buildOptions"]) PropertyAssignment:has(Identifier[name="experimentalStaticBuild"])';
-    const [experimentalStaticBuildAssignment] = tsquery(
+    const [experimentalStaticBuildAssignment] = query(
       astroConfigAst,
       experimentalStaticBuildAssignmentSelector
     );
 
     if (experimentalStaticBuildAssignment) {
-      const [falseKeyword] = tsquery(
+      const [falseKeyword] = query(
         experimentalStaticBuildAssignment,
         'Identifier ~ FalseKeyword'
       );

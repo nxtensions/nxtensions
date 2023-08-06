@@ -3,8 +3,9 @@ import { initGenerator } from '../init/generator';
 import { GeneratorOptions } from './schema';
 import {
   addFiles,
-  addProject,
   addIntegrationsPackages,
+  addProject,
+  configureTailwindIntegration,
   normalizeOptions,
   setDefaultProject,
   setupE2ETests,
@@ -26,6 +27,7 @@ export async function applicationGenerator(
   addProject(tree, options);
   setDefaultProject(tree, options.projectName);
   addFiles(tree, options);
+  configureTailwindIntegration(tree, options);
 
   const e2eTask = await setupE2ETests(tree, options);
   if (e2eTask) {
