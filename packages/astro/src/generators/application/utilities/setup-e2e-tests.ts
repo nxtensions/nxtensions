@@ -1,13 +1,13 @@
 import {
-  GeneratorCallback,
+  ensurePackage,
   names,
   readProjectConfiguration,
-  Tree,
   updateProjectConfiguration,
+  type GeneratorCallback,
+  type Tree,
 } from '@nx/devkit';
-import { Linter } from '@nx/linter';
-import { importNrwlCypress } from '../../utilities/cypress';
-import { NormalizedGeneratorOptions } from '../schema';
+import { getInstalledNxVersion } from '../../utilities/versions';
+import type { NormalizedGeneratorOptions } from '../schema';
 
 export async function setupE2ETests(
   tree: Tree,
@@ -23,7 +23,13 @@ export async function setupE2ETests(
     : name;
   const e2eProjectName = directory.replace(/\//g, '-');
 
-  const { cypressProjectGenerator } = await importNrwlCypress();
+  const { cypressProjectGenerator } = ensurePackage<
+    typeof import('@nx/cypress')
+  >('@nx/cypress', getInstalledNxVersion(tree));
+  const { Linter } = ensurePackage<typeof import('@nx/linter')>(
+    '@nx/linter',
+    getInstalledNxVersion(tree)
+  );
   const cypressTask = await cypressProjectGenerator(tree, {
     name,
     project: options.projectName,

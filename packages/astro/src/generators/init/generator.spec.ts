@@ -3,7 +3,7 @@ jest.mock('@nx/cypress');
 import { cypressInitGenerator } from '@nx/cypress';
 import type { Tree } from '@nx/devkit';
 import { readJson, readNxJson, updateJson, updateNxJson } from '@nx/devkit';
-import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
+import { createTreeWithEmptyWorkspace } from '../utilities/testing';
 import { initGenerator } from './generator';
 import { astroVersion } from './versions';
 

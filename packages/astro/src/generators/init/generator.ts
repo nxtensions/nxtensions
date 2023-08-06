@@ -1,7 +1,7 @@
 import type { GeneratorCallback, Tree } from '@nx/devkit';
-import { readNxJson } from '@nx/devkit';
+import { ensurePackage, readNxJson } from '@nx/devkit';
 import { addDependenciesToPackageJson } from '../../utilities/package-json';
-import { importNrwlCypress } from '../utilities/cypress';
+import { getInstalledNxVersion } from '../utilities/versions';
 import type { GeneratorOptions } from './schema';
 import {
   addProjectGraphPlugin,
@@ -24,7 +24,9 @@ export async function initGenerator(
   }
 
   const tasks: GeneratorCallback[] = [];
-  const { initGenerator: jsInitGenerator } = await import('@nx/js');
+  const { initGenerator: jsInitGenerator } = ensurePackage<
+    typeof import('@nx/js')
+  >('@nx/js', getInstalledNxVersion(tree));
   const jsTask = await jsInitGenerator(tree, { skipFormat: true });
   tasks.push(jsTask);
 
@@ -36,7 +38,9 @@ export async function initGenerator(
   setupNpmrc(tree);
 
   if (options.addCypressTests !== false) {
-    const { cypressInitGenerator } = await importNrwlCypress();
+    const { cypressInitGenerator } = ensurePackage<
+      typeof import('@nx/cypress')
+    >('@nx/cypress', getInstalledNxVersion(tree));
     const cypressTask = await cypressInitGenerator(tree, {});
     tasks.push(cypressTask);
   }
