@@ -1,10 +1,15 @@
-import type { Tree } from '@nx/devkit';
 import {
   generateFiles,
   joinPathFragments,
   names,
   offsetFromRoot,
+  type Tree,
 } from '@nx/devkit';
+import { major } from 'semver';
+import {
+  cleanVersion,
+  getPackageInstalledVersion,
+} from '../../utilities/versions';
 import type { NormalizedGeneratorOptions } from '../schema';
 
 export function addFiles(
@@ -23,6 +28,7 @@ export function addFiles(
       offsetFromRoot: rootOffset,
       outDir: joinPathFragments(rootOffset, 'dist', options.projectRoot),
       tmpl: '',
+      isTs5: isTypeScript5(tree),
     }
   );
 
@@ -34,4 +40,12 @@ export function addFiles(
       { tmpl: '' }
     );
   }
+}
+
+function isTypeScript5(tree: Tree): boolean {
+  const typescriptVersion = getPackageInstalledVersion(tree, 'typescript');
+
+  return typescriptVersion
+    ? major(cleanVersion(typescriptVersion)) >= 5
+    : false;
 }

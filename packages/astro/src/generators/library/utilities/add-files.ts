@@ -3,9 +3,14 @@ import {
   joinPathFragments,
   names,
   offsetFromRoot,
-  Tree,
+  type Tree,
 } from '@nx/devkit';
-import { NormalizedGeneratorOptions } from '../schema';
+import { major } from 'semver';
+import {
+  cleanVersion,
+  getPackageInstalledVersion,
+} from '../../utilities/versions';
+import type { NormalizedGeneratorOptions } from '../schema';
 
 export function addFiles(tree: Tree, options: NormalizedGeneratorOptions) {
   generateFiles(
@@ -17,10 +22,19 @@ export function addFiles(tree: Tree, options: NormalizedGeneratorOptions) {
       ...names(options.name),
       offsetFromRoot: offsetFromRoot(options.projectRoot),
       tmpl: '',
+      isTs5: isTypeScript5(tree),
     }
   );
 
   if (!options.publishable) {
     tree.delete(joinPathFragments(options.projectRoot, 'package.json'));
   }
+}
+
+function isTypeScript5(tree: Tree): boolean {
+  const typescriptVersion = getPackageInstalledVersion(tree, 'typescript');
+
+  return typescriptVersion
+    ? major(cleanVersion(typescriptVersion)) >= 5
+    : false;
 }
