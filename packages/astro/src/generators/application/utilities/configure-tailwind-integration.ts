@@ -1,8 +1,13 @@
-import { joinPathFragments, readJson, type Tree } from '@nx/devkit';
-import { insertImport } from '@nx/js';
+import {
+  ensurePackage,
+  joinPathFragments,
+  readJson,
+  type Tree,
+} from '@nx/devkit';
 import { ast, query } from '@phenomnomnominal/tsquery';
 import { clean, coerce, lt } from 'semver';
 import type { CallExpression } from 'typescript';
+import { getInstalledNxVersion } from '../../utilities/versions';
 import type { IntegrationInfo, NormalizedGeneratorOptions } from '../schema';
 
 export function configureTailwindIntegration(
@@ -53,6 +58,10 @@ export function configureTailwindIntegration(
 
   // add import for `fileURLToPath`
   source = ast(updatedConfig);
+  const { insertImport } = ensurePackage<typeof import('@nx/js')>(
+    '@nx/js',
+    getInstalledNxVersion(tree)
+  );
   insertImport(tree, source, astroConfigPath, 'fileURLToPath', 'node:url');
 }
 

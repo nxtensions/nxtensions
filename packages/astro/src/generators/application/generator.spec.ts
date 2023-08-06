@@ -13,8 +13,8 @@ import {
   Tree,
   updateNxJson,
 } from '@nx/devkit';
-import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import fetch from 'node-fetch';
+import { createTreeWithEmptyWorkspace } from '../utilities/testing';
 import { applicationGenerator } from './generator';
 import { GeneratorOptions } from './schema';
 

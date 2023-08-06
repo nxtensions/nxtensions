@@ -37,6 +37,14 @@
     "nx": "^16.0.0",
     "typescript": ">=4.6.2"
   },
+  "peerDependenciesMeta": {
+    "@nx/cypress": {
+      "optional": true
+    },
+    "@nx/linter": {
+      "optional": true
+    }
+  },
   "dependencies": {
     "@astrojs/compiler": "~1.8.1",
     "@phenomnomnominal/tsquery": "~6.1.2",
