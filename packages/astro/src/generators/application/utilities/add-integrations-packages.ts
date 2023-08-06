@@ -1,9 +1,6 @@
-import {
-  addDependenciesToPackageJson,
-  GeneratorCallback,
-  Tree,
-} from '@nx/devkit';
-import { IntegrationInfo } from '../schema';
+import type { GeneratorCallback, Tree } from '@nx/devkit';
+import { addDependenciesToPackageJson } from '../../../utilities/package-json';
+import type { IntegrationInfo } from '../schema';
 
 export function addIntegrationsPackages(
   tree: Tree,

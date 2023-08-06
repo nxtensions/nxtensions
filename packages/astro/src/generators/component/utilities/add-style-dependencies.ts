@@ -1,9 +1,6 @@
-import {
-  Tree,
-  GeneratorCallback,
-  addDependenciesToPackageJson,
-} from '@nx/devkit';
-import { NormalizedGeneratorOptions } from '../schema';
+import type { GeneratorCallback, Tree } from '@nx/devkit';
+import { addDependenciesToPackageJson } from '../../../utilities/package-json';
+import type { NormalizedGeneratorOptions } from '../schema';
 
 export function addStyleDependencies(
   tree: Tree,
