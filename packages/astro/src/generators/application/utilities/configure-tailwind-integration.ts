@@ -4,16 +4,15 @@ import {
   readJson,
   type Tree,
 } from '@nx/devkit';
-import { ast, query } from '@phenomnomnominal/tsquery';
 import { clean, coerce, lt } from 'semver';
 import type { CallExpression } from 'typescript';
 import { getInstalledNxVersion } from '../../utilities/versions';
 import type { IntegrationInfo, NormalizedGeneratorOptions } from '../schema';
 
-export function configureTailwindIntegration(
+export async function configureTailwindIntegration(
   tree: Tree,
   options: NormalizedGeneratorOptions
-): void {
+): Promise<void> {
   const tailwindIntegration = options.integrations.find(
     (integration) => integration.name === 'tailwind'
   );
@@ -34,6 +33,8 @@ export function configureTailwindIntegration(
     'astro.config.mjs'
   );
   const astroConfigContent = tree.read(astroConfigPath, 'utf-8');
+
+  const { ast, query } = await import('@phenomnomnominal/tsquery');
   let source = ast(astroConfigContent);
 
   const tailwindCallExpressions = query<CallExpression>(
