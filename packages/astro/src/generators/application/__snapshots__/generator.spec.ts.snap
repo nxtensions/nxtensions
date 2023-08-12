@@ -5,6 +5,7 @@ exports[`application generator --integrations should add integrations to the ast
 import solid from '@astrojs/solid-js';
 import vue from '@astrojs/vue';
 
+// https://astro.build/config
 export default defineConfig({
   outDir: '../dist/app1',
   integrations: [solid(),vue()],

@@ -44,6 +44,14 @@ describe('component generator', () => {
   test('should create the component in the right location when adding it to a library', async () => {
     await componentGenerator(tree, { name: 'foo', project: libProject });
 
+    expect(tree.exists(`libs/${libProject}/src/Foo.astro`)).toBeTruthy();
+  });
+
+  test('should create the component in src/lib whrn that dir exists and it is not empty for backward compat', async () => {
+    tree.write(`libs/${libProject}/src/lib/Cmp1.astro`, '<div>cmp1</div>');
+
+    await componentGenerator(tree, { name: 'foo', project: libProject });
+
     expect(tree.exists(`libs/${libProject}/src/lib/Foo.astro`)).toBeTruthy();
   });
 
@@ -57,7 +65,7 @@ describe('component generator', () => {
       await componentGenerator(tree, { name: name, project: libProject });
 
       expect(
-        tree.exists(`libs/${libProject}/src/lib/${expectedName}.astro`)
+        tree.exists(`libs/${libProject}/src/${expectedName}.astro`)
       ).toBeTruthy();
     }
   );
@@ -168,7 +176,7 @@ describe('component generator', () => {
         capitalizeName: false,
       });
 
-      expect(tree.exists(`libs/${libProject}/src/lib/foo.astro`)).toBeTruthy();
+      expect(tree.exists(`libs/${libProject}/src/foo.astro`)).toBeTruthy();
     });
   });
 });

@@ -68,7 +68,7 @@ import { ${libComponentName} } from '@proj/${lib}';
 
     const indexContent = readFile(`dist/apps/${app}/index.html`);
     const libComponentContent = readFile(
-      `libs/${lib}/src/lib/${libComponentName}.astro`
+      `libs/${lib}/src/${libComponentName}.astro`
     );
     expect(indexContent).toEqual(
       expect.stringContaining(libComponentContent.trim())
@@ -169,7 +169,7 @@ import { ${libComponentName} } from '@proj/${lib}';
     );
     // update lib component to use text-2xl
     updateFile(
-      `libs/${lib}/src/lib/${libComponentName}.astro`,
+      `libs/${lib}/src/${libComponentName}.astro`,
       `<h2 class="text-2xl">Welcome to ${lib}!</h2>`
     );
 
@@ -228,7 +228,7 @@ import { ${libComponentName} } from '@proj/${lib}';
 
       const lib2ComponentName = names(lib2).className;
       updateFile(
-        `libs/${lib1}/src/lib/${lib1ComponentName}.astro`,
+        `libs/${lib1}/src/${lib1ComponentName}.astro`,
         `---
     import { ${lib2ComponentName} } from '@proj/${lib2}';
     ---

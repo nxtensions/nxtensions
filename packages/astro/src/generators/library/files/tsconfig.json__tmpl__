@@ -27,5 +27,6 @@
     "ignoreDeprecations": "5.0",<% } %>
     // Allow JavaScript files to be imported
     "allowJs": true
-  }
+  },
+  "include": ["index.ts", "src"]
 }

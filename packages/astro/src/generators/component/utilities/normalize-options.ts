@@ -11,7 +11,12 @@ export function normalizeOptions(
   if (options.directory) {
     directory = joinPathFragments(project.root, options.directory);
   } else if (project.projectType === 'library') {
-    directory = joinPathFragments(project.root, 'src', 'lib');
+    const libDirPath = joinPathFragments(project.root, 'src', 'lib');
+    if (tree.exists(libDirPath) && tree.children(libDirPath).length) {
+      directory = libDirPath;
+    } else {
+      directory = joinPathFragments(project.root, 'src');
+    }
   } else {
     directory = joinPathFragments(project.root, 'src', 'components');
   }

@@ -3,6 +3,7 @@ import { defineConfig } from "astro/config";<% if (integrations.length > 0) { %>
   .map(({ name, packageName }) =>`import ${name} from '${packageName}';`)
   .join('\n') %><% } %>
 
+// https://astro.build/config
 export default defineConfig({
   outDir: '<%= outDir %>',<% if (integrations.length > 0) { %>
   integrations: [<%= integrations.map(({ name }) => `${name}()`) %>],<% } %>
