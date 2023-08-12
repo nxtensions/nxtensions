@@ -27,7 +27,7 @@ export async function applicationGenerator(
   addProject(tree, options);
   setDefaultProject(tree, options.projectName);
   addFiles(tree, options);
-  configureTailwindIntegration(tree, options);
+  await configureTailwindIntegration(tree, options);
 
   const e2eTask = await setupE2ETests(tree, options);
   if (e2eTask) {
