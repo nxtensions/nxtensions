@@ -16,7 +16,7 @@ export function addPathMapping(
     const c = json.compilerOptions;
     c.paths = c.paths ?? {};
     c.paths[options.importPath] = [
-      joinPathFragments(options.projectRoot, 'src/index.js'),
+      joinPathFragments(options.projectRoot, 'index.ts'),
     ];
 
     return json;

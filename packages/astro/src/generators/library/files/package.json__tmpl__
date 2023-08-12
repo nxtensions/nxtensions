@@ -3,10 +3,15 @@
   "version": "0.0.1",
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./index.ts"
   },
-  "files": ["src"],
-  "keywords": ["astro-component"],
+  "files": [
+    "src",
+    "index.ts"
+  ],
+  "keywords": [
+    "astro-component"
+  ],
   "peerDependencies": {
     "astro": "^1.0.0"
   }
