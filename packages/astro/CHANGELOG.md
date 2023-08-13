@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [16.2.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v16.1.0...@nxtensions/astro@v16.2.0) (2023-08-13)
+
+### Features
+
+- **astro:** restore usage of astro's latest version ([#467](https://github.com/nxtensions/nxtensions/issues/467)) ([9a3d805](https://github.com/nxtensions/nxtensions/commit/9a3d80536e8d85378a61366ae6ed1b9ca1834925))
+- **astro:** sync with upstream and simplify generator templates ([#468](https://github.com/nxtensions/nxtensions/issues/468)) ([fd33746](https://github.com/nxtensions/nxtensions/commit/fd33746ffb9788b3f5a59d39554eabb1fc6707d6))
+
+### Bug Fixes
+
+- **astro:** import tsquery lazily in application generator ([#466](https://github.com/nxtensions/nxtensions/issues/466)) ([c328cdb](https://github.com/nxtensions/nxtensions/commit/c328cdb5e97373465e8cb1660a8b7cdc5423a37c))
+- **astro:** set explicit include setting to generated app tsconfig ([#469](https://github.com/nxtensions/nxtensions/issues/469)) ([88ca75f](https://github.com/nxtensions/nxtensions/commit/88ca75fd577ea0f105a971c07dc30f6e38ce3549))
+
 ## [16.1.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v16.0.0...@nxtensions/astro@v16.1.0) (2023-08-06)
 
 ### Features
