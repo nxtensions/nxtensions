@@ -31,7 +31,7 @@
     "@nx/workspace": "16.6.0",
     "@phenomnomnominal/tsquery": "~6.1.2",
     "@swc-node/register": "~1.6.6",
-    "@swc/core": "~1.3.74",
+    "@swc/core": "~1.3.82",
     "@types/fs-extra": "~11.0.1",
     "@types/jest": "29.4.4",
     "@types/kill-port": "~2.0.0",
