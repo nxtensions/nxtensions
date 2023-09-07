@@ -17,7 +17,7 @@
     "tslib": "~2.6.1"
   },
   "devDependencies": {
-    "@astrojs/compiler": "~1.8.1",
+    "@astrojs/compiler": "^2.0.1",
     "@commitlint/cli": "~17.6.7",
     "@commitlint/config-conventional": "~17.6.7",
     "@commitlint/cz-commitlint": "~17.6.7",
@@ -41,7 +41,7 @@
     "@types/tcp-port-used": "~1.0.1",
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
-    "astro": "~2.10.7",
+    "astro": "^3.0.10",
     "commitizen": "~4.3.0",
     "eslint": "~8.46.0",
     "eslint-config-prettier": "~8.9.0",

@@ -16,7 +16,7 @@ export async function* previewExecutor(
 
     // TODO: build url from what's in the Astro config once the CLI API is available.
     // See https://github.com/snowpackjs/astro/issues/1483.
-    yield { baseUrl: `http://localhost:3000`, success };
+    yield { baseUrl: `http://localhost:4321`, success };
 
     // This Promise intentionally never resolves, leaving the process running
     // eslint-disable-next-line @typescript-eslint/no-empty-function
