@@ -25,5 +25,5 @@ try {
   );
 } catch (e) {
   console.error('The Nx CLI could not be patched.');
-  throw e;
+  process.exit(0);
 }
