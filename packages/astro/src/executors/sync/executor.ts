@@ -7,7 +7,7 @@ import {
   isAstroVersion,
 } from '../../utilities/versions';
 import type { SyncExecutorOptions } from './schema';
-import { getAstroBinPath } from '../../utilities/astro-bin';
+import { getAstroBinPath } from '../../utilities/versions';
 
 let childProcess: ChildProcess;
 

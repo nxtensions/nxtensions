@@ -4,7 +4,7 @@ import type { ChildProcess } from 'child_process';
 import { fork } from 'child_process';
 import stripAnsi from 'strip-ansi';
 import type { DevExecutorOptions } from './schema';
-import { getAstroBinPath } from '../../utilities/astro-bin';
+import { getAstroBinPath } from '../../utilities/versions';
 
 let childProcess: ChildProcess;
 

@@ -5,7 +5,7 @@ import { fork } from 'child_process';
 import { removeSync } from 'fs-extra';
 import { resolve } from 'path';
 import type { BuildExecutorOptions } from './schema';
-import { getAstroBinPath } from '../../utilities/astro-bin';
+import { getAstroBinPath } from '../../utilities/versions';
 
 let childProcess: ChildProcess;
 

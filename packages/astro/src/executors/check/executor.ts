@@ -3,7 +3,7 @@ import { logger } from '@nx/devkit';
 import type { ChildProcess } from 'child_process';
 import { fork } from 'child_process';
 import type { CheckExecutorOptions } from './schema';
-import { getAstroBinPath } from '../../utilities/astro-bin';
+import { getAstroBinPath } from '../../utilities/versions';
 
 let childProcess: ChildProcess;
 

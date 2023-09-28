@@ -56,18 +56,8 @@ import Card from '../components/Card.astro';
 			/>
 			<Card
 				href="https://astro.build/chat/"
-				title="Astro Community"
-				body="Come say hi to our amazing Astro Discord community. ❤️"
-			/>
-			<Card
-				href="https://nx.dev/"
-				title="Nx"
-				body="Learn more about Nx."
-			/>
-			<Card
-				href="https://nrwlcommunity.slack.com/"
-				title="Nrwl Community Slack"
-				body="Come chat in the Nrwl Community Slack. ❤️"
+				title="Community"
+				body="Come say hi to our amazing Discord community. ❤️"
 			/>
 		</ul>
 	</main>
@@ -83,7 +73,6 @@ import Card from '../components/Card.astro';
 		font-size: 20px;
 		line-height: 1.6;
 	}
-
 	.astro-a {
 		position: absolute;
 		top: -32px;
@@ -93,7 +82,6 @@ import Card from '../components/Card.astro';
 		height: auto;
 		z-index: -1;
 	}
-
 	h1 {
 		font-size: 4rem;
 		font-weight: 700;
@@ -101,7 +89,6 @@ import Card from '../components/Card.astro';
 		text-align: center;
 		margin-bottom: 1em;
 	}
-
 	.text-gradient {
 		background-image: var(--accent-gradient);
 		-webkit-background-clip: text;
@@ -109,7 +96,6 @@ import Card from '../components/Card.astro';
 		background-size: 400%;
 		background-position: 0%;
 	}
-
 	.instructions {
 		margin-bottom: 2rem;
 		border: 1px solid rgba(var(--accent-light), 25%);
@@ -117,7 +103,6 @@ import Card from '../components/Card.astro';
 		padding: 1.5rem;
 		border-radius: 8px;
 	}
-
 	.instructions code {
 		font-size: 0.8em;
 		font-weight: bold;
@@ -126,11 +111,9 @@ import Card from '../components/Card.astro';
 		border-radius: 4px;
 		padding: 0.3em 0.4em;
 	}
-
 	.instructions strong {
 		color: rgb(var(--accent-light));
 	}
-
 	.link-card-grid {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));

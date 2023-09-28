@@ -2,7 +2,7 @@ import { ExecutorContext, logger } from '@nx/devkit';
 import { ChildProcess, fork } from 'child_process';
 import stripAnsi from 'strip-ansi';
 import { PreviewExecutorOptions } from './schema';
-import { getAstroBinPath } from '../../utilities/astro-bin';
+import { getAstroBinPath } from '../../utilities/versions';
 
 let childProcess: ChildProcess;
 
