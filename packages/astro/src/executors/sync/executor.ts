@@ -7,6 +7,7 @@ import {
   isAstroVersion,
 } from '../../utilities/versions';
 import type { SyncExecutorOptions } from './schema';
+import { getAstroBinPath } from '../../utilities/astro-bin';
 
 let childProcess: ChildProcess;
 
@@ -43,7 +44,7 @@ export default syncExecutor;
 function runCliSync(workspaceRoot: string, projectRoot: string) {
   return new Promise((resolve, reject) => {
     childProcess = fork(
-      require.resolve('astro'),
+      getAstroBinPath(),
       ['sync', ...getAstroBuildArgs(projectRoot)],
       {
         cwd: workspaceRoot,

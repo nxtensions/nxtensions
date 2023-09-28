@@ -3,6 +3,7 @@ import { logger } from '@nx/devkit';
 import type { ChildProcess } from 'child_process';
 import { fork } from 'child_process';
 import type { CheckExecutorOptions } from './schema';
+import { getAstroBinPath } from '../../utilities/astro-bin';
 
 let childProcess: ChildProcess;
 
@@ -34,7 +35,7 @@ function runCliCheck(workspaceRoot: string, projectRoot: string) {
     // TODO: use Astro CLI API once it's available.
     // See https://github.com/snowpackjs/astro/issues/1483.
     childProcess = fork(
-      require.resolve('astro'),
+      getAstroBinPath(),
       ['check', ...getAstroBuildArgs(projectRoot)],
       {
         cwd: workspaceRoot,

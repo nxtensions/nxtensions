@@ -5,6 +5,7 @@ import { fork } from 'child_process';
 import { removeSync } from 'fs-extra';
 import { resolve } from 'path';
 import type { BuildExecutorOptions } from './schema';
+import { getAstroBinPath } from '../../utilities/astro-bin';
 
 let childProcess: ChildProcess;
 
@@ -57,7 +58,7 @@ function runCliBuild(
     // TODO: use Astro CLI API once it's available.
     // See https://github.com/snowpackjs/astro/issues/1483.
     childProcess = fork(
-      require.resolve('astro'),
+      getAstroBinPath(),
       ['build', ...getAstroBuildArgs(projectRoot, options)],
       {
         cwd: workspaceRoot,

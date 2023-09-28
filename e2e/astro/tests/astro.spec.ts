@@ -142,7 +142,7 @@ import { ${libComponentName} } from '@proj/${lib}';
       `Successfully ran target e2e for project ${app}`
     );
 
-    expect(await killPorts(3000)).toBeTruthy();
+    expect(await killPorts(4321)).toBeTruthy();
   }, 300_000);
 
   it('should generate app and a dependent lib with Tailwind CSS and build correctly', async () => {

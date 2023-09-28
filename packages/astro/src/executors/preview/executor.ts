@@ -2,6 +2,7 @@ import { ExecutorContext, logger } from '@nx/devkit';
 import { ChildProcess, fork } from 'child_process';
 import stripAnsi from 'strip-ansi';
 import { PreviewExecutorOptions } from './schema';
+import { getAstroBinPath } from '../../utilities/astro-bin';
 
 let childProcess: ChildProcess;
 
@@ -43,7 +44,7 @@ function runCliPreview(
     // TODO: use Astro CLI API once it's available.
     // See https://github.com/snowpackjs/astro/issues/1483.
     childProcess = fork(
-      require.resolve('astro'),
+      getAstroBinPath(),
       ['preview', ...getAstroPreviewArgs(projectRoot, options)],
       {
         cwd: workspaceRoot,
