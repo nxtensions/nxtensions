@@ -27,10 +27,14 @@ function emitChildProcessStdioData(
   childProcessStdioDataEventStore[stdio] = value;
 }
 
-const oldAstroServerStartedTerminalOutput =
-  '01:49 PM [astro] Server started                               64ms';
-const astroServerStartedTerminalOutput = `
+const astroV3ServerStartedTerminalOutput = `
   🚀 [42m[30m astro [39m[49m [32mv0.24.0[39m [2mstarted in 476ms[22m
+
+  [2m┃[22m Local    [1m[36mhttp://localhost:4321/[39m[22m
+  [2m┃[22m Network  [2muse --host to expose[22m
+`;
+const astroV4ServerStartedTerminalOutput = `
+  🚀 [42m[30m astro [39m[49m [32mv0.24.0[39m [2mready in 476 ms[22m
 
   [2m┃[22m Local    [1m[36mhttp://localhost:4321/[39m[22m
   [2m┃[22m Network  [2muse --host to expose[22m
@@ -81,7 +85,7 @@ describe('Preview Executor', () => {
   });
 
   test('should run successfully', async () => {
-    emitChildProcessStdioData('stdout', astroServerStartedTerminalOutput);
+    emitChildProcessStdioData('stdout', astroV4ServerStartedTerminalOutput);
 
     const resultIterator = previewExecutor({}, context);
 
@@ -91,7 +95,7 @@ describe('Preview Executor', () => {
   });
 
   test('should support the old Astro CLI output', async () => {
-    emitChildProcessStdioData('stdout', oldAstroServerStartedTerminalOutput);
+    emitChildProcessStdioData('stdout', astroV3ServerStartedTerminalOutput);
 
     const resultIterator = previewExecutor({}, context);
 
