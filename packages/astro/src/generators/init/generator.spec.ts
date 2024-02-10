@@ -22,15 +22,6 @@ describe('init generator', () => {
     expect(plugins).toContain('@nxtensions/astro');
   });
 
-  test('should add the check target to the cacheable operations', async () => {
-    await initGenerator(tree, {});
-
-    const workspace = readNxJson(tree);
-    expect(
-      workspace.tasksRunnerOptions.default.options.cacheableOperations
-    ).toContain('check');
-  });
-
   test('should add the check target defaults', async () => {
     let workspace = readNxJson(tree);
     workspace.namedInputs ??= { production: [] };
@@ -42,6 +33,7 @@ describe('init generator', () => {
     workspace = readNxJson(tree);
     expect(workspace.targetDefaults.check).toStrictEqual({
       inputs: ['production', '^production'],
+      cache: true,
     });
   });
 

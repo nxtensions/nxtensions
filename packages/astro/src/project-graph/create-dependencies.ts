@@ -1,11 +1,13 @@
 import type { Node } from '@astrojs/compiler/types';
-import type {
-  FileData,
-  ProjectFileMap,
-  ProjectGraph,
-  ProjectGraphProcessorContext,
+import {
+  workspaceRoot,
+  type CreateDependencies,
+  type CreateDependenciesContext,
+  type FileData,
+  type ProjectFileMap,
+  type ProjectGraphProjectNode,
+  type RawProjectGraphDependency,
 } from '@nx/devkit';
-import { DependencyType, ProjectGraphBuilder, workspaceRoot } from '@nx/devkit';
 import { readFileSync } from 'fs';
 import { TargetProjectLocator } from 'nx/src/plugins/js/project-graph/build-dependencies/target-project-locator';
 import { TypeScriptImportLocator } from 'nx/src/plugins/js/project-graph/build-dependencies/typescript-import-locator';
@@ -16,23 +18,20 @@ let astroCompilerUtils: typeof import('@astrojs/compiler/utils');
 let importLocator: TypeScriptImportLocator;
 let ts: typeof import('typescript');
 
-export async function processProjectGraph(
-  graph: ProjectGraph,
-  context: ProjectGraphProcessorContext
-): Promise<ProjectGraph> {
-  const filesToProcess = getAstroFilesToProcess(context.filesToProcess);
+export const createDependencies: CreateDependencies = async (
+  options,
+  context
+) => {
+  const filesToProcess = getAstroFilesToProcess(
+    context.filesToProcess.projectFileMap
+  );
 
-  // return the unmodified project graph when there are no Astro files to process
   if (filesToProcess.length === 0) {
-    return graph;
+    return [];
   }
 
-  const builder = new ProjectGraphBuilder(graph);
+  const dependencies: RawProjectGraphDependency[] = [];
   for (const { project, files } of filesToProcess) {
-    if (!graph.nodes[project]) {
-      addNode(context, builder, project);
-    }
-
     for (const file of files) {
       // we delay the creation of these until needed and then, we cache them
       astroCompiler ??= await new Function(
@@ -49,46 +48,37 @@ export async function processProjectGraph(
       });
 
       // collect the dependencies
-      await collectDependencies(builder, ast, graph, project, file.file);
+      await collectDependencies(ast, context, project, file.file, dependencies);
     }
   }
 
-  return builder.getUpdatedProjectGraph();
-}
-
-function addNode(
-  context: ProjectGraphProcessorContext,
-  builder: ProjectGraphBuilder,
-  projectName: string
-): void {
-  const project = context.projectsConfigurations.projects[projectName];
-  const projectType =
-    project.projectType === 'application'
-      ? projectName.endsWith('-e2e')
-        ? 'e2e'
-        : 'app'
-      : 'lib';
-  builder.addNode({
-    data: { ...project, tags: project.tags ?? [] },
-    name: projectName,
-    type: projectType,
-  });
-}
+  return dependencies;
+};
 
 async function collectDependencies(
-  builder: ProjectGraphBuilder,
   node: Node,
-  graph: ProjectGraph,
+  context: CreateDependenciesContext,
   project: string,
-  filePath: string
+  filePath: string,
+  collectedDependencies: RawProjectGraphDependency[]
 ): Promise<void> {
   if (astroCompilerUtils.is.frontmatter(node)) {
     // we delay the creation of these until needed and then, we cache them
     importLocator ??= new TypeScriptImportLocator();
     ts = ts ?? require('typescript');
+    const nodes: Record<string, ProjectGraphProjectNode> = Object.fromEntries(
+      Object.entries(context.projects).map(([key, config]) => [
+        key,
+        {
+          name: key,
+          type: null,
+          data: config,
+        },
+      ])
+    );
     const targetProjectLocator = new TargetProjectLocator(
-      graph.nodes,
-      graph.externalNodes
+      nodes,
+      context.externalNodes
     );
 
     const sourceFile = ts.createSourceFile(
@@ -103,15 +93,17 @@ async function collectDependencies(
       sourceFile,
       (importExpr, filePath, type) => {
         // locate project containing the import
-        const target = targetProjectLocator.findProjectWithImport(
-          importExpr,
-          filePath
-        );
+        const target =
+          targetProjectLocator.findProjectWithImport(importExpr, filePath) ??
+          `npm:${importExpr}`;
 
         // add the explicit dependency when the target project was found
-        if (target) {
-          addDependencyToGraph(builder, project, target, filePath, type);
-        }
+        collectedDependencies.push({
+          source: project,
+          target,
+          type,
+          sourceFile: filePath,
+        });
       }
     );
 
@@ -124,7 +116,13 @@ async function collectDependencies(
   }
 
   for (const child of node.children) {
-    await collectDependencies(builder, child, graph, project, filePath);
+    await collectDependencies(
+      child,
+      context,
+      project,
+      filePath,
+      collectedDependencies
+    );
 
     // the child is the frontmatter and at this point was already processed, bail out
     if (astroCompilerUtils.is.frontmatter(child)) {
@@ -137,12 +135,12 @@ function getAstroFilesToProcess(filesToProcess: ProjectFileMap): {
   project: string;
   files: FileData[];
 }[] {
-  const astroExtensions = ['.astro', '.md', '.mdx'];
+  const astroExtensions = new Set(['.astro', '.md', '.mdx']);
 
   return Object.entries(filesToProcess)
     .map(([project, files]) => {
       const astroFiles = files.filter((file) =>
-        astroExtensions.includes(extname(file.file))
+        astroExtensions.has(extname(file.file))
       );
       if (astroFiles.length > 0) {
         return { project, files: astroFiles };
@@ -151,20 +149,4 @@ function getAstroFilesToProcess(filesToProcess: ProjectFileMap): {
       return undefined;
     })
     .filter(Boolean);
-}
-
-async function addDependencyToGraph(
-  builder: ProjectGraphBuilder,
-  sourceProject: string,
-  targetProject: string,
-  sourceFilePath: string,
-  dependencyType: DependencyType
-): Promise<void> {
-  if (dependencyType === DependencyType.static) {
-    builder.addStaticDependency(sourceProject, targetProject, sourceFilePath);
-  } else if (dependencyType === DependencyType.dynamic) {
-    builder.addDynamicDependency(sourceProject, targetProject, sourceFilePath);
-  } else {
-    builder.addImplicitDependency(sourceProject, targetProject);
-  }
 }
