@@ -1,6 +1,8 @@
-import { formatFiles, GeneratorCallback, Tree } from '@nx/devkit';
+import { formatFiles, type GeneratorCallback, type Tree } from '@nx/devkit';
+import { addDependenciesToPackageJson } from '../../utilities/package-json';
 import { initGenerator } from '../init/generator';
-import { GeneratorOptions } from './schema';
+import { astroCheckVersion, typescriptVersion } from '../utilities/versions';
+import type { GeneratorOptions } from './schema';
 import {
   addFiles,
   addPathMapping,
@@ -20,7 +22,19 @@ export async function libraryGenerator(
 
   const options = normalizeOptions(tree, rawOptions);
 
+  const tasks: GeneratorCallback[] = [];
   const initTask = await initGenerator(tree, { addCypressTests: false });
+  tasks.push(initTask);
+
+  const depsTask = addDependenciesToPackageJson(
+    tree,
+    {},
+    {
+      '@astrojs/check': astroCheckVersion,
+      typescript: typescriptVersion,
+    }
+  );
+  tasks.push(depsTask);
 
   addProject(tree, options);
   addFiles(tree, options);
@@ -28,7 +42,7 @@ export async function libraryGenerator(
 
   await formatFiles(tree);
 
-  return initTask;
+  return () => tasks.forEach((task) => task());
 }
 
 export default libraryGenerator;

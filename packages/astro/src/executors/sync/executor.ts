@@ -1,11 +1,5 @@
-import type { ExecutorContext } from '@nx/devkit';
-import { logger } from '@nx/devkit';
-import type { ChildProcess } from 'child_process';
-import { fork } from 'child_process';
-import {
-  getInstalledAstroVersion,
-  isAstroVersion,
-} from '../../utilities/versions';
+import { logger, type ExecutorContext } from '@nx/devkit';
+import { spawn, type ChildProcess } from 'child_process';
 import type { SyncExecutorOptions } from './schema';
 
 let childProcess: ChildProcess;
@@ -14,13 +8,6 @@ export async function syncExecutor(
   _options: SyncExecutorOptions,
   context: ExecutorContext
 ): Promise<{ success: boolean }> {
-  if (!isAstroVersion('1.8.0')) {
-    const astroVersion = getInstalledAstroVersion();
-    throw new Error(
-      `The Astro "sync" CLI command is only available from version 1.8.0. Your installed version is "${astroVersion}".`
-    );
-  }
-
   const projectRoot = context.workspace.projects[context.projectName].root;
 
   try {
@@ -42,14 +29,11 @@ export default syncExecutor;
 
 function runCliSync(workspaceRoot: string, projectRoot: string) {
   return new Promise((resolve, reject) => {
-    childProcess = fork(
-      require.resolve('astro'),
-      ['sync', ...getAstroBuildArgs(projectRoot)],
-      {
-        cwd: workspaceRoot,
-        stdio: 'inherit',
-      }
-    );
+    // TODO: use Astro CLI API: https://docs.astro.build/en/reference/cli-reference/#advanced-apis-experimental
+    childProcess = spawn('astro', ['sync', ...getAstroSyncArgs(projectRoot)], {
+      cwd: workspaceRoot,
+      stdio: 'inherit',
+    });
 
     // Ensure the child process is killed when the parent exits
     process.on('exit', () => childProcess.kill());
@@ -68,7 +52,7 @@ function runCliSync(workspaceRoot: string, projectRoot: string) {
   });
 }
 
-function getAstroBuildArgs(projectRoot: string): string[] {
+function getAstroSyncArgs(projectRoot: string): string[] {
   const args: string[] = ['--root', projectRoot];
 
   return args;

@@ -1,6 +1,8 @@
-import type { Tree } from '@nx/devkit';
-import { addProjectConfiguration, joinPathFragments } from '@nx/devkit';
-import { isAstroVersion } from '../../../utilities/versions';
+import {
+  addProjectConfiguration,
+  joinPathFragments,
+  type Tree,
+} from '@nx/devkit';
 import type { NormalizedGeneratorOptions } from '../schema';
 
 export function addProject(
@@ -39,9 +41,9 @@ export function addProject(
         check: {
           executor: '@nxtensions/astro:check',
         },
-        sync: isAstroVersion('1.8.0')
-          ? { executor: '@nxtensions/astro:sync' }
-          : undefined,
+        sync: {
+          executor: '@nxtensions/astro:sync',
+        },
       },
       tags: options.tags,
     },

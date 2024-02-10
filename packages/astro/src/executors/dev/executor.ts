@@ -1,7 +1,6 @@
-import type { ExecutorContext } from '@nx/devkit';
-import { logger } from '@nx/devkit';
+import { logger, type ExecutorContext } from '@nx/devkit';
 import type { ChildProcess } from 'child_process';
-import { fork } from 'child_process';
+import { spawn } from 'child_process';
 import stripAnsi from 'strip-ansi';
 import type { DevExecutorOptions } from './schema';
 
@@ -18,7 +17,7 @@ export async function* devExecutor(
 
     // TODO: build url from what's in the Astro config once the CLI API is available.
     // See https://github.com/snowpackjs/astro/issues/1483.
-    yield { baseUrl: `http://localhost:${options.port ?? 3000}`, success };
+    yield { baseUrl: `http://localhost:${options.port ?? 4321}`, success };
 
     // This Promise intentionally never resolves, leaving the process running
     // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -42,10 +41,9 @@ function runCliDev(
   options: DevExecutorOptions
 ): Promise<boolean> {
   return new Promise((resolve, reject) => {
-    // TODO: use Astro CLI API once it's available.
-    // See https://github.com/snowpackjs/astro/issues/1483.
-    childProcess = fork(
-      require.resolve('astro'),
+    // TODO: use Astro CLI API: https://docs.astro.build/en/reference/cli-reference/#advanced-apis-experimental
+    childProcess = spawn(
+      'astro',
       ['dev', ...getAstroDevArgs(projectRoot, options)],
       {
         cwd: workspaceRoot,

@@ -4,8 +4,8 @@ import { cypressInitGenerator } from '@nx/cypress';
 import type { Tree } from '@nx/devkit';
 import { readJson, readNxJson, updateJson, updateNxJson } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '../utilities/testing';
+import { astroVersion } from '../utilities/versions';
 import { initGenerator } from './generator';
-import { astroVersion } from './versions';
 
 describe('init generator', () => {
   let tree: Tree;

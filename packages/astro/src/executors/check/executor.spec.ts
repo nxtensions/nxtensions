@@ -1,7 +1,7 @@
 jest.mock('child_process');
 
 import { ExecutorContext } from '@nx/devkit';
-import { fork } from 'child_process';
+import { spawn } from 'child_process';
 import { checkExecutor } from './executor';
 
 type ChildProcessEvents = 'error' | 'exit';
@@ -34,7 +34,7 @@ describe('Check Executor', () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any;
 
-    (fork as jest.Mock).mockImplementation(() => ({
+    (spawn as jest.Mock).mockImplementation(() => ({
       kill: jest.fn(),
       on: (eventName, cb) => {
         if (childProcessEventStore[eventName] !== undefined) {
@@ -52,7 +52,7 @@ describe('Check Executor', () => {
     const result = await checkExecutor({}, context);
 
     expect(result.success).toBe(true);
-    expect(fork).toHaveBeenCalled();
+    expect(spawn).toHaveBeenCalled();
   });
 
   test('should fail if exit code is different than 0', async () => {
@@ -61,15 +61,15 @@ describe('Check Executor', () => {
     const result = await checkExecutor({}, context);
 
     expect(result.success).toBe(false);
-    expect(fork).toHaveBeenCalled();
+    expect(spawn).toHaveBeenCalled();
   });
 
-  test('should fail when the forked process errors', async () => {
+  test('should fail when the spawned process errors', async () => {
     emitChildProcessEvent('error', new Error('Check failed!'));
 
     const result = await checkExecutor({}, context);
 
     expect(result.success).toBe(false);
-    expect(fork).toHaveBeenCalled();
+    expect(spawn).toHaveBeenCalled();
   });
 });

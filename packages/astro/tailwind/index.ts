@@ -7,7 +7,7 @@ import { createGlobPatternsForDependencies as jsGenerateGlobs } from '@nx/js/src
  */
 export function createGlobPatternsForDependencies(
   dirPath: string,
-  fileGlobPattern = '/**/!(*.stories|*.spec).{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'
+  fileGlobPattern = '/**/*!(*.stories|*.spec).{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'
 ) {
   try {
     return jsGenerateGlobs(dirPath, fileGlobPattern);

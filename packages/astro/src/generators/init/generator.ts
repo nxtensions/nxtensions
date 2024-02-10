@@ -1,7 +1,7 @@
 import type { GeneratorCallback, Tree } from '@nx/devkit';
 import { ensurePackage, readNxJson } from '@nx/devkit';
 import { addDependenciesToPackageJson } from '../../utilities/package-json';
-import { getInstalledNxVersion } from '../utilities/versions';
+import { astroVersion, getInstalledNxVersion } from '../utilities/versions';
 import type { GeneratorOptions } from './schema';
 import {
   addProjectGraphPlugin,
@@ -11,7 +11,6 @@ import {
   updateGitignore,
   updateWorkspaceConfiguration,
 } from './utilities';
-import { astroVersion } from './versions';
 
 export async function initGenerator(
   tree: Tree,

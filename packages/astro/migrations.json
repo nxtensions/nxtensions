@@ -1,11 +1,27 @@
 {
-  "generators": {},
+  "generators": {
+    "add-astro-check-dependencies": {
+      "cli": "nx",
+      "version": "17.0.0-beta.0",
+      "description": "Add dependencies for 'astro check' command if used.",
+      "factory": "./src/migrations/update-17-0-0/add-astro-check-dependencies"
+    }
+  },
   "packageJsonUpdates": {
     "3.0.0": {
       "version": "3.0.0-beta.0",
       "packages": {
         "astro": {
           "version": "^1.3.0",
+          "alwaysAddToPackageJson": false
+        }
+      }
+    },
+    "17.0.0": {
+      "version": "17.0.0-beta.0",
+      "packages": {
+        "astro": {
+          "version": "^3.6.4",
           "alwaysAddToPackageJson": false
         }
       }
