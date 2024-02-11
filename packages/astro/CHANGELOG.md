@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [18.0.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v17.0.0...@nxtensions/astro@v18.0.0) (2024-02-11)
+
+### ⚠ BREAKING CHANGES
+
+- **astro:** Support for Nx versions lower than 18 was dropped
+
+- feat(astro): remove the patch-nx-cli.js script
+
+### Features
+
+- **astro:** support astro v4 ([#540](https://github.com/nxtensions/nxtensions/issues/540)) ([998db4f](https://github.com/nxtensions/nxtensions/commit/998db4fabcd228120f12c32985bedd806a91c2d5))
+- **astro:** support nx v18 ([#539](https://github.com/nxtensions/nxtensions/issues/539)) ([a85745c](https://github.com/nxtensions/nxtensions/commit/a85745c29f380ceacbcd9ba6ebec114a18c6847b))
+
 ## [17.0.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v16.2.0...@nxtensions/astro@v17.0.0) (2024-02-11)
 
 ### ⚠ BREAKING CHANGES
