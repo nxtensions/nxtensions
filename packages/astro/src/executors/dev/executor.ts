@@ -57,7 +57,7 @@ function runCliDev(
     process.on('SIGTERM', () => childProcess.kill());
 
     const serverStartedRegex =
-      /(astro +v\d{1,3}.\d{1,3}.\d{1,3} started in \d+ms|Server started)/;
+      /astro +v\d{1,3}.\d{1,3}.\d{1,3} (ready in \d+ ms|started in \d+ms)/;
     childProcess.stdout.on('data', (data) => {
       process.stdout.write(data);
 
