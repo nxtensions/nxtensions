@@ -3,5 +3,8 @@
 /dist
 /coverage
 /.github
+node_modules
+/pnpm-lock.yaml
+tmp
 
 /.nx/cache
