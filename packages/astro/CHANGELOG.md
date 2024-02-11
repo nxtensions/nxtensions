@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [17.0.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v16.2.0...@nxtensions/astro@v17.0.0) (2024-02-11)
+
+### ⚠ BREAKING CHANGES
+
+- **astro:** Support for versions of Astro lower than v3 was dropped
+
+- chore(repo): bump deps
+
+### Features
+
+- **astro:** support astro v3 ([#538](https://github.com/nxtensions/nxtensions/issues/538)) ([a07c7bf](https://github.com/nxtensions/nxtensions/commit/a07c7bfc1d74a505df361c9d30c50609e8584674))
+- **astro:** support nx v17 ([#537](https://github.com/nxtensions/nxtensions/issues/537)) ([627bd81](https://github.com/nxtensions/nxtensions/commit/627bd81cc8d428c479fbfe1986f3c5ee885a6b33))
+
+### Bug Fixes
+
+- **astro:** makes the nx patch exit normally instead of throwing an error ([#509](https://github.com/nxtensions/nxtensions/issues/509)) ([2100ad9](https://github.com/nxtensions/nxtensions/commit/2100ad911ca9bab5e22a75306efd5c283aac485f))
+
 ## [16.2.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v16.1.0...@nxtensions/astro@v16.2.0) (2023-08-13)
 
 ### Features
