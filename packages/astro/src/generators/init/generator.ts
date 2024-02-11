@@ -6,7 +6,6 @@ import type { GeneratorOptions } from './schema';
 import {
   addProjectGraphPlugin,
   addVSCodeRecommendedExtensions,
-  patchNxCli,
   setupNpmrc,
   updateGitignore,
   updateWorkspaceConfiguration,
@@ -33,7 +32,6 @@ export async function initGenerator(
   updateWorkspaceConfiguration(tree);
   updateGitignore(tree);
   addVSCodeRecommendedExtensions(tree);
-  patchNxCli(tree);
   setupNpmrc(tree);
 
   if (options.addCypressTests !== false) {

@@ -28,13 +28,13 @@
   "executors": "./executors.json",
   "nx-migrations": "./migrations.json",
   "peerDependencies": {
-    "@nx/cypress": "^17.0.0",
-    "@nx/devkit": "^17.0.0",
-    "@nx/js": "^17.0.0",
-    "@nx/eslint": "^17.0.0",
-    "@nx/workspace": "^17.0.0",
+    "@nx/cypress": "^18.0.0",
+    "@nx/devkit": "^18.0.0",
+    "@nx/js": "^18.0.0",
+    "@nx/eslint": "^18.0.0",
+    "@nx/workspace": "^18.0.0",
     "astro": "^3.0.0",
-    "nx": "^17.0.0",
+    "nx": "^18.0.0",
     "typescript": "^5.0.0"
   },
   "peerDependenciesMeta": {

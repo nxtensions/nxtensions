@@ -5,6 +5,12 @@
       "version": "17.0.0-beta.0",
       "description": "Add dependencies for 'astro check' command if used.",
       "factory": "./src/migrations/update-17-0-0/add-astro-check-dependencies"
+    },
+    "remove-patch-nx-cli-script": {
+      "cli": "nx",
+      "version": "18.0.0-beta.0",
+      "description": "Remove the patch-nx-cli.js script.",
+      "factory": "./src/migrations/update-18-0-0/remove-patch-nx-cli-script"
     }
   },
   "packageJsonUpdates": {
