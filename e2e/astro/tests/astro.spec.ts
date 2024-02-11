@@ -27,14 +27,14 @@ describe('astro e2e', () => {
     const app = uniq('app');
 
     await runNxCommandAsync(`generate @nxtensions/astro:app ${app}`);
-    expect(() => checkFilesExist(`apps/${app}`)).not.toThrow();
+    expect(() => checkFilesExist(app)).not.toThrow();
 
     const output = await runNxCommandAsync(`build ${app}`);
 
     expect(stripAnsi(output.stdout)).toContain(
       `Successfully ran target build for project ${app}`
     );
-    expect(() => checkFilesExist(`dist/apps/${app}/index.html`)).not.toThrow();
+    expect(() => checkFilesExist(`dist/${app}/index.html`)).not.toThrow();
   }, 300_000);
 
   it('should generate app and a dependent lib and build correctly', async () => {
@@ -42,14 +42,14 @@ describe('astro e2e', () => {
     const lib = uniq('lib');
 
     await runNxCommandAsync(`generate @nxtensions/astro:app ${app}`);
-    expect(() => checkFilesExist(`apps/${app}`)).not.toThrow();
+    expect(() => checkFilesExist(app)).not.toThrow();
 
     await runNxCommandAsync(`generate @nxtensions/astro:lib ${lib}`);
-    expect(() => checkFilesExist(`libs/${lib}`)).not.toThrow();
+    expect(() => checkFilesExist(lib)).not.toThrow();
 
     const libComponentName = names(lib).className;
     updateFile(
-      `apps/${app}/src/pages/index.astro`,
+      `${app}/src/pages/index.astro`,
       `---
 import { ${libComponentName} } from '@proj/${lib}';
 ---
@@ -63,12 +63,12 @@ import { ${libComponentName} } from '@proj/${lib}';
     expect(stripAnsi(output.stdout)).toContain(
       `Successfully ran target build for project ${app}`
     );
-    expect(() => checkFilesExist(`dist/apps/${app}`)).not.toThrow();
-    expect(() => checkFilesExist(`dist/apps/${app}/index.html`)).not.toThrow();
+    expect(() => checkFilesExist(`dist/${app}`)).not.toThrow();
+    expect(() => checkFilesExist(`dist/${app}/index.html`)).not.toThrow();
 
-    const indexContent = readFile(`dist/apps/${app}/index.html`);
+    const indexContent = readFile(`dist/${app}/index.html`);
     const libComponentContent = readFile(
-      `libs/${lib}/src/${libComponentName}.astro`
+      `${lib}/src/${libComponentName}.astro`
     );
     expect(indexContent).toEqual(
       expect.stringContaining(libComponentContent.trim())
@@ -98,15 +98,15 @@ import { ${libComponentName} } from '@proj/${lib}';
 
     await runNxCommandAsync(`generate @nxtensions/astro:app ${app}`);
     updateFile(
-      `apps/${app}/astro.config.mjs`,
+      `${app}/astro.config.mjs`,
       `import { defineConfig } from "astro/config";
 
       export default defineConfig({
-        outDir: '../../dist/apps/${app}',
+        outDir: '../../dist/${app}',
       });`
     );
     updateFile(
-      `apps/${app}/src/content/config.ts`,
+      `${app}/src/content/config.ts`,
       `import { z, defineCollection } from 'astro:content';
 
       const blog = defineCollection({
@@ -119,14 +119,14 @@ import { ${libComponentName} } from '@proj/${lib}';
 
       export const collections = { blog };`
     );
-    updateFile(`apps/${app}/src/content/blog/awesome-blog-post.mdx`, '');
+    updateFile(`${app}/src/content/blog/awesome-blog-post.mdx`, '');
 
     const output = await runNxCommandAsync(`run ${app}:sync`);
     expect(stripAnsi(output.stdout)).toContain(
       `Successfully ran target sync for project ${app}`
     );
-    checkFilesExist(`apps/${app}/.astro/types.d.ts`);
-    expect(readFile(`apps/${app}/src/env.d.ts`)).toContain(
+    checkFilesExist(`${app}/.astro/types.d.ts`);
+    expect(readFile(`${app}/src/env.d.ts`)).toContain(
       '/// <reference path="../.astro/types.d.ts" />'
     );
   }, 300_000);
@@ -157,7 +157,7 @@ import { ${libComponentName} } from '@proj/${lib}';
     const libComponentName = names(lib).className;
     // update app index to use text-4xl and text-center and the lib
     updateFile(
-      `apps/${app}/src/pages/index.astro`,
+      `${app}/src/pages/index.astro`,
       `---
 import { ${libComponentName} } from '@proj/${lib}';
 ---
@@ -169,7 +169,7 @@ import { ${libComponentName} } from '@proj/${lib}';
     );
     // update lib component to use text-2xl
     updateFile(
-      `libs/${lib}/src/${libComponentName}.astro`,
+      `${lib}/src/${libComponentName}.astro`,
       `<h2 class="text-2xl">Welcome to ${lib}!</h2>`
     );
 
@@ -207,7 +207,7 @@ import { ${libComponentName} } from '@proj/${lib}';
       // add the lib as a dependency to the app
       const lib1ComponentName = names(lib1).className;
       updateFile(
-        `apps/${app1}/src/pages/index.astro`,
+        `${app1}/src/pages/index.astro`,
         `---
     import { ${lib1ComponentName} } from '@proj/${lib1}';
     ---
@@ -228,7 +228,7 @@ import { ${libComponentName} } from '@proj/${lib}';
 
       const lib2ComponentName = names(lib2).className;
       updateFile(
-        `libs/${lib1}/src/${lib1ComponentName}.astro`,
+        `${lib1}/src/${lib1ComponentName}.astro`,
         `---
     import { ${lib2ComponentName} } from '@proj/${lib2}';
     ---
@@ -249,7 +249,7 @@ import { ${libComponentName} } from '@proj/${lib}';
 });
 
 function findAstroBuiltStylesheet(project: string, dir = ''): string | null {
-  const outputDir = tmpProjPath(join('dist', 'apps', project, dir));
+  const outputDir = tmpProjPath(join('dist', project, dir));
   const stylesheetPath = readdirSync(outputDir).find(
     (f) => f.startsWith('index') && f.endsWith('.css')
   );

@@ -1,58 +1,6 @@
 {
-  "generators": {
-    "add-check-target": {
-      "cli": "nx",
-      "version": "1.4.0-beta.0",
-      "description": "Adds a check target to Astro projects.",
-      "factory": "./src/migrations/update-1-4-0/add-check-target"
-    },
-    "add-sass-dependency": {
-      "cli": "nx",
-      "version": "1.4.0-beta.0",
-      "description": "Installs the `sass` package if Sass is being used in Astro projects and it's not already installed.",
-      "factory": "./src/migrations/update-1-4-0/add-sass-dependency"
-    },
-    "remove-experimental-static-build": {
-      "cli": "nx",
-      "version": "2.1.0-beta.0",
-      "description": "Removes usage of the experimentalStaticBuild option.",
-      "factory": "./src/migrations/update-2-1-0/remove-experimental-static-build"
-    },
-    "add-script-to-patch-nx-cli-esm-support": {
-      "cli": "nx",
-      "version": "2.3.0-beta.0",
-      "description": "Add script to patch the Nx CLI to support ESM import (@astrojs/compiler) in project graph plugin.",
-      "factory": "./src/migrations/update-2-3-0/add-script-to-patch-nx-cli"
-    }
-  },
+  "generators": {},
   "packageJsonUpdates": {
-    "1.4.0": {
-      "version": "1.4.0-beta.0",
-      "packages": {
-        "astro": {
-          "version": "~0.23.0",
-          "alwaysAddToPackageJson": false
-        }
-      }
-    },
-    "2.1.0": {
-      "version": "2.1.0-beta.0",
-      "packages": {
-        "astro": {
-          "version": "~0.24.0",
-          "alwaysAddToPackageJson": false
-        }
-      }
-    },
-    "2.3.0": {
-      "version": "2.3.0-beta.0",
-      "packages": {
-        "astro": {
-          "version": "~1.0.0-beta.56",
-          "alwaysAddToPackageJson": false
-        }
-      }
-    },
     "3.0.0": {
       "version": "3.0.0-beta.0",
       "packages": {

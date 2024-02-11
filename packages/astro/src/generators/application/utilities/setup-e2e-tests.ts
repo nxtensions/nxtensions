@@ -26,8 +26,8 @@ export async function setupE2ETests(
   const { cypressProjectGenerator } = ensurePackage<
     typeof import('@nx/cypress')
   >('@nx/cypress', getInstalledNxVersion(tree));
-  const { Linter } = ensurePackage<typeof import('@nx/linter')>(
-    '@nx/linter',
+  const { Linter } = ensurePackage<typeof import('@nx/eslint')>(
+    '@nx/eslint',
     getInstalledNxVersion(tree)
   );
   const cypressTask = await cypressProjectGenerator(tree, {
@@ -35,7 +35,6 @@ export async function setupE2ETests(
     project: options.projectName,
     directory: options.directory,
     linter: Linter.EsLint,
-    standaloneConfig: options.standaloneConfig,
     skipFormat: true,
   });
 

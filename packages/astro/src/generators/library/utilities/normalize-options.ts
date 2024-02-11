@@ -42,16 +42,10 @@ export function normalizeOptions(
   };
 }
 
-function getNpmScope(tree: Tree): string | null {
-  const nxJson = readNxJson(tree);
-  if (nxJson?.npmScope) {
-    return nxJson.npmScope;
-  }
+function getNpmScope(tree: Tree): string | undefined {
+  const { name } = tree.exists('package.json')
+    ? readJson<{ name?: string }>(tree, 'package.json')
+    : { name: null };
 
-  const { name } = readJson<{ name?: string }>(tree, 'package.json');
-  if (name?.startsWith('@')) {
-    return name.split('/')[0].substring(1);
-  }
-
-  return null;
+  return name?.startsWith('@') ? name.split('/')[0].substring(1) : undefined;
 }
