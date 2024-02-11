@@ -12,14 +12,14 @@ If you have any ideas or suggestions for Nxtensions, you can [start a discussion
 
 ## Prerequisites
 
-Nxtensions uses [Yarn](https://classic.yarnpkg.com/) to manage dependencies. To contribute, [make sure that you have Yarn installed on your machine](https://classic.yarnpkg.com/en/docs/install).
+Nxtensions uses [PNPM](https://pnpm.io/) to manage dependencies. To contribute, [make sure that you have PNPM installed on your machine](https://pnpm.io/installation).
 
 ## Setting up your development environment
 
 ```bash
 git clone https://github.com/nxtensions/nxtensions.git
 cd nxtensions
-yarn
+pnpm i
 ```
 
 ## Build
@@ -30,7 +30,7 @@ Nxtensions uses [Nx](https://nx.dev). To build a project in the workspace run:
 nx build <project-name>
 ```
 
-> **Note**: If you don't have Nx installed globally you can run `yarn nx build <project-name>`.
+> **Note**: If you don't have Nx installed globally you can run `pnpm nx build <project-name>`.
 
 To build any project affected by the changes made in the workspace run:
 
@@ -83,4 +83,4 @@ Please follow the following guidelines when submitting a PR:
 - Make sure the affected projects build successfully (`nx affected:build`).
 - Make sure the unit tests of the affected projects pass (`nx affected:test`).
 - Make sure the affected projects pass the linting (`nx affected:lint`).
-- This is a [Commitizen](https://github.com/commitizen/cz-cli) friendly repository, just do `git add` and execute `yarn commit` to create a commit following our commit guidelines.
+- This is a [Commitizen](https://github.com/commitizen/cz-cli) friendly repository, just do `git add` and execute `pnpm commit` to create a commit following our commit guidelines.
