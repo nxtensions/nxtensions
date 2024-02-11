@@ -1,7 +1,7 @@
 jest.mock('child_process');
 
 import { ExecutorContext } from '@nx/devkit';
-import { fork } from 'child_process';
+import { spawn } from 'child_process';
 import { previewExecutor } from './executor';
 
 type ChildProcessEvents = 'error' | 'exit';
@@ -32,7 +32,7 @@ const oldAstroServerStartedTerminalOutput =
 const astroServerStartedTerminalOutput = `
   🚀 [42m[30m astro [39m[49m [32mv0.24.0[39m [2mstarted in 476ms[22m
 
-  [2m┃[22m Local    [1m[36mhttp://localhost:3000/[39m[22m
+  [2m┃[22m Local    [1m[36mhttp://localhost:4321/[39m[22m
   [2m┃[22m Network  [2muse --host to expose[22m
 `;
 
@@ -54,7 +54,7 @@ describe('Preview Executor', () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any;
 
-    (fork as jest.Mock).mockImplementation(() => ({
+    (spawn as jest.Mock).mockImplementation(() => ({
       kill: jest.fn(),
       on: (eventName, cb) => {
         if (childProcessEventStore[eventName] !== undefined) {
@@ -87,7 +87,7 @@ describe('Preview Executor', () => {
 
     const result = (await resultIterator.next()).value;
     expect(result.success).toBe(true);
-    expect(fork).toHaveBeenCalled();
+    expect(spawn).toHaveBeenCalled();
   });
 
   test('should support the old Astro CLI output', async () => {
@@ -97,7 +97,7 @@ describe('Preview Executor', () => {
 
     const result = (await resultIterator.next()).value;
     expect(result.success).toBe(true);
-    expect(fork).toHaveBeenCalled();
+    expect(spawn).toHaveBeenCalled();
   });
 
   test('should fail if exit code is different than 0', async () => {
@@ -108,10 +108,10 @@ describe('Preview Executor', () => {
 
     const result = (await resultIterator.next()).value;
     expect(result.success).toBe(false);
-    expect(fork).toHaveBeenCalled();
+    expect(spawn).toHaveBeenCalled();
   });
 
-  test('should fail when the forked process errors', async () => {
+  test('should fail when the spawned process errors', async () => {
     emitChildProcessEvent('error', new Error('Preview failed!'));
     emitChildProcessStdioData('stdout', '');
 
@@ -119,6 +119,6 @@ describe('Preview Executor', () => {
 
     const result = (await resultIterator.next()).value;
     expect(result.success).toBe(false);
-    expect(fork).toHaveBeenCalled();
+    expect(spawn).toHaveBeenCalled();
   });
 });

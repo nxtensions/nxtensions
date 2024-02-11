@@ -1,6 +1,8 @@
-import { formatFiles, GeneratorCallback, Tree } from '@nx/devkit';
+import { formatFiles, type GeneratorCallback, type Tree } from '@nx/devkit';
+import { addDependenciesToPackageJson } from '../../utilities/package-json';
 import { initGenerator } from '../init/generator';
-import { GeneratorOptions } from './schema';
+import { astroCheckVersion, typescriptVersion } from '../utilities/versions';
+import type { GeneratorOptions } from './schema';
 import {
   addFiles,
   addIntegrationsPackages,
@@ -23,6 +25,16 @@ export async function applicationGenerator(
 
   const tasks: GeneratorCallback[] = [];
   tasks.push(initTask);
+
+  const depsTask = addDependenciesToPackageJson(
+    tree,
+    {},
+    {
+      '@astrojs/check': astroCheckVersion,
+      typescript: typescriptVersion,
+    }
+  );
+  tasks.push(depsTask);
 
   addProject(tree, options);
   setDefaultProject(tree, options.projectName);

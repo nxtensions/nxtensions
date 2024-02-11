@@ -1,7 +1,5 @@
-import type { ExecutorContext } from '@nx/devkit';
-import { logger } from '@nx/devkit';
-import type { ChildProcess } from 'child_process';
-import { fork } from 'child_process';
+import { logger, type ExecutorContext } from '@nx/devkit';
+import { spawn, type ChildProcess } from 'child_process';
 import { removeSync } from 'fs-extra';
 import { resolve } from 'path';
 import type { BuildExecutorOptions } from './schema';
@@ -54,10 +52,9 @@ function runCliBuild(
   options: BuildExecutorOptions
 ) {
   return new Promise((resolve, reject) => {
-    // TODO: use Astro CLI API once it's available.
-    // See https://github.com/snowpackjs/astro/issues/1483.
-    childProcess = fork(
-      require.resolve('astro'),
+    // TODO: use Astro CLI API: https://docs.astro.build/en/reference/cli-reference/#advanced-apis-experimental
+    childProcess = spawn(
+      'astro',
       ['build', ...getAstroBuildArgs(projectRoot, options)],
       {
         cwd: workspaceRoot,

@@ -1,7 +1,5 @@
-import type { ExecutorContext } from '@nx/devkit';
-import { logger } from '@nx/devkit';
-import type { ChildProcess } from 'child_process';
-import { fork } from 'child_process';
+import { logger, type ExecutorContext } from '@nx/devkit';
+import { spawn, type ChildProcess } from 'child_process';
 import type { CheckExecutorOptions } from './schema';
 
 let childProcess: ChildProcess;
@@ -31,11 +29,10 @@ export default checkExecutor;
 
 function runCliCheck(workspaceRoot: string, projectRoot: string) {
   return new Promise((resolve, reject) => {
-    // TODO: use Astro CLI API once it's available.
-    // See https://github.com/snowpackjs/astro/issues/1483.
-    childProcess = fork(
-      require.resolve('astro'),
-      ['check', ...getAstroBuildArgs(projectRoot)],
+    // TODO: use Astro CLI API: https://docs.astro.build/en/reference/cli-reference/#advanced-apis-experimental
+    childProcess = spawn(
+      'astro',
+      ['check', ...getAstroCheckArgs(projectRoot)],
       {
         cwd: workspaceRoot,
         stdio: 'inherit',
@@ -59,7 +56,7 @@ function runCliCheck(workspaceRoot: string, projectRoot: string) {
   });
 }
 
-function getAstroBuildArgs(projectRoot: string): string[] {
+function getAstroCheckArgs(projectRoot: string): string[] {
   const args: string[] = ['--root', projectRoot];
 
   return args;

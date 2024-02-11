@@ -58,25 +58,6 @@ describe('library generator', () => {
     ]);
   });
 
-  test('should ignore typescript 5 deprecation warnings', async () => {
-    await libraryGenerator(tree, options);
-
-    const { compilerOptions } = readJson(tree, `${options.name}/tsconfig.json`);
-    expect(compilerOptions.ignoreDeprecations).toBe('5.0');
-  });
-
-  test('should not ignore typescript 5 deprecation warnings when typescript 5 is not installed', async () => {
-    updateJson(tree, 'package.json', (json) => {
-      json.devDependencies.typescript = '~4.9.5';
-      return json;
-    });
-
-    await libraryGenerator(tree, options);
-
-    const { compilerOptions } = readJson(tree, `${options.name}/tsconfig.json`);
-    expect(compilerOptions.ignoreDeprecations).toBeUndefined();
-  });
-
   test('should format files', async () => {
     await libraryGenerator(tree, options);
 

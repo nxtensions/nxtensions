@@ -65,9 +65,9 @@ import Card from '../components/Card.astro';
 				body="Learn more about Nx."
 			/>
 			<Card
-				href="https://nrwlcommunity.slack.com/"
-				title="Nrwl Community Slack"
-				body="Come chat in the Nrwl Community Slack. ❤️"
+				href="https://go.nx.dev/community"
+				title="Nx Community"
+				body="Come chat in the Nx Discord community. ❤️"
 			/>
 		</ul>
 	</main>
