@@ -4,10 +4,6 @@
   "sourceRoot": "packages/tsconfig-paths-snowpack-plugin/src",
   "projectType": "library",
   "targets": {
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
-    },
     "build": {
       "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],

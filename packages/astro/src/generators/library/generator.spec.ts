@@ -7,7 +7,6 @@ import {
   formatFiles,
   readJson,
   readProjectConfiguration,
-  updateJson,
   type Tree,
 } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '../utilities/testing';

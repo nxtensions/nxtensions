@@ -4,7 +4,6 @@ import {
   joinPathFragments,
   names,
   readJson,
-  readNxJson,
 } from '@nx/devkit';
 import type { GeneratorOptions, NormalizedGeneratorOptions } from '../schema';
 

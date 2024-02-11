@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
-    "sharedGlobals": [],
+    "sharedGlobals": ["{workspaceRoot}/.github/workflows/main.yml"],
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "production": [
       "default",
@@ -20,8 +20,8 @@
       "cache": true
     },
     "@nx/jest:jest": {
-      "cache": true,
       "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
+      "cache": true,
       "options": {
         "passWithNoTests": true
       },
@@ -31,12 +31,9 @@
           "codeCoverage": true
         }
       }
-    },
-    "@nx/eslint:lint": {
-      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"],
-      "cache": true
     }
   },
-  "nxCloudAccessToken": "NmMzZThhOGUtMGM0Zi00ZGVjLWFhOTctY2E3NjgxNjA0Y2UxfHJlYWQtd3JpdGU=",
+  "plugins": ["@nx/eslint/plugin"],
+  "nxCloudAccessToken": "NzA4YTdiYmUtYzFhMC00ZjUxLThmNTMtN2VmMWYxOGZmYWRjfHJlYWQ=",
   "parallel": 3
 }

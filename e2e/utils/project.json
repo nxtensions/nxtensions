@@ -3,12 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "e2e/utils/src",
-  "targets": {
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
-    }
-  },
+  "targets": {},
   "tags": ["scope:shared", "type:e2e-utils"],
   "implicitDependencies": []
 }

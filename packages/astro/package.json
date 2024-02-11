@@ -32,7 +32,6 @@
     "@nx/devkit": "^18.0.0",
     "@nx/js": "^18.0.0",
     "@nx/eslint": "^18.0.0",
-    "@nx/workspace": "^18.0.0",
     "astro": "^3.0.0 || ^4.0.0",
     "nx": "^18.0.0",
     "typescript": "^5.0.0"
@@ -51,6 +50,7 @@
     "fs-extra": "~11.2.0",
     "node-fetch": "~2.7.0",
     "semver": "~7.6.0",
-    "strip-ansi": "~6.0.1"
+    "strip-ansi": "~6.0.1",
+    "tslib": "~2.6.2"
   }
 }
