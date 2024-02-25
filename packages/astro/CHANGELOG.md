@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [18.1.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v18.0.0...@nxtensions/astro@v18.1.0) (2024-02-25)
+
+### Features
+
+- **astro:** allow generating applications with project name and directory as provided ([#561](https://github.com/nxtensions/nxtensions/issues/561)) ([abdb9f8](https://github.com/nxtensions/nxtensions/commit/abdb9f8dc31876d0816d50b9ae3af0c5d099c9da))
+- **astro:** allow generating components with name and directory as provided ([#563](https://github.com/nxtensions/nxtensions/issues/563)) ([d2c54c1](https://github.com/nxtensions/nxtensions/commit/d2c54c1ad799577694683400f059f6b2c3dcbb8b))
+- **astro:** allow generating libraries with project name and directory as provided ([#562](https://github.com/nxtensions/nxtensions/issues/562)) ([f20a454](https://github.com/nxtensions/nxtensions/commit/f20a454f3312a5ef788a9abc99c2a6a8f1bb7752))
+
 ## [18.0.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v17.0.0...@nxtensions/astro@v18.0.0) (2024-02-11)
 
 ### ⚠ BREAKING CHANGES
