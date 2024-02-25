@@ -1,5 +1,5 @@
 import type { Tree } from '@nx/devkit';
-import { getWorkspaceLayout, joinPathFragments, names } from '@nx/devkit';
+import { determineProjectNameAndRootOptions } from '@nx/devkit/src/generators/project-name-and-root-utils';
 import fetch from 'node-fetch';
 import type {
   GeneratorOptions,
@@ -11,14 +11,18 @@ export async function normalizeOptions(
   tree: Tree,
   options: GeneratorOptions
 ): Promise<NormalizedGeneratorOptions> {
-  const { appsDir, standaloneAsDefault } = getWorkspaceLayout(tree);
+  const { projectName, projectRoot, projectNameAndRootFormat } =
+    await determineProjectNameAndRootOptions(tree, {
+      name: options.name,
+      projectType: 'application',
+      directory: options.directory,
+      projectNameAndRootFormat: options.projectNameAndRootFormat,
+      callingGenerator: '@nxtensions/astro:application',
+    });
 
-  const name = names(options.name).fileName;
-  const directory = options.directory
-    ? `${names(options.directory).fileName}/${name}`
-    : name;
-  const projectName = directory.replace(/\//g, '-');
-  const projectRoot = joinPathFragments(appsDir, directory);
+  const e2eProjectName = `${projectName}-e2e`;
+  const e2eProjectRoot = `${projectRoot}-e2e`;
+
   const tags = options.tags
     ? options.tags.split(',').map((tag) => tag.trim())
     : [];
@@ -30,9 +34,11 @@ export async function normalizeOptions(
     addCypressTests: options.addCypressTests ?? true,
     projectName,
     projectRoot,
+    e2eProjectName,
+    e2eProjectRoot,
     integrations,
-    standaloneConfig: options.standaloneConfig ?? standaloneAsDefault,
     tags,
+    projectNameAndRootFormat,
   };
 }
 

@@ -1,3 +1,5 @@
+import type { ProjectNameAndRootFormat } from '@nx/devkit/src/generators/project-name-and-root-utils';
+
 export type IntegrationInfo = {
   name: string;
   packageName: string;
@@ -8,9 +10,14 @@ export interface GeneratorOptions {
   name: string;
   addCypressTests?: boolean;
   directory?: string;
+  projectNameAndRootFormat?: ProjectNameAndRootFormat;
   integrations?: string[];
-  standaloneConfig?: boolean;
   tags?: string;
+
+  /**
+   * @deprecated This option is no longer used and will be removed in v19.
+   */
+  standaloneConfig?: boolean;
 }
 
 interface NormalizedGeneratorOptions extends GeneratorOptions {
@@ -18,6 +25,7 @@ interface NormalizedGeneratorOptions extends GeneratorOptions {
   integrations: IntegrationInfo[];
   projectName: string;
   projectRoot: string;
-  standaloneConfig: boolean;
+  e2eProjectName: string;
+  e2eProjectRoot: string;
   tags: string[];
 }

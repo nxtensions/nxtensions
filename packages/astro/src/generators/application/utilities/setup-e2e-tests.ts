@@ -1,6 +1,7 @@
 import {
+  addProjectConfiguration,
   ensurePackage,
-  names,
+  joinPathFragments,
   readProjectConfiguration,
   updateProjectConfiguration,
   type GeneratorCallback,
@@ -17,32 +18,35 @@ export async function setupE2ETests(
     return undefined;
   }
 
-  const name = `${names(options.name).fileName}-e2e`;
-  const directory = options.directory
-    ? `${names(options.directory).fileName}/${name}`
-    : name;
-  const e2eProjectName = directory.replace(/\//g, '-');
-
-  const { cypressProjectGenerator } = ensurePackage<
+  const { configurationGenerator } = ensurePackage<
     typeof import('@nx/cypress')
   >('@nx/cypress', getInstalledNxVersion(tree));
   const { Linter } = ensurePackage<typeof import('@nx/eslint')>(
     '@nx/eslint',
     getInstalledNxVersion(tree)
   );
-  const cypressTask = await cypressProjectGenerator(tree, {
-    name,
-    project: options.projectName,
-    directory: options.directory,
+  addProjectConfiguration(tree, options.e2eProjectName, {
+    projectType: 'application',
+    root: options.e2eProjectRoot,
+    sourceRoot: joinPathFragments(options.e2eProjectRoot, 'src'),
+    targets: {},
+    tags: [],
+    implicitDependencies: [options.projectName],
+  });
+  const cypressTask = await configurationGenerator(tree, {
+    project: options.e2eProjectName,
+    directory: 'src',
     linter: Linter.EsLint,
     skipFormat: true,
+    devServerTarget: `${options.projectName}:dev`,
+    baseUrl: 'http://localhost:4200',
   });
 
-  const e2eProject = readProjectConfiguration(tree, e2eProjectName);
+  const e2eProject = readProjectConfiguration(tree, options.e2eProjectName);
   e2eProject.targets.e2e.options.devServerTarget =
     e2eProject.targets.e2e.options.devServerTarget.replace(':serve', ':dev');
   delete e2eProject.targets.e2e.configurations;
-  updateProjectConfiguration(tree, e2eProjectName, e2eProject);
+  updateProjectConfiguration(tree, options.e2eProjectName, e2eProject);
 
   tree.write(
     `${e2eProject.sourceRoot}/e2e/app.cy.ts`,
