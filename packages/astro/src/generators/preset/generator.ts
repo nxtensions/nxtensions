@@ -1,6 +1,10 @@
-import type { GeneratorCallback, Tree } from '@nx/devkit';
-import { formatFiles } from '@nx/devkit';
-import applicationGenerator from '../application/generator';
+import {
+  formatFiles,
+  joinPathFragments,
+  type GeneratorCallback,
+  type Tree,
+} from '@nx/devkit';
+import { applicationGenerator } from '../application/generator';
 import type { GeneratorOptions } from './schema';
 
 export default async function (
@@ -11,6 +15,8 @@ export default async function (
     name: options.astroAppName,
     addCypressTests: false,
     tags: options.tags,
+    directory: joinPathFragments('apps', options.astroAppName),
+    projectNameAndRootFormat: 'as-provided',
   });
 
   await formatFiles(tree);

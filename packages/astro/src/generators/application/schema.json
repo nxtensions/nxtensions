@@ -25,6 +25,11 @@
       "description": "A directory where the project is placed.",
       "alias": "d"
     },
+    "projectNameAndRootFormat": {
+      "description": "Whether to generate the project name and root directory as provided (`as-provided`) or generate them composing their values and taking the configured layout into account (`derived`).",
+      "type": "string",
+      "enum": ["as-provided", "derived"]
+    },
     "integrations": {
       "type": "array",
       "description": "Frameworks and addons to enable in the application.",
@@ -80,7 +85,8 @@
     },
     "standaloneConfig": {
       "description": "Split the project configuration into `<projectRoot>/project.json` rather than including it inside `workspace.json`.",
-      "type": "boolean"
+      "type": "boolean",
+      "x-deprecated": "This option is no longer used and will be removed in v19."
     },
     "addCypressTests": {
       "description": "Generate an E2E project with Cypress.",

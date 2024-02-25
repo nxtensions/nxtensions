@@ -20,7 +20,10 @@ import type { GeneratorOptions } from './schema';
 
 describe('application generator', () => {
   let tree: Tree;
-  const options: GeneratorOptions = { name: 'app1' };
+  const options: GeneratorOptions = {
+    name: 'app1',
+    projectNameAndRootFormat: 'as-provided',
+  };
 
   beforeEach(() => {
     tree = createTreeWithEmptyWorkspace();
@@ -70,7 +73,10 @@ describe('application generator', () => {
   test('should generate files in the right location in a monorepo layout', async () => {
     tree.write('apps/.gitkeep', '');
 
-    await applicationGenerator(tree, options);
+    await applicationGenerator(tree, {
+      ...options,
+      projectNameAndRootFormat: undefined,
+    });
 
     expect(tree.exists(`apps/${options.name}/public/favicon.svg`)).toBeTruthy();
     expect(
@@ -94,47 +100,38 @@ describe('application generator', () => {
 
   describe('--directory', () => {
     test('should add project with the right name when a directory is provided', async () => {
-      const directory = 'some-directory/sub-directory';
+      const directory = `some-directory/sub-directory/${options.name}`;
 
       await applicationGenerator(tree, { ...options, directory });
 
-      const project = readProjectConfiguration(
-        tree,
-        `some-directory-sub-directory-${options.name}`
-      );
+      const project = readProjectConfiguration(tree, options.name);
       expect(project).toBeTruthy();
     });
 
     test('should generate files in the right directory', async () => {
-      const directory = 'some-directory/sub-directory';
+      const directory = `some-directory/sub-directory/${options.name}`;
 
       await applicationGenerator(tree, { ...options, directory });
 
+      expect(tree.exists(`${directory}/public/favicon.svg`)).toBeTruthy();
       expect(
-        tree.exists(`${directory}/${options.name}/public/favicon.svg`)
+        tree.exists(`${directory}/src/components/Card.astro`)
       ).toBeTruthy();
-      expect(
-        tree.exists(`${directory}/${options.name}/src/components/Card.astro`)
-      ).toBeTruthy();
-      expect(
-        tree.exists(`${directory}/${options.name}/src/layouts/Layout.astro`)
-      ).toBeTruthy();
-      expect(
-        tree.exists(`${directory}/${options.name}/src/pages/index.astro`)
-      ).toBeTruthy();
-      expect(
-        tree.exists(`${directory}/${options.name}/astro.config.mjs`)
-      ).toBeTruthy();
-      expect(
-        tree.exists(`${directory}/${options.name}/tsconfig.json`)
-      ).toBeTruthy();
+      expect(tree.exists(`${directory}/src/layouts/Layout.astro`)).toBeTruthy();
+      expect(tree.exists(`${directory}/src/pages/index.astro`)).toBeTruthy();
+      expect(tree.exists(`${directory}/astro.config.mjs`)).toBeTruthy();
+      expect(tree.exists(`${directory}/tsconfig.json`)).toBeTruthy();
     });
 
     test('should generate files in the right directory in a monorepo layout', async () => {
       tree.write('apps/.gitkeep', '');
       const directory = 'some-directory/sub-directory';
 
-      await applicationGenerator(tree, { ...options, directory });
+      await applicationGenerator(tree, {
+        ...options,
+        directory,
+        projectNameAndRootFormat: undefined,
+      });
 
       expect(
         tree.exists(`apps/${directory}/${options.name}/public/favicon.svg`)
@@ -321,8 +318,8 @@ describe('application generator', () => {
     });
 
     test('should be configured correctly when passing a directory', async () => {
-      const directory = 'some-directory/sub-directory';
-      const e2eProjectName = `some-directory-sub-directory-${options.name}-e2e`;
+      const directory = `some-directory/sub-directory/${options.name}`;
+      const e2eProjectName = `${options.name}-e2e`;
 
       await applicationGenerator(tree, {
         ...options,
@@ -330,7 +327,7 @@ describe('application generator', () => {
         addCypressTests: true,
       });
 
-      expect(tree.exists(`${directory}/${options.name}-e2e`)).toBeTruthy();
+      expect(tree.exists(`${directory}-e2e`)).toBeTruthy();
       const e2eProject = readProjectConfiguration(tree, e2eProjectName);
       expect(e2eProject.targets.e2e).toBeTruthy();
     });

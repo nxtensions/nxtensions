@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "generators": {
     "application": {
-      "factory": "./src/generators/application/generator",
+      "factory": "./src/generators/application/generator#applicationGeneratorInternal",
       "schema": "./src/generators/application/schema.json",
       "aliases": ["app"],
       "x-type": "application",
