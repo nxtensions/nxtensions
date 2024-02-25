@@ -15,7 +15,10 @@ import type { GeneratorOptions } from './schema';
 
 describe('library generator', () => {
   let tree: Tree;
-  const options: GeneratorOptions = { name: 'lib1' };
+  const options: GeneratorOptions = {
+    name: 'lib1',
+    projectNameAndRootFormat: 'as-provided',
+  };
 
   beforeEach(() => {
     tree = createTreeWithEmptyWorkspace();
@@ -40,7 +43,10 @@ describe('library generator', () => {
   test('should generate files in a monorepo layout', async () => {
     tree.write('libs/.gitkeep', '');
 
-    await libraryGenerator(tree, options);
+    await libraryGenerator(tree, {
+      ...options,
+      projectNameAndRootFormat: 'derived',
+    });
 
     expect(tree.exists(`libs/${options.name}/index.ts`)).toBeTruthy();
     expect(tree.exists(`libs/${options.name}/src/Lib1.astro`)).toBeTruthy();
@@ -64,37 +70,32 @@ describe('library generator', () => {
   });
 
   describe('--directory', () => {
-    const directory = 'some-directory/sub-directory';
+    const directory = `some-directory/sub-directory/${options.name}`;
 
     test('should add project with the right name when a directory is provided', async () => {
       await libraryGenerator(tree, { ...options, directory });
 
-      const project = readProjectConfiguration(
-        tree,
-        `some-directory-sub-directory-${options.name}`
-      );
+      const project = readProjectConfiguration(tree, options.name);
       expect(project).toBeTruthy();
     });
 
     test('should generate files in the right directory', async () => {
       await libraryGenerator(tree, { ...options, directory });
 
-      expect(tree.exists(`${directory}/${options.name}/index.ts`)).toBeTruthy();
-      expect(
-        tree.exists(`${directory}/${options.name}/src/Lib1.astro`)
-      ).toBeTruthy();
-      expect(
-        tree.exists(`${directory}/${options.name}/README.md`)
-      ).toBeTruthy();
-      expect(
-        tree.exists(`${directory}/${options.name}/tsconfig.json`)
-      ).toBeTruthy();
+      expect(tree.exists(`${directory}/index.ts`)).toBeTruthy();
+      expect(tree.exists(`${directory}/src/Lib1.astro`)).toBeTruthy();
+      expect(tree.exists(`${directory}/README.md`)).toBeTruthy();
+      expect(tree.exists(`${directory}/tsconfig.json`)).toBeTruthy();
     });
 
     test('should generate files in the right directory in a monorepo layout', async () => {
       tree.write('libs/.gitkeep', '');
 
-      await libraryGenerator(tree, { ...options, directory });
+      await libraryGenerator(tree, {
+        ...options,
+        directory,
+        projectNameAndRootFormat: 'derived',
+      });
 
       expect(
         tree.exists(`libs/${directory}/${options.name}/index.ts`)
@@ -114,11 +115,9 @@ describe('library generator', () => {
       await libraryGenerator(tree, { ...options, directory });
 
       const { compilerOptions } = readJson(tree, 'tsconfig.base.json');
-      expect(
-        compilerOptions.paths[
-          `@proj/some-directory-sub-directory-${options.name}`
-        ]
-      ).toStrictEqual([`${directory}/${options.name}/index.ts`]);
+      expect(compilerOptions.paths[`@proj/${options.name}`]).toStrictEqual([
+        `${directory}/index.ts`,
+      ]);
     });
   });
 

@@ -25,6 +25,11 @@
       "description": "A directory where the project is placed.",
       "alias": "d"
     },
+    "projectNameAndRootFormat": {
+      "description": "Whether to generate the project name and root directory as provided (`as-provided`) or generate them composing their values and taking the configured layout into account (`derived`).",
+      "type": "string",
+      "enum": ["as-provided", "derived"]
+    },
     "publishable": {
       "type": "boolean",
       "description": "Whether the library is intended to be distributed.",
@@ -36,7 +41,8 @@
     },
     "standaloneConfig": {
       "description": "Split the project configuration into `<projectRoot>/project.json` rather than including it inside `workspace.json`.",
-      "type": "boolean"
+      "type": "boolean",
+      "x-deprecated": "This option is no longer used and will be removed in v19."
     }
   },
   "additionalProperties": false,
