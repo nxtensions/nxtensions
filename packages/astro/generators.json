@@ -11,7 +11,7 @@
       "description": "Generates an Astro application."
     },
     "component": {
-      "factory": "./src/generators/component/generator",
+      "factory": "./src/generators/component/generator#componentGeneratorInternal",
       "schema": "./src/generators/component/schema.json",
       "aliases": ["c"],
       "description": "Generates an Astro or Markdown component."

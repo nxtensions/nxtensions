@@ -7,11 +7,11 @@ import {
   addProjectConfiguration,
   formatFiles,
   readJson,
-  Tree,
+  type Tree,
 } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { componentGenerator } from './generator';
-import { Style } from './schema';
+import type { Style } from './schema';
 
 describe('component generator', () => {
   let tree: Tree;
@@ -33,150 +33,266 @@ describe('component generator', () => {
     jest.clearAllMocks();
   });
 
-  test('should create the component in the right location when adding it to an application', async () => {
-    await componentGenerator(tree, { name: 'foo', project: appProject });
-
-    expect(
-      tree.exists(`apps/${appProject}/src/components/Foo.astro`)
-    ).toBeTruthy();
-  });
-
-  test('should create the component in the right location when adding it to a library', async () => {
-    await componentGenerator(tree, { name: 'foo', project: libProject });
-
-    expect(tree.exists(`libs/${libProject}/src/Foo.astro`)).toBeTruthy();
-  });
-
-  test('should create the component in src/lib whrn that dir exists and it is not empty for backward compat', async () => {
-    tree.write(`libs/${libProject}/src/lib/Cmp1.astro`, '<div>cmp1</div>');
-
-    await componentGenerator(tree, { name: 'foo', project: libProject });
-
-    expect(tree.exists(`libs/${libProject}/src/lib/Foo.astro`)).toBeTruthy();
-  });
-
-  test.each([
-    ['foo', 'Foo'],
-    ['foo-bar', 'FooBar'],
-    ['fooBar', 'FooBar'],
-  ])(
-    'should create the component with the right PascalCase name when "%s" is provided',
-    async (name, expectedName) => {
-      await componentGenerator(tree, { name: name, project: libProject });
-
-      expect(
-        tree.exists(`libs/${libProject}/src/${expectedName}.astro`)
-      ).toBeTruthy();
-    }
-  );
-
-  test('should format files', async () => {
-    await componentGenerator(tree, { name: 'foo', project: appProject });
-
-    expect(formatFiles).toHaveBeenCalled();
-  });
-
-  describe('--directory', () => {
+  describe('--name-and-directory-format=as-provided', () => {
     test('should create the component in the right location when adding it to an application', async () => {
-      const directory = 'folder/foo';
-
       await componentGenerator(tree, {
-        name: 'foo',
-        project: appProject,
-        directory,
+        name: 'Foo',
+        directory: `apps/${appProject}/src/components`,
+        nameAndDirectoryFormat: 'as-provided',
       });
 
       expect(
-        tree.exists(`apps/${appProject}/${directory}/Foo.astro`)
+        tree.exists(`apps/${appProject}/src/components/Foo.astro`)
       ).toBeTruthy();
     });
 
     test('should create the component in the right location when adding it to a library', async () => {
-      const directory = 'folder/foo';
-
       await componentGenerator(tree, {
-        name: 'foo',
-        project: libProject,
-        directory,
+        name: 'Foo',
+        directory: `libs/${libProject}/src`,
+        nameAndDirectoryFormat: 'as-provided',
       });
 
-      expect(
-        tree.exists(`libs/${libProject}/${directory}/Foo.astro`)
-      ).toBeTruthy();
+      expect(tree.exists(`libs/${libProject}/src/Foo.astro`)).toBeTruthy();
     });
-  });
 
-  describe('--styles', () => {
-    test.each([undefined, 'css', 'scss', 'sass', 'less', 'styl', 'none'])(
-      'should create the component with the right stylesheet content when "%s" is provided',
-      async (style: Style) => {
+    test('should create the component in src/lib when that dir exists and it is not empty for backward compat', async () => {
+      tree.write(`libs/${libProject}/src/lib/Cmp1.astro`, '<div>cmp1</div>');
+
+      await componentGenerator(tree, {
+        name: 'Foo',
+        directory: `libs/${libProject}/src/lib`,
+        nameAndDirectoryFormat: 'as-provided',
+      });
+
+      expect(tree.exists(`libs/${libProject}/src/lib/Foo.astro`)).toBeTruthy();
+    });
+
+    test.each([['foo'], ['Foo'], ['foo-bar'], ['fooBar'], ['FooBar']])(
+      'should create the component with "%s" as provided',
+      async (name) => {
         await componentGenerator(tree, {
-          name: 'foo',
-          project: appProject,
-          style,
+          name,
+          directory: `libs/${libProject}/src`,
+          nameAndDirectoryFormat: 'as-provided',
         });
 
         expect(
-          tree.read(`apps/${appProject}/src/components/Foo.astro`, 'utf-8')
-        ).toMatchSnapshot();
+          tree.exists(`libs/${libProject}/src/${name}.astro`)
+        ).toBeTruthy();
       }
     );
 
-    test.each([
-      ['scss', 'sass'],
-      ['sass', 'sass'],
-      ['less', 'less'],
-      ['styl', 'stylus'],
-    ])(
-      'should install the right package when "%s" is provided',
-      async (style: Style, packageName: string) => {
-        await componentGenerator(tree, {
-          name: 'foo',
-          project: appProject,
-          style,
-        });
-
-        const { devDependencies } = readJson(tree, 'package.json');
-        expect(devDependencies[packageName]).toBeTruthy();
-      }
-    );
-
-    test.each([undefined, 'css', 'none'])(
-      'should not install any package when "%s" is provided',
-      async (style: Style) => {
-        await componentGenerator(tree, {
-          name: 'foo',
-          project: appProject,
-          style,
-        });
-
-        const { devDependencies } = readJson(tree, 'package.json');
-        expect(devDependencies).toStrictEqual({});
-      }
-    );
-  });
-
-  describe('--capitalize-name', () => {
-    test('should not capitalize the filename when adding it to an application', async () => {
+    test('should format files', async () => {
       await componentGenerator(tree, {
         name: 'foo',
-        project: appProject,
-        capitalizeName: false,
+        directory: `apps/${appProject}/src/components`,
+        nameAndDirectoryFormat: 'as-provided',
       });
 
+      expect(formatFiles).toHaveBeenCalled();
+    });
+
+    describe('--styles', () => {
+      test.each([undefined, 'css', 'scss', 'sass', 'less', 'styl', 'none'])(
+        'should create the component with the right stylesheet content when "%s" is provided',
+        async (style: Style) => {
+          await componentGenerator(tree, {
+            name: 'Foo',
+            directory: `apps/${appProject}/src/components`,
+            style,
+            nameAndDirectoryFormat: 'as-provided',
+          });
+
+          expect(
+            tree.read(`apps/${appProject}/src/components/Foo.astro`, 'utf-8')
+          ).toMatchSnapshot();
+        }
+      );
+
+      test.each([
+        ['scss', 'sass'],
+        ['sass', 'sass'],
+        ['less', 'less'],
+        ['styl', 'stylus'],
+      ])(
+        'should install the right package when "%s" is provided',
+        async (style: Style, packageName: string) => {
+          await componentGenerator(tree, {
+            name: 'foo',
+            directory: `apps/${appProject}/src/components`,
+            style,
+            nameAndDirectoryFormat: 'as-provided',
+          });
+
+          const { devDependencies } = readJson(tree, 'package.json');
+          expect(devDependencies[packageName]).toBeTruthy();
+        }
+      );
+
+      test.each([undefined, 'css', 'none'])(
+        'should not install any package when "%s" is provided',
+        async (style: Style) => {
+          await componentGenerator(tree, {
+            name: 'foo',
+            directory: `apps/${appProject}/src/components`,
+            style,
+            nameAndDirectoryFormat: 'as-provided',
+          });
+
+          const { devDependencies } = readJson(tree, 'package.json');
+          expect(devDependencies).toStrictEqual({});
+        }
+      );
+    });
+  });
+
+  describe('--name-and-directory-format=derived', () => {
+    test('should create the component in the right location when adding it to an application', async () => {
+      await componentGenerator(tree, { name: 'foo', project: appProject });
+
       expect(
-        tree.exists(`apps/${appProject}/src/components/foo.astro`)
+        tree.exists(`apps/${appProject}/src/components/Foo.astro`)
       ).toBeTruthy();
     });
 
-    test('should not capitalize the filename when adding it to a library', async () => {
-      await componentGenerator(tree, {
-        name: 'foo',
-        project: libProject,
-        capitalizeName: false,
+    test('should create the component in the right location when adding it to a library', async () => {
+      await componentGenerator(tree, { name: 'foo', project: libProject });
+
+      expect(tree.exists(`libs/${libProject}/src/Foo.astro`)).toBeTruthy();
+    });
+
+    test('should create the component in src/lib when that dir exists and it is not empty for backward compat', async () => {
+      tree.write(`libs/${libProject}/src/lib/Cmp1.astro`, '<div>cmp1</div>');
+
+      await componentGenerator(tree, { name: 'foo', project: libProject });
+
+      expect(tree.exists(`libs/${libProject}/src/lib/Foo.astro`)).toBeTruthy();
+    });
+
+    test.each([
+      ['foo', 'Foo'],
+      ['foo-bar', 'FooBar'],
+      ['fooBar', 'FooBar'],
+    ])(
+      'should create the component with the right PascalCase name when "%s" is provided',
+      async (name, expectedName) => {
+        await componentGenerator(tree, { name: name, project: libProject });
+
+        expect(
+          tree.exists(`libs/${libProject}/src/${expectedName}.astro`)
+        ).toBeTruthy();
+      }
+    );
+
+    test('should format files', async () => {
+      await componentGenerator(tree, { name: 'foo', project: appProject });
+
+      expect(formatFiles).toHaveBeenCalled();
+    });
+
+    describe('--directory', () => {
+      test('should create the component in the right location when adding it to an application', async () => {
+        const directory = 'folder/foo';
+
+        await componentGenerator(tree, {
+          name: 'foo',
+          project: appProject,
+          directory,
+        });
+
+        expect(
+          tree.exists(`apps/${appProject}/${directory}/Foo.astro`)
+        ).toBeTruthy();
       });
 
-      expect(tree.exists(`libs/${libProject}/src/foo.astro`)).toBeTruthy();
+      test('should create the component in the right location when adding it to a library', async () => {
+        const directory = 'folder/foo';
+
+        await componentGenerator(tree, {
+          name: 'foo',
+          project: libProject,
+          directory,
+        });
+
+        expect(
+          tree.exists(`libs/${libProject}/${directory}/Foo.astro`)
+        ).toBeTruthy();
+      });
+    });
+
+    describe('--styles', () => {
+      test.each([undefined, 'css', 'scss', 'sass', 'less', 'styl', 'none'])(
+        'should create the component with the right stylesheet content when "%s" is provided',
+        async (style: Style) => {
+          await componentGenerator(tree, {
+            name: 'foo',
+            project: appProject,
+            style,
+          });
+
+          expect(
+            tree.read(`apps/${appProject}/src/components/Foo.astro`, 'utf-8')
+          ).toMatchSnapshot();
+        }
+      );
+
+      test.each([
+        ['scss', 'sass'],
+        ['sass', 'sass'],
+        ['less', 'less'],
+        ['styl', 'stylus'],
+      ])(
+        'should install the right package when "%s" is provided',
+        async (style: Style, packageName: string) => {
+          await componentGenerator(tree, {
+            name: 'foo',
+            project: appProject,
+            style,
+          });
+
+          const { devDependencies } = readJson(tree, 'package.json');
+          expect(devDependencies[packageName]).toBeTruthy();
+        }
+      );
+
+      test.each([undefined, 'css', 'none'])(
+        'should not install any package when "%s" is provided',
+        async (style: Style) => {
+          await componentGenerator(tree, {
+            name: 'foo',
+            project: appProject,
+            style,
+          });
+
+          const { devDependencies } = readJson(tree, 'package.json');
+          expect(devDependencies).toStrictEqual({});
+        }
+      );
+    });
+
+    describe('--capitalize-name', () => {
+      test('should not capitalize the filename when adding it to an application', async () => {
+        await componentGenerator(tree, {
+          name: 'foo',
+          project: appProject,
+          capitalizeName: false,
+        });
+
+        expect(
+          tree.exists(`apps/${appProject}/src/components/foo.astro`)
+        ).toBeTruthy();
+      });
+
+      test('should not capitalize the filename when adding it to a library', async () => {
+        await componentGenerator(tree, {
+          name: 'foo',
+          project: libProject,
+          capitalizeName: false,
+        });
+
+        expect(tree.exists(`libs/${libProject}/src/foo.astro`)).toBeTruthy();
+      });
     });
   });
 });
