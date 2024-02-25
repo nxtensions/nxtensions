@@ -1,5 +1,9 @@
 storage: ../tmp/local-registry/storage
 
+auth:
+  htpasswd:
+    file: ./htpasswd
+
 uplinks:
   npmjs:
     url: https://registry.npmjs.org/
@@ -13,6 +17,7 @@ packages:
     access: $all
     publish: $all
     unpublish: $all
+    proxy: npmjs
 
   '**':
     access: $all
@@ -21,4 +26,9 @@ packages:
     proxy: npmjs
 
 logs:
-  - { type: stdout, format: pretty, level: http }
+  type: stdout
+  format: pretty
+  level: warn
+
+publish:
+  allow_offline: true
