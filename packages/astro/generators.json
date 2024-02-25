@@ -22,7 +22,7 @@
       "description": "Initializes the Astro plugin."
     },
     "library": {
-      "factory": "./src/generators/library/generator",
+      "factory": "./src/generators/library/generator#libraryGeneratorInternal",
       "schema": "./src/generators/library/schema.json",
       "aliases": ["lib"],
       "x-type": "library",
