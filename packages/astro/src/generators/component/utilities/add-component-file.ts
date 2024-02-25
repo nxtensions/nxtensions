@@ -1,11 +1,11 @@
-import { generateFiles, joinPathFragments, names, Tree } from '@nx/devkit';
-import { NormalizedGeneratorOptions } from '../schema';
+import { generateFiles, joinPathFragments, names, type Tree } from '@nx/devkit';
+import type { NormalizedGeneratorOptions } from '../schema';
 
 export function addComponentFile(
   tree: Tree,
   options: NormalizedGeneratorOptions
 ): void {
-  const componentNames = names(options.name);
+  const { className } = names(options.name);
 
   generateFiles(
     tree,
@@ -13,10 +13,7 @@ export function addComponentFile(
     options.directory,
     {
       ...options,
-      ...componentNames,
-      componentFilename: options.capitalizeName
-        ? componentNames.className
-        : options.name,
+      className,
       tmpl: '',
     }
   );
