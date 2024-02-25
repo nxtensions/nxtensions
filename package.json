@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "commit": "git-cz",
-    "local-registry": "./tools/scripts/local-registry.sh",
+    "local-registry": "nx local-registry nxtensions",
     "release": "ts-node ./tools/scripts/release-project.ts",
     "prepare": "husky install"
   },
