@@ -58,7 +58,9 @@ function runCliBuild(
       ['build', ...getAstroBuildArgs(projectRoot, options)],
       {
         cwd: workspaceRoot,
+        env: { ...process.env, FORCE_COLOR: 'true' },
         stdio: 'inherit',
+        shell: process.platform === 'win32',
       }
     );
 
