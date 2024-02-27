@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [18.1.1](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v18.1.0...@nxtensions/astro@v18.1.1) (2024-02-27)
+
+### Bug Fixes
+
+- **astro:** spawn astro process correctly on windows platform ([#564](https://github.com/nxtensions/nxtensions/issues/564)) ([0381a71](https://github.com/nxtensions/nxtensions/commit/0381a71f49c705053f976dd29a936262f66935e7))
+
 ## [18.1.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v18.0.0...@nxtensions/astro@v18.1.0) (2024-02-25)
 
 ### Features
