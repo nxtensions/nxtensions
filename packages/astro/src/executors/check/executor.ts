@@ -35,7 +35,9 @@ function runCliCheck(workspaceRoot: string, projectRoot: string) {
       ['check', ...getAstroCheckArgs(projectRoot)],
       {
         cwd: workspaceRoot,
+        env: { ...process.env, FORCE_COLOR: 'true' },
         stdio: 'inherit',
+        shell: process.platform === 'win32',
       }
     );
 

@@ -83,8 +83,11 @@ describe('Build Executor', () => {
 
     await buildExecutor({ deleteOutputPath: true }, context);
 
+    const expectedPathToRemove =
+      process.platform === 'win32' ? 'dist\\apps\\app1' : 'dist/apps/app1';
+
     expect(fsExtra.removeSync).toHaveBeenCalledWith(
-      expect.stringContaining('dist/apps/app1')
+      expect.stringContaining(expectedPathToRemove)
     );
   });
 

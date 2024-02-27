@@ -48,6 +48,7 @@ function runCliPreview(
         cwd: workspaceRoot,
         env: { ...process.env, FORCE_COLOR: 'true' },
         stdio: 'pipe',
+        shell: process.platform === 'win32',
       }
     );
 

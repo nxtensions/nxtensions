@@ -32,7 +32,9 @@ function runCliSync(workspaceRoot: string, projectRoot: string) {
     // TODO: use Astro CLI API: https://docs.astro.build/en/reference/cli-reference/#advanced-apis-experimental
     childProcess = spawn('astro', ['sync', ...getAstroSyncArgs(projectRoot)], {
       cwd: workspaceRoot,
+      env: { ...process.env, FORCE_COLOR: 'true' },
       stdio: 'inherit',
+      shell: process.platform === 'win32',
     });
 
     // Ensure the child process is killed when the parent exits
