@@ -19,7 +19,7 @@
   "devDependencies": {
     "@astrojs/compiler": "~2.5.3",
     "@commitlint/cli": "~18.6.0",
-    "@commitlint/config-conventional": "~18.6.0",
+    "@commitlint/config-conventional": "~19.0.3",
     "@commitlint/cz-commitlint": "~18.6.0",
     "@nx/cypress": "18.0.4",
     "@nx/eslint": "18.0.4",
