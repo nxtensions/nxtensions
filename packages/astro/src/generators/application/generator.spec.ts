@@ -1,11 +1,6 @@
 jest.mock('node-fetch');
-jest.mock('@nx/devkit', () => ({
-  ...jest.requireActual('@nx/devkit'),
-  formatFiles: jest.fn(),
-}));
 
 import {
-  formatFiles,
   getProjects,
   readJson,
   readNxJson,
@@ -110,12 +105,6 @@ describe('application generator', () => {
     ).toBeTruthy();
     expect(tree.exists(`apps/${options.name}/astro.config.mjs`)).toBeTruthy();
     expect(tree.exists(`apps/${options.name}/tsconfig.json`)).toBeTruthy();
-  });
-
-  test('should format files', async () => {
-    await applicationGenerator(tree, options);
-
-    expect(formatFiles).toHaveBeenCalled();
   });
 
   describe('--directory', () => {
@@ -324,17 +313,28 @@ describe('application generator', () => {
       expect(readProjectConfiguration(tree, e2eProjectName)).toBeTruthy();
     });
 
-    test('should configure the e2e target correctly', async () => {
+    test('should configure the right web server command in cypress preset', async () => {
       const e2eProjectName = `${options.name}-e2e`;
 
       await applicationGenerator(tree, { ...options, addCypressTests: true });
 
-      const e2eProject = readProjectConfiguration(tree, e2eProjectName);
-      expect(e2eProject.targets.e2e).toBeTruthy();
-      expect(e2eProject.targets.e2e.options.devServerTarget).toBe(
-        `${options.name}:dev`
-      );
-      expect(e2eProject.targets.e2e.configurations).toBeUndefined();
+      expect(tree.read(`${e2eProjectName}/cypress.config.ts`, 'utf-8'))
+        .toMatchInlineSnapshot(`
+        "import { nxE2EPreset } from '@nx/cypress/plugins/cypress-preset';
+
+        import { defineConfig } from 'cypress';
+
+        export default defineConfig({
+          e2e: {
+            ...nxE2EPreset(__filename, {
+              cypressDir: 'src',
+              webServerCommands: { default: 'nx run app1:dev' },
+            }),
+            baseUrl: 'http://localhost:4321',
+          },
+        });
+        "
+      `);
     });
 
     test('should be configured correctly when passing a directory', async () => {
@@ -348,8 +348,7 @@ describe('application generator', () => {
       });
 
       expect(tree.exists(`${directory}-e2e`)).toBeTruthy();
-      const e2eProject = readProjectConfiguration(tree, e2eProjectName);
-      expect(e2eProject.targets.e2e).toBeTruthy();
+      expect(readProjectConfiguration(tree, e2eProjectName)).toBeTruthy();
     });
   });
 });

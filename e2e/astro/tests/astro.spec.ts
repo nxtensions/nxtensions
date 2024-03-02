@@ -135,7 +135,7 @@ import { ${libComponentName} } from '@proj/${lib}';
     const app = uniq('app');
 
     await runNxCommandAsync(`generate @nxtensions/astro:app ${app}`);
-    const output = await runNxCommandAsync(`run ${app}-e2e:e2e --no-watch`);
+    const output = await runNxCommandAsync(`run ${app}-e2e:e2e`);
 
     expect(stripAnsi(output.stdout)).toContain('All specs passed!');
     expect(stripAnsi(output.stdout)).toContain(
