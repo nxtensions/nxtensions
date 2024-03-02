@@ -1,10 +1,6 @@
-jest.mock('@nx/cypress');
-
-import { cypressInitGenerator } from '@nx/cypress';
 import type { Tree } from '@nx/devkit';
-import { readJson, readNxJson, updateNxJson } from '@nx/devkit';
+import { readJson, readNxJson } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '../utilities/testing';
-import { astroVersion } from '../utilities/versions';
 import { initGenerator } from './generator';
 
 describe('init generator', () => {
@@ -20,21 +16,6 @@ describe('init generator', () => {
 
     const { plugins } = readNxJson(tree);
     expect(plugins).toContain('@nxtensions/astro');
-  });
-
-  test('should add the check target defaults', async () => {
-    let workspace = readNxJson(tree);
-    workspace.namedInputs ??= { production: [] };
-    workspace.targetDefaults ??= {};
-    updateNxJson(tree, workspace);
-
-    await initGenerator(tree, {});
-
-    workspace = readNxJson(tree);
-    expect(workspace.targetDefaults.check).toStrictEqual({
-      inputs: ['production', '^production'],
-      cache: true,
-    });
   });
 
   test('should add "node_modules" and ".astro" entries to .gitignore', async () => {
@@ -124,13 +105,6 @@ bar
     ).toHaveLength(1);
   });
 
-  test('should add astro as a devDependency', async () => {
-    await initGenerator(tree, {});
-
-    const { devDependencies } = readJson(tree, 'package.json');
-    expect(devDependencies.astro).toBe(astroVersion);
-  });
-
   test('should add .npmrc when it does not exist', async () => {
     await initGenerator(tree, {});
 
@@ -152,25 +126,5 @@ bar
     await initGenerator(tree, {});
 
     expect(tree.read('.npmrc', 'utf-8')).toBe('shamefully-hoist=true');
-  });
-
-  describe('--addCypressTests', () => {
-    test('should not add cypress when --addCypressTests=false', async () => {
-      await initGenerator(tree, { addCypressTests: false });
-
-      expect(cypressInitGenerator).not.toHaveBeenCalled();
-    });
-
-    test('should add cypress by default', async () => {
-      await initGenerator(tree, {});
-
-      expect(cypressInitGenerator).toHaveBeenCalled();
-    });
-
-    test('should add cypress when --addCypressTests=true', async () => {
-      await initGenerator(tree, {});
-
-      expect(cypressInitGenerator).toHaveBeenCalled();
-    });
   });
 });

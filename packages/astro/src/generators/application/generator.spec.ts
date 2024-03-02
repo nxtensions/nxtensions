@@ -37,6 +37,26 @@ describe('application generator', () => {
     expect(config).toMatchSnapshot();
   });
 
+  test('should set target defaults', async () => {
+    await applicationGenerator(tree, options);
+
+    const nxJson = readNxJson(tree);
+    expect(nxJson.targetDefaults).toStrictEqual(
+      expect.objectContaining({
+        '@nxtensions/astro:build': {
+          cache: true,
+          inputs: ['default', '^default'],
+          outputs: ['{workspaceRoot}/dist/{projectRoot}'],
+        },
+        '@nxtensions/astro:check': {
+          cache: true,
+          inputs: ['default', '^default'],
+        },
+        '@nxtensions/astro:preview': { dependsOn: ['build'] },
+      })
+    );
+  });
+
   test('should not set the default project when it is already set', async () => {
     let config = readNxJson(tree);
     config.defaultProject = 'other-app';

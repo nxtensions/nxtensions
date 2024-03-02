@@ -6,6 +6,7 @@ jest.mock('@nx/devkit', () => ({
 import {
   formatFiles,
   readJson,
+  readNxJson,
   readProjectConfiguration,
   type Tree,
 } from '@nx/devkit';
@@ -29,6 +30,20 @@ describe('library generator', () => {
 
     const config = readProjectConfiguration(tree, options.name);
     expect(config).toMatchSnapshot();
+  });
+
+  test('should set target defaults', async () => {
+    await libraryGenerator(tree, options);
+
+    const nxJson = readNxJson(tree);
+    expect(nxJson.targetDefaults).toStrictEqual(
+      expect.objectContaining({
+        '@nxtensions/astro:check': {
+          cache: true,
+          inputs: ['default', '^default'],
+        },
+      })
+    );
   });
 
   test('should generate files', async () => {

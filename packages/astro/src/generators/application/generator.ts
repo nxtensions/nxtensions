@@ -1,7 +1,17 @@
-import { formatFiles, type GeneratorCallback, type Tree } from '@nx/devkit';
+import {
+  ensurePackage,
+  formatFiles,
+  type GeneratorCallback,
+  type Tree,
+} from '@nx/devkit';
 import { addDependenciesToPackageJson } from '../../utilities/package-json';
 import { initGenerator } from '../init/generator';
-import { astroCheckVersion, typescriptVersion } from '../utilities/versions';
+import {
+  astroCheckVersion,
+  astroVersion,
+  getInstalledNxVersion,
+  typescriptVersion,
+} from '../utilities/versions';
 import type { GeneratorOptions } from './schema';
 import {
   addFiles,
@@ -29,17 +39,20 @@ export async function applicationGeneratorInternal(
 ): Promise<GeneratorCallback | void> {
   const options = await normalizeOptions(tree, rawOptions);
 
-  const initTask = await initGenerator(tree, {
-    addCypressTests: options.addCypressTests,
-  });
-
   const tasks: GeneratorCallback[] = [];
-  tasks.push(initTask);
+  const { initGenerator: jsInitGenerator } = ensurePackage<
+    typeof import('@nx/js')
+  >('@nx/js', getInstalledNxVersion(tree));
+  const jsTask = await jsInitGenerator(tree, { skipFormat: true });
+  tasks.push(jsTask);
+
+  await initGenerator(tree, {});
 
   const depsTask = addDependenciesToPackageJson(
     tree,
     {},
     {
+      astro: astroVersion,
       '@astrojs/check': astroCheckVersion,
       typescript: typescriptVersion,
     }

@@ -19,7 +19,8 @@
     "init": {
       "factory": "./src/generators/init/generator",
       "schema": "./src/generators/init/schema.json",
-      "description": "Initializes the Astro plugin."
+      "description": "Initializes the Astro plugin.",
+      "hidden": true
     },
     "library": {
       "factory": "./src/generators/library/generator#libraryGeneratorInternal",
