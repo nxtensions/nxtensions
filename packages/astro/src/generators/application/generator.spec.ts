@@ -284,30 +284,34 @@ describe('application generator', () => {
     });
   });
 
-  describe('--addCypressTests', () => {
-    test('should not add an e2e project when --addCypressTests=false', async () => {
+  describe('--e2eTestRunner', () => {
+    test('should not add an e2e project when --e2eTestRunner=none', async () => {
       const e2eProjectName = `${options.name}-e2e`;
 
-      await applicationGenerator(tree, { ...options, addCypressTests: false });
+      await applicationGenerator(tree, { ...options, e2eTestRunner: 'none' });
 
       expect(tree.exists(`${e2eProjectName}`)).toBeFalsy();
       const projects = getProjects(tree);
       expect(projects.has(e2eProjectName)).toBeFalsy();
     });
 
-    test('should add an e2e project by default', async () => {
+    test('should not add an e2e project by default', async () => {
       const e2eProjectName = `${options.name}-e2e`;
 
       await applicationGenerator(tree, options);
 
-      expect(tree.exists(`${e2eProjectName}`)).toBeTruthy();
-      expect(readProjectConfiguration(tree, e2eProjectName)).toBeTruthy();
+      expect(tree.exists(`${e2eProjectName}`)).toBeFalsy();
+      const projects = getProjects(tree);
+      expect(projects.has(e2eProjectName)).toBeFalsy();
     });
 
-    test('should add an e2e project when --addCypressTests=true', async () => {
+    test('should add a cypress e2e project when --e2eTestRunner=cypress', async () => {
       const e2eProjectName = `${options.name}-e2e`;
 
-      await applicationGenerator(tree, { ...options, addCypressTests: true });
+      await applicationGenerator(tree, {
+        ...options,
+        e2eTestRunner: 'cypress',
+      });
 
       expect(tree.exists(`${e2eProjectName}`)).toBeTruthy();
       expect(readProjectConfiguration(tree, e2eProjectName)).toBeTruthy();
@@ -316,7 +320,10 @@ describe('application generator', () => {
     test('should configure the right web server command in cypress preset', async () => {
       const e2eProjectName = `${options.name}-e2e`;
 
-      await applicationGenerator(tree, { ...options, addCypressTests: true });
+      await applicationGenerator(tree, {
+        ...options,
+        e2eTestRunner: 'cypress',
+      });
 
       expect(tree.read(`${e2eProjectName}/cypress.config.ts`, 'utf-8'))
         .toMatchInlineSnapshot(`
@@ -337,14 +344,53 @@ describe('application generator', () => {
       `);
     });
 
-    test('should be configured correctly when passing a directory', async () => {
+    test('should create cypress e2e project correctly when passing a directory', async () => {
       const directory = `some-directory/sub-directory/${options.name}`;
       const e2eProjectName = `${options.name}-e2e`;
 
       await applicationGenerator(tree, {
         ...options,
         directory,
-        addCypressTests: true,
+        e2eTestRunner: 'cypress',
+      });
+
+      expect(tree.exists(`${directory}-e2e`)).toBeTruthy();
+      expect(readProjectConfiguration(tree, e2eProjectName)).toBeTruthy();
+    });
+
+    test('should add a playwright e2e project when --e2eTestRunner=playwright', async () => {
+      const e2eProjectName = `${options.name}-e2e`;
+
+      await applicationGenerator(tree, {
+        ...options,
+        e2eTestRunner: 'playwright',
+      });
+
+      expect(tree.exists(`${e2eProjectName}`)).toBeTruthy();
+      expect(readProjectConfiguration(tree, e2eProjectName)).toBeTruthy();
+    });
+
+    test('should configure playwright correctly', async () => {
+      const e2eProjectName = `${options.name}-e2e`;
+
+      await applicationGenerator(tree, {
+        ...options,
+        e2eTestRunner: 'playwright',
+      });
+
+      expect(
+        tree.read(`${e2eProjectName}/playwright.config.ts`, 'utf-8')
+      ).toMatchSnapshot();
+    });
+
+    test('should create playwright e2e project correctly when passing a directory', async () => {
+      const directory = `some-directory/sub-directory/${options.name}`;
+      const e2eProjectName = `${options.name}-e2e`;
+
+      await applicationGenerator(tree, {
+        ...options,
+        directory,
+        e2eTestRunner: 'playwright',
       });
 
       expect(tree.exists(`${directory}-e2e`)).toBeTruthy();

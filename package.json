@@ -27,6 +27,7 @@
     "@nx/jest": "18.0.4",
     "@nx/js": "18.0.4",
     "@nx/node": "18.0.4",
+    "@nx/playwright": "18.0.4",
     "@nx/plugin": "18.0.4",
     "@nx/workspace": "18.0.4",
     "@phenomnomnominal/tsquery": "~6.1.3",

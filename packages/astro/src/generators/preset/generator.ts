@@ -13,7 +13,6 @@ export default async function (
 ): Promise<GeneratorCallback | void> {
   const applicationTask = await applicationGenerator(tree, {
     name: options.astroAppName,
-    addCypressTests: false,
     tags: options.tags,
     directory: joinPathFragments('apps', options.astroAppName),
     projectNameAndRootFormat: 'as-provided',
