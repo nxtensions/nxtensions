@@ -25,9 +25,6 @@ exports[`application generator should add project configuration 1`] = `
     "build": {
       "executor": "@nxtensions/astro:build",
       "options": {},
-      "outputs": [
-        "{workspaceRoot}/dist/{projectRoot}",
-      ],
     },
     "check": {
       "executor": "@nxtensions/astro:check",
@@ -37,12 +34,6 @@ exports[`application generator should add project configuration 1`] = `
       "options": {},
     },
     "preview": {
-      "dependsOn": [
-        {
-          "projects": "self",
-          "target": "build",
-        },
-      ],
       "executor": "@nxtensions/astro:preview",
       "options": {},
     },

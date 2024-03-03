@@ -11,6 +11,12 @@
       "version": "18.0.0-beta.0",
       "description": "Remove the patch-nx-cli.js script.",
       "factory": "./src/migrations/update-18-0-0/remove-patch-nx-cli-script"
+    },
+    "move-options-to-target-defaults": {
+      "cli": "nx",
+      "version": "18.2.0",
+      "description": "Move executor options to target defaults.",
+      "factory": "./src/migrations/update-18-2-0/move-options-to-target-defaults"
     }
   },
   "packageJsonUpdates": {
