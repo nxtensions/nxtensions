@@ -83,6 +83,12 @@
         ]
       }
     },
+    "e2eTestRunner": {
+      "description": "Test runner to use for end-to-end tests.",
+      "type": "string",
+      "enum": ["none", "cypress", "playwright"],
+      "default": "none"
+    },
     "standaloneConfig": {
       "description": "Split the project configuration into `<projectRoot>/project.json` rather than including it inside `workspace.json`.",
       "type": "boolean",
@@ -91,7 +97,7 @@
     "addCypressTests": {
       "description": "Generate an E2E project with Cypress.",
       "type": "boolean",
-      "default": true
+      "x-deprecated": "Use the `--e2eTestRunner` option instead. This option will be removed in v19."
     }
   },
   "additionalProperties": false,

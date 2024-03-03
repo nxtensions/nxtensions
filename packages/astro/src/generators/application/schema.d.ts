@@ -5,15 +5,20 @@ export type IntegrationInfo = {
   packageName: string;
   dependencies: [name: string, version: string][];
 };
+export type E2eTestRunner = 'none' | 'cypress' | 'playwright';
 
 export interface GeneratorOptions {
   name: string;
-  addCypressTests?: boolean;
   directory?: string;
+  e2eTestRunner?: E2eTestRunner;
   projectNameAndRootFormat?: ProjectNameAndRootFormat;
   integrations?: string[];
   tags?: string;
 
+  /**
+   * @deprecated Use the `--e2eTestRunner` option instead. This option will be removed in v19.
+   */
+  addCypressTests?: boolean;
   /**
    * @deprecated This option is no longer used and will be removed in v19.
    */
@@ -21,7 +26,7 @@ export interface GeneratorOptions {
 }
 
 interface NormalizedGeneratorOptions extends GeneratorOptions {
-  addCypressTests: boolean;
+  e2eTestRunner: E2eTestRunner;
   integrations: IntegrationInfo[];
   projectName: string;
   projectRoot: string;

@@ -31,12 +31,16 @@
     "@nx/cypress": "^18.0.0",
     "@nx/devkit": "^18.0.0",
     "@nx/js": "^18.0.0",
+    "@nx/playwright": "^18.0.0",
     "astro": "^3.0.0 || ^4.0.0",
     "nx": "^18.0.0",
     "typescript": "^5.0.0"
   },
   "peerDependenciesMeta": {
     "@nx/cypress": {
+      "optional": true
+    },
+    "@nx/playwright": {
       "optional": true
     }
   },

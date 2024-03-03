@@ -5,7 +5,7 @@ import type { IntegrationInfo } from '../schema';
 export function addIntegrationsPackages(
   tree: Tree,
   integrations: IntegrationInfo[]
-): GeneratorCallback {
+): GeneratorCallback | undefined {
   if (integrations.length === 0) {
     return undefined;
   }

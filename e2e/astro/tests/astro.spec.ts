@@ -9,6 +9,8 @@ import {
   updateFile,
 } from '@nx/plugin/testing';
 import {
+  ensureCypressInstallation,
+  ensurePlaywrightBrowsersInstallation,
   initializeGitRepo,
   killPorts,
   readProjectGraph,
@@ -131,13 +133,35 @@ import { ${libComponentName} } from '@proj/${lib}';
     );
   }, 300_000);
 
-  it('should generate e2e tests for an app and test correctly', async () => {
+  it('should generate cypress e2e tests for an app and test correctly', async () => {
     const app = uniq('app');
 
-    await runNxCommandAsync(`generate @nxtensions/astro:app ${app}`);
+    await runNxCommandAsync(
+      `generate @nxtensions/astro:app ${app} --e2eTestRunner=cypress`
+    );
+    ensureCypressInstallation();
     const output = await runNxCommandAsync(`run ${app}-e2e:e2e`);
 
     expect(stripAnsi(output.stdout)).toContain('All specs passed!');
+    expect(stripAnsi(output.stdout)).toContain(
+      `Successfully ran target e2e for project ${app}`
+    );
+
+    expect(await killPorts(4321)).toBeTruthy();
+  }, 300_000);
+
+  it('should generate playwright e2e tests for an app and test correctly', async () => {
+    const app = uniq('app');
+
+    await runNxCommandAsync(
+      `generate @nxtensions/astro:app ${app} --e2eTestRunner=playwright`
+    );
+    ensurePlaywrightBrowsersInstallation();
+    const output = await runNxCommandAsync(`run ${app}-e2e:e2e`, {
+      // Playwright uses it to determine Jest is running and throws, don't propagate it
+      env: { JEST_WORKER_ID: undefined },
+    });
+
     expect(stripAnsi(output.stdout)).toContain(
       `Successfully ran target e2e for project ${app}`
     );

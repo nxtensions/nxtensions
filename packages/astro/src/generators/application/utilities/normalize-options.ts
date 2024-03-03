@@ -31,7 +31,8 @@ export async function normalizeOptions(
 
   return {
     ...options,
-    addCypressTests: options.addCypressTests ?? true,
+    e2eTestRunner:
+      options.e2eTestRunner ?? (options.addCypressTests ? 'cypress' : 'none'),
     projectName,
     projectRoot,
     e2eProjectName,
