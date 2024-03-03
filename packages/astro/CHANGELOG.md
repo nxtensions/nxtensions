@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [18.2.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v18.1.1...@nxtensions/astro@v18.2.0) (2024-03-03)
+
+### Features
+
+- **astro:** add support for generating apps with playwright e2e tests ([#574](https://github.com/nxtensions/nxtensions/issues/574)) ([e0392a9](https://github.com/nxtensions/nxtensions/commit/e0392a97f085f66b8bff5cf52910f59133e4fcd4))
+- **astro:** allow cypress generator to infer targets ([#573](https://github.com/nxtensions/nxtensions/issues/573)) ([74ed967](https://github.com/nxtensions/nxtensions/commit/74ed967e59604e2ac78396765235210122455b8c))
+- **astro:** set target defaults per executor ([#572](https://github.com/nxtensions/nxtensions/issues/572)) ([e70a625](https://github.com/nxtensions/nxtensions/commit/e70a625dc62bee8fdb0c7a1df54b4d41404fd109))
+
 ### [18.1.1](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v18.1.0...@nxtensions/astro@v18.1.1) (2024-02-27)
 
 ### Bug Fixes
