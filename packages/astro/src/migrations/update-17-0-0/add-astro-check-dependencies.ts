@@ -1,6 +1,6 @@
 import { formatFiles, readJson, writeJson, type Tree } from '@nx/devkit';
+import type { PackageJson } from 'nx/src/utils/package-json';
 import { clean, coerce, lt } from 'semver';
-import type { PackageJson } from '../../utilities/package-json';
 
 export default async function (tree: Tree) {
   const packageJson = readJson<PackageJson>(tree, 'package.json');

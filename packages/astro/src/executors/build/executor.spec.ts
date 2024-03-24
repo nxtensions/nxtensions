@@ -5,7 +5,7 @@ jest.mock('fs-extra', () => ({
 }));
 
 import { ExecutorContext } from '@nx/devkit';
-import { spawn } from 'child_process';
+import { fork } from 'child_process';
 import * as fsExtra from 'fs-extra';
 import { buildExecutor } from './executor';
 
@@ -39,7 +39,7 @@ describe('Build Executor', () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any;
 
-    (spawn as jest.Mock).mockImplementation(() => ({
+    (fork as jest.Mock).mockImplementation(() => ({
       kill: jest.fn(),
       on: (eventName, cb) => {
         if (childProcessEventStore[eventName] !== undefined) {
@@ -57,7 +57,7 @@ describe('Build Executor', () => {
     const result = await buildExecutor({}, context);
 
     expect(result.success).toBe(true);
-    expect(spawn).toHaveBeenCalled();
+    expect(fork).toHaveBeenCalled();
   });
 
   test('should fail if exit code is different than 0', async () => {
@@ -66,16 +66,16 @@ describe('Build Executor', () => {
     const result = await buildExecutor({}, context);
 
     expect(result.success).toBe(false);
-    expect(spawn).toHaveBeenCalled();
+    expect(fork).toHaveBeenCalled();
   });
 
-  test('should fail when the spawned process errors', async () => {
+  test('should fail when the forked process errors', async () => {
     emitChildProcessEvent('error', new Error('Build failed!'));
 
     const result = await buildExecutor({}, context);
 
     expect(result.success).toBe(false);
-    expect(spawn).toHaveBeenCalled();
+    expect(fork).toHaveBeenCalled();
   });
 
   test('should delete output path', async () => {

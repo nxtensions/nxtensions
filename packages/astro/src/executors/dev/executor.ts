@@ -1,7 +1,8 @@
 import { logger, type ExecutorContext } from '@nx/devkit';
 import type { ChildProcess } from 'child_process';
-import { spawn } from 'child_process';
+import { fork } from 'child_process';
 import stripAnsi from 'strip-ansi';
+import { getAstroCliPath } from '../../utilities/astro';
 import type { DevExecutorOptions } from './schema';
 
 let childProcess: ChildProcess;
@@ -42,14 +43,13 @@ function runCliDev(
 ): Promise<boolean> {
   return new Promise((resolve, reject) => {
     // TODO: use Astro CLI API: https://docs.astro.build/en/reference/cli-reference/#advanced-apis-experimental
-    childProcess = spawn(
-      'astro',
+    childProcess = fork(
+      getAstroCliPath(),
       ['dev', ...getAstroDevArgs(projectRoot, options)],
       {
         cwd: workspaceRoot,
         env: { ...process.env, FORCE_COLOR: 'true' },
         stdio: 'pipe',
-        shell: process.platform === 'win32',
       }
     );
 

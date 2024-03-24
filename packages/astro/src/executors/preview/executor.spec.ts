@@ -1,7 +1,7 @@
 jest.mock('child_process');
 
 import { ExecutorContext } from '@nx/devkit';
-import { spawn } from 'child_process';
+import { fork } from 'child_process';
 import { previewExecutor } from './executor';
 
 type ChildProcessEvents = 'error' | 'exit';
@@ -58,7 +58,7 @@ describe('Preview Executor', () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any;
 
-    (spawn as jest.Mock).mockImplementation(() => ({
+    (fork as jest.Mock).mockImplementation(() => ({
       kill: jest.fn(),
       on: (eventName, cb) => {
         if (childProcessEventStore[eventName] !== undefined) {
@@ -91,7 +91,7 @@ describe('Preview Executor', () => {
 
     const result = (await resultIterator.next()).value;
     expect(result.success).toBe(true);
-    expect(spawn).toHaveBeenCalled();
+    expect(fork).toHaveBeenCalled();
   });
 
   test('should support the old Astro CLI output', async () => {
@@ -101,7 +101,7 @@ describe('Preview Executor', () => {
 
     const result = (await resultIterator.next()).value;
     expect(result.success).toBe(true);
-    expect(spawn).toHaveBeenCalled();
+    expect(fork).toHaveBeenCalled();
   });
 
   test('should fail if exit code is different than 0', async () => {
@@ -112,10 +112,10 @@ describe('Preview Executor', () => {
 
     const result = (await resultIterator.next()).value;
     expect(result.success).toBe(false);
-    expect(spawn).toHaveBeenCalled();
+    expect(fork).toHaveBeenCalled();
   });
 
-  test('should fail when the spawned process errors', async () => {
+  test('should fail when the forked process errors', async () => {
     emitChildProcessEvent('error', new Error('Preview failed!'));
     emitChildProcessStdioData('stdout', '');
 
@@ -123,6 +123,6 @@ describe('Preview Executor', () => {
 
     const result = (await resultIterator.next()).value;
     expect(result.success).toBe(false);
-    expect(spawn).toHaveBeenCalled();
+    expect(fork).toHaveBeenCalled();
   });
 });

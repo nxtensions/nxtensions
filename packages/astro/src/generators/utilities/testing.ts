@@ -1,6 +1,6 @@
 import { Tree, readJsonFile, updateJson } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace as _createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
-import { PackageJson } from '../../utilities/package-json';
+import type { PackageJson } from 'nx/src/utils/package-json';
 
 export function createTreeWithEmptyWorkspace(nxVersion?: string): Tree {
   const tree = _createTreeWithEmptyWorkspace();

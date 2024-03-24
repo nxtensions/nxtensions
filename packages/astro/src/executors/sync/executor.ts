@@ -1,5 +1,6 @@
 import { logger, type ExecutorContext } from '@nx/devkit';
-import { spawn, type ChildProcess } from 'child_process';
+import { fork, type ChildProcess } from 'child_process';
+import { getAstroCliPath } from '../../utilities/astro';
 import type { SyncExecutorOptions } from './schema';
 
 let childProcess: ChildProcess;
@@ -30,12 +31,15 @@ export default syncExecutor;
 function runCliSync(workspaceRoot: string, projectRoot: string) {
   return new Promise((resolve, reject) => {
     // TODO: use Astro CLI API: https://docs.astro.build/en/reference/cli-reference/#advanced-apis-experimental
-    childProcess = spawn('astro', ['sync', ...getAstroSyncArgs(projectRoot)], {
-      cwd: workspaceRoot,
-      env: { ...process.env, FORCE_COLOR: 'true' },
-      stdio: 'inherit',
-      shell: process.platform === 'win32',
-    });
+    childProcess = fork(
+      getAstroCliPath(),
+      ['sync', ...getAstroSyncArgs(projectRoot)],
+      {
+        cwd: workspaceRoot,
+        env: { ...process.env, FORCE_COLOR: 'true' },
+        stdio: 'inherit',
+      }
+    );
 
     // Ensure the child process is killed when the parent exits
     process.on('exit', () => childProcess.kill());
