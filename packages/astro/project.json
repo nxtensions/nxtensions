@@ -9,6 +9,12 @@
       "outputs": ["{workspaceRoot}/coverage/packages/astro"],
       "options": {
         "jestConfig": "packages/astro/jest.config.ts"
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
       }
     },
     "build": {

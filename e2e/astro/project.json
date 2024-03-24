@@ -5,7 +5,14 @@
   "sourceRoot": "e2e/astro/tests",
   "targets": {
     "e2e": {
-      "dependsOn": ["astro:build"],
+      "dependsOn": ["^build"],
+      "inputs": [
+        "default",
+        "^production",
+        "{workspaceRoot}/jest.preset.js",
+        "{workspaceRoot}/.verdaccio/config.yml",
+        { "env": "NX_E2E_CI_CACHE_KEY" }
+      ],
       "executor": "@nx/jest:jest",
       "options": {
         "jestConfig": "e2e/astro/jest.config.js",

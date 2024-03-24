@@ -12,7 +12,7 @@ import {
   ensureCypressInstallation,
   ensurePlaywrightBrowsersInstallation,
   initializeGitRepo,
-  killPorts,
+  killPort,
   readProjectGraph,
 } from '@nxtensions/e2e-utils';
 import { readdirSync, statSync } from 'fs';
@@ -147,7 +147,7 @@ import { ${libComponentName} } from '@proj/${lib}';
       `Successfully ran target e2e for project ${app}`
     );
 
-    expect(await killPorts(4321)).toBeTruthy();
+    expect(await killPort(4321)).toBeTruthy();
   }, 300_000);
 
   it('should generate playwright e2e tests for an app and test correctly', async () => {
@@ -166,7 +166,7 @@ import { ${libComponentName} } from '@proj/${lib}';
       `Successfully ran target e2e for project ${app}`
     );
 
-    expect(await killPorts(4321)).toBeTruthy();
+    expect(await killPort(4321)).toBeTruthy();
   }, 300_000);
 
   it('should generate app and a dependent lib with Tailwind CSS and build correctly', async () => {

@@ -1,0 +1,58 @@
+name: Nightly Tests
+
+on:
+  # Trigger manually or on schedule
+  workflow_dispatch:
+  workflow_call:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  nightly-tests:
+    name: ${{ matrix.os }}/${{ matrix.package_manager }}/${{ matrix.node_version }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+        node_version: [18, 20]
+        package_manager: [npm, yarn, pnpm]
+    runs-on: ${{matrix.os}}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+          run_install: false
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node_version }}
+          cache: 'pnpm'
+
+      - name: Cache node_modules
+        id: cache-modules
+        uses: actions/cache@v4
+        with:
+          lookup-only: true
+          path: '**/node_modules'
+          key: ${{ runner.os }}-${{ matrix.node_version }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }} }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.node_version }}-pnpm-
+
+      - name: Install packages
+        run: pnpm install --frozen-lockfile
+
+      - name: Run tests
+        id: e2e-run
+        run: pnpm nx run-many -t e2e --parallel=1
+        shell: bash
+        timeout-minutes: 30
+        env:
+          NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+          NX_E2E_CI_CACHE_KEY: e2e-gha-${{ matrix.os }}-${{ matrix.node_version }}-${{ matrix.package_manager }}
+          SELECTED_PM: ${{ matrix.package_manager }}
