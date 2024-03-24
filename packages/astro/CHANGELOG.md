@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [18.2.1](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v18.2.0...@nxtensions/astro@v18.2.1) (2024-03-24)
+
+### Bug Fixes
+
+- **astro:** allow passing additional properties to the nx init generator ([#599](https://github.com/nxtensions/nxtensions/issues/599)) ([38fe3c5](https://github.com/nxtensions/nxtensions/commit/38fe3c56f597711570b7416b8f56cb4793f963fb))
+- **astro:** resolve and execute astro cli binary ([#600](https://github.com/nxtensions/nxtensions/issues/600)) ([42e9ee1](https://github.com/nxtensions/nxtensions/commit/42e9ee1464744044b516132b49d3c8bdec1cc373))
+
 ## [18.2.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v18.1.1...@nxtensions/astro@v18.2.0) (2024-03-03)
 
 ### Features
