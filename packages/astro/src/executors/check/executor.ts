@@ -1,5 +1,6 @@
 import { logger, type ExecutorContext } from '@nx/devkit';
-import { spawn, type ChildProcess } from 'child_process';
+import { fork, type ChildProcess } from 'child_process';
+import { getAstroCliPath } from '../../utilities/astro';
 import type { CheckExecutorOptions } from './schema';
 
 let childProcess: ChildProcess;
@@ -30,14 +31,13 @@ export default checkExecutor;
 function runCliCheck(workspaceRoot: string, projectRoot: string) {
   return new Promise((resolve, reject) => {
     // TODO: use Astro CLI API: https://docs.astro.build/en/reference/cli-reference/#advanced-apis-experimental
-    childProcess = spawn(
-      'astro',
+    childProcess = fork(
+      getAstroCliPath(),
       ['check', ...getAstroCheckArgs(projectRoot)],
       {
         cwd: workspaceRoot,
         env: { ...process.env, FORCE_COLOR: 'true' },
         stdio: 'inherit',
-        shell: process.platform === 'win32',
       }
     );
 

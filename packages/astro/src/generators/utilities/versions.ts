@@ -1,6 +1,6 @@
 import { readJson, type Tree } from '@nx/devkit';
+import type { PackageJson } from 'nx/src/utils/package-json';
 import { clean, coerce } from 'semver';
-import type { PackageJson } from '../../utilities/package-json';
 
 export const astroVersion = '^4.3.5';
 export const astroCheckVersion = '^0.5.2';

@@ -1,5 +1,5 @@
 import { formatFiles, readJson, writeJson, type Tree } from '@nx/devkit';
-import type { PackageJson } from '../../utilities/package-json';
+import type { PackageJson } from 'nx/src/utils/package-json';
 
 const fullScriptRegex = /^node (?:\.\/)?tools\/scripts\/patch-nx-cli\.js$/;
 const leadingScriptRegex =

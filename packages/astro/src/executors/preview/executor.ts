@@ -1,6 +1,7 @@
 import { logger, type ExecutorContext } from '@nx/devkit';
-import { spawn, type ChildProcess } from 'child_process';
+import { fork, type ChildProcess } from 'child_process';
 import stripAnsi from 'strip-ansi';
+import { getAstroCliPath } from '../../utilities/astro';
 import type { PreviewExecutorOptions } from './schema';
 
 let childProcess: ChildProcess;
@@ -41,14 +42,13 @@ function runCliPreview(
 ): Promise<boolean> {
   return new Promise((resolve, reject) => {
     // TODO: use Astro CLI API: https://docs.astro.build/en/reference/cli-reference/#advanced-apis-experimental
-    childProcess = spawn(
-      'astro',
+    childProcess = fork(
+      getAstroCliPath(),
       ['preview', ...getAstroPreviewArgs(projectRoot, options)],
       {
         cwd: workspaceRoot,
         env: { ...process.env, FORCE_COLOR: 'true' },
         stdio: 'pipe',
-        shell: process.platform === 'win32',
       }
     );
 
