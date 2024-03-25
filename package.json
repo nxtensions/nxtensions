@@ -60,7 +60,7 @@
     "strip-ansi": "~6.0.1",
     "ts-jest": "~29.1.2",
     "ts-node": "~10.9.2",
-    "typescript": "5.3.3",
+    "typescript": "5.4.3",
     "verdaccio": "~5.30.2"
   },
   "config": {
