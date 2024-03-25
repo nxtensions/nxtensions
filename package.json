@@ -44,7 +44,7 @@
     "astro": "~4.5.9",
     "chalk": "~4.1.2",
     "commitizen": "~4.3.0",
-    "eslint": "~8.56.0",
+    "eslint": "~8.57.0",
     "eslint-config-prettier": "9.1.0",
     "fs-extra": "~11.2.0",
     "husky": "~9.0.11",
