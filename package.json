@@ -24,7 +24,7 @@
     "@nx/cypress": "18.1.2",
     "@nx/eslint": "18.1.2",
     "@nx/eslint-plugin": "18.1.2",
-    "@nx/jest": "18.1.2",
+    "@nx/jest": "18.3.2",
     "@nx/js": "18.1.2",
     "@nx/node": "18.1.2",
     "@nx/playwright": "18.1.2",
