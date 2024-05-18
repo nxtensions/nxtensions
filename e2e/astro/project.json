@@ -3,23 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "e2e/astro/tests",
-  "targets": {
-    "e2e": {
-      "dependsOn": ["^build"],
-      "inputs": [
-        "default",
-        "^production",
-        "{workspaceRoot}/jest.preset.js",
-        "{workspaceRoot}/.verdaccio/config.yml",
-        { "env": "NX_E2E_CI_CACHE_KEY" }
-      ],
-      "executor": "@nx/jest:jest",
-      "options": {
-        "jestConfig": "e2e/astro/jest.config.js",
-        "runInBand": true
-      }
-    }
-  },
+  "targets": {},
   "tags": ["scope:astro", "type:e2e"],
   "implicitDependencies": ["astro"]
 }
