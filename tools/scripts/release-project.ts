@@ -165,5 +165,7 @@ if (require.main === module) {
     dryRun: args.dryRun,
     localRelease: args.local ?? false,
     version: args.version,
+  }).then(() => {
+    process.exit(0);
   });
 }
