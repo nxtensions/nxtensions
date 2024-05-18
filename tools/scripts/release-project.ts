@@ -1,4 +1,4 @@
-import { ProjectConfiguration, Workspaces } from '@nx/devkit';
+import { createProjectGraphAsync, type ProjectConfiguration } from '@nx/devkit';
 import { execSync } from 'child_process';
 import { existsSync } from 'fs';
 import { join } from 'path';
@@ -14,11 +14,9 @@ export async function releaseProject(
   projectName: string,
   options: ReleaseProjectOptions & { localRelease: boolean }
 ): Promise<void> {
-  const workspace = new Workspaces(
-    join(__dirname, '../..')
-  ).readWorkspaceConfiguration();
+  const projectGraph = await createProjectGraphAsync();
 
-  const project = workspace.projects[projectName];
+  const project = projectGraph.nodes[projectName].data as ProjectConfiguration;
   const { localRelease, ...rest } = options;
 
   if (options.localRelease) {
