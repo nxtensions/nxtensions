@@ -19,12 +19,46 @@
       "inputs": ["production", "^production"],
       "cache": true
     },
-    "@nx/jest:jest": {
-      "cache": true,
-      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"]
+    "test": {
+      "inputs": [
+        "default",
+        "{workspaceRoot}/jest.preset.js",
+        "^production",
+        { "externalDependencies": ["jest"] }
+      ]
+    },
+    "e2e": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "default",
+        "^production",
+        "{workspaceRoot}/jest.preset.js",
+        "{workspaceRoot}/.verdaccio/config.yml",
+        { "externalDependencies": ["jest"] },
+        { "env": "NX_E2E_CI_CACHE_KEY" }
+      ],
+      "options": {
+        "runInBand": true
+      }
     }
   },
-  "plugins": ["@nx/eslint/plugin"],
+  "plugins": [
+    "@nx/eslint/plugin",
+    {
+      "plugin": "@nx/jest/plugin",
+      "include": ["packages/**/*"],
+      "options": {
+        "targetName": "test"
+      }
+    },
+    {
+      "plugin": "@nx/jest/plugin",
+      "include": ["e2e/**/*"],
+      "options": {
+        "targetName": "e2e"
+      }
+    }
+  ],
   "nxCloudAccessToken": "NzA4YTdiYmUtYzFhMC00ZjUxLThmNTMtN2VmMWYxOGZmYWRjfHJlYWQ=",
   "parallel": 3
 }

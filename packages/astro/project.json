@@ -4,19 +4,6 @@
   "sourceRoot": "packages/astro/src",
   "projectType": "library",
   "targets": {
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/packages/astro"],
-      "options": {
-        "jestConfig": "packages/astro/jest.config.ts"
-      },
-      "configurations": {
-        "ci": {
-          "ci": true,
-          "codeCoverage": true
-        }
-      }
-    },
     "build": {
       "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],

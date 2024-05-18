@@ -1,5 +1,6 @@
 jest.mock('node-fetch');
 
+import * as devkit from '@nx/devkit';
 import {
   getProjects,
   readJson,
@@ -9,6 +10,7 @@ import {
   type Tree,
 } from '@nx/devkit';
 import fetch from 'node-fetch';
+import type { PackageManagerCommands } from 'nx/src/utils/package-manager';
 import { createTreeWithEmptyWorkspace } from '../utilities/testing';
 import { applicationGenerator } from './generator';
 import type { GeneratorOptions } from './schema';
@@ -372,6 +374,9 @@ describe('application generator', () => {
 
     test('should configure playwright correctly', async () => {
       const e2eProjectName = `${options.name}-e2e`;
+      jest
+        .spyOn(devkit, 'getPackageManagerCommand')
+        .mockReturnValue({ exec: 'pnpm exec' } as PackageManagerCommands);
 
       await applicationGenerator(tree, {
         ...options,
