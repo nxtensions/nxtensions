@@ -16,9 +16,6 @@ dependencies:
     version: 2.6.2
 
 devDependencies:
-  '@astrojs/compiler':
-    specifier: ~2.7.0
-    version: 2.7.0
   '@commitlint/cli':
     specifier: ~19.2.1
     version: 19.2.1(@types/node@20.11.17)(typescript@5.4.5)
