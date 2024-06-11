@@ -94,7 +94,7 @@ async function collectDependencies(
       (importExpr, filePath, type) => {
         // locate project containing the import
         const target =
-          targetProjectLocator.findProjectWithImport(importExpr, filePath) ??
+          targetProjectLocator.findProjectFromImport(importExpr, filePath) ??
           `npm:${importExpr}`;
 
         // add the explicit dependency when the target project was found
