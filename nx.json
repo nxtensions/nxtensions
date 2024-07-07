@@ -43,7 +43,12 @@
     }
   },
   "plugins": [
-    "@nx/eslint/plugin",
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      }
+    },
     {
       "plugin": "@nx/jest/plugin",
       "include": ["packages/**/*"],

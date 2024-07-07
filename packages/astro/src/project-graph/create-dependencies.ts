@@ -97,7 +97,10 @@ function convertImportToDependency(
   targetProjectLocator: TargetProjectLocator
 ): RawProjectGraphDependency {
   const target =
-    targetProjectLocator.findProjectWithImport(importExpr, sourceFile) ??
+    ('findProjectWithImport' in targetProjectLocator
+      ? // @ts-expect-error available method in versions lower than 19.1.2
+        targetProjectLocator.findProjectWithImport(importExpr, sourceFile)
+      : targetProjectLocator.findProjectFromImport(importExpr, sourceFile)) ??
     `npm:${importExpr}`;
 
   return {
