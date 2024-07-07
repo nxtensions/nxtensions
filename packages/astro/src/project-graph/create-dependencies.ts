@@ -1,152 +1,112 @@
-import type { Node } from '@astrojs/compiler/types';
 import {
+  DependencyType,
+  normalizePath,
   workspaceRoot,
   type CreateDependencies,
-  type CreateDependenciesContext,
-  type FileData,
   type ProjectFileMap,
   type ProjectGraphProjectNode,
   type RawProjectGraphDependency,
 } from '@nx/devkit';
-import { readFileSync } from 'fs';
+import { findImports } from 'nx/src/native';
 import { TargetProjectLocator } from 'nx/src/plugins/js/project-graph/build-dependencies/target-project-locator';
-import { TypeScriptImportLocator } from 'nx/src/plugins/js/project-graph/build-dependencies/typescript-import-locator';
-import { extname, join } from 'path';
+import { extname, join, relative } from 'path';
 
-let astroCompiler: typeof import('@astrojs/compiler');
-let astroCompilerUtils: typeof import('@astrojs/compiler/utils');
-let importLocator: TypeScriptImportLocator;
-let ts: typeof import('typescript');
-
-export const createDependencies: CreateDependencies = async (
-  options,
-  context
-) => {
+export const createDependencies: CreateDependencies = (options, context) => {
   const filesToProcess = getAstroFilesToProcess(
     context.filesToProcess.projectFileMap
   );
 
-  if (filesToProcess.length === 0) {
+  if (Object.keys(filesToProcess).length === 0) {
     return [];
   }
 
+  const nodes: Record<string, ProjectGraphProjectNode> = Object.fromEntries(
+    Object.entries(context.projects).map(([key, config]) => [
+      key,
+      {
+        name: key,
+        type: null,
+        data: config,
+      },
+    ])
+  );
+  const targetProjectLocator = new TargetProjectLocator(
+    nodes,
+    context.externalNodes
+  );
+
+  const imports = findImports(filesToProcess);
   const dependencies: RawProjectGraphDependency[] = [];
-  for (const { project, files } of filesToProcess) {
-    for (const file of files) {
-      // we delay the creation of these until needed and then, we cache them
-      astroCompiler ??= await new Function(
-        `return import('@astrojs/compiler');`
-      )();
-      astroCompilerUtils ??= await new Function(
-        `return import('@astrojs/compiler/utils');`
-      )();
 
-      const fileContent = readFileSync(join(workspaceRoot, file.file), 'utf-8');
-      // parse the file to get the AST
-      const { ast } = await astroCompiler.parse(fileContent, {
-        position: false,
-      });
+  for (const {
+    sourceProject,
+    file,
+    staticImportExpressions,
+    dynamicImportExpressions,
+  } of imports) {
+    const normalizedFilePath = normalizePath(relative(workspaceRoot, file));
+    for (const importExpr of staticImportExpressions) {
+      const dependency = convertImportToDependency(
+        importExpr,
+        normalizedFilePath,
+        sourceProject,
+        DependencyType.static,
+        targetProjectLocator
+      );
+      dependencies.push(dependency);
+    }
 
-      // collect the dependencies
-      await collectDependencies(ast, context, project, file.file, dependencies);
+    for (const importExpr of dynamicImportExpressions) {
+      const dependency = convertImportToDependency(
+        importExpr,
+        normalizedFilePath,
+        sourceProject,
+        DependencyType.dynamic,
+        targetProjectLocator
+      );
+      dependencies.push(dependency);
     }
   }
 
   return dependencies;
 };
 
-async function collectDependencies(
-  node: Node,
-  context: CreateDependenciesContext,
-  project: string,
-  filePath: string,
-  collectedDependencies: RawProjectGraphDependency[]
-): Promise<void> {
-  if (astroCompilerUtils.is.frontmatter(node)) {
-    // we delay the creation of these until needed and then, we cache them
-    importLocator ??= new TypeScriptImportLocator();
-    ts = ts ?? require('typescript');
-    const nodes: Record<string, ProjectGraphProjectNode> = Object.fromEntries(
-      Object.entries(context.projects).map(([key, config]) => [
-        key,
-        {
-          name: key,
-          type: null,
-          data: config,
-        },
-      ])
-    );
-    const targetProjectLocator = new TargetProjectLocator(
-      nodes,
-      context.externalNodes
-    );
-
-    const sourceFile = ts.createSourceFile(
-      filePath,
-      node.value,
-      ts.ScriptTarget.Latest,
-      true
-    );
-    // locate imports
-    importLocator.fromNode(
-      filePath,
-      sourceFile,
-      (importExpr, filePath, type) => {
-        // locate project containing the import
-        const target =
-          targetProjectLocator.findProjectWithImport(importExpr, filePath) ??
-          `npm:${importExpr}`;
-
-        // add the explicit dependency when the target project was found
-        collectedDependencies.push({
-          source: project,
-          target,
-          type,
-          sourceFile: filePath,
-        });
-      }
-    );
-
-    // bail out since the frontmatter has already been processed
-    return;
-  }
-
-  if (!astroCompilerUtils.is.parent(node)) {
-    return;
-  }
-
-  for (const child of node.children) {
-    await collectDependencies(
-      child,
-      context,
-      project,
-      filePath,
-      collectedDependencies
-    );
-
-    // the child is the frontmatter and at this point was already processed, bail out
-    if (astroCompilerUtils.is.frontmatter(child)) {
-      return;
-    }
-  }
-}
-
-function getAstroFilesToProcess(filesToProcess: ProjectFileMap): {
-  project: string;
-  files: FileData[];
-}[] {
+function getAstroFilesToProcess(
+  projectFileMap: ProjectFileMap
+): Record<string, string[]> {
   const astroExtensions = new Set(['.astro', '.md', '.mdx']);
 
-  return Object.entries(filesToProcess)
-    .map(([project, files]) => {
-      const astroFiles = files.filter((file) =>
-        astroExtensions.has(extname(file.file))
-      );
-      if (astroFiles.length > 0) {
-        return { project, files: astroFiles };
+  const filesToProcess: Record<string, string[]> = {};
+  for (const [project, fileData] of Object.entries(projectFileMap)) {
+    for (const { file } of fileData) {
+      if (astroExtensions.has(extname(file))) {
+        filesToProcess[project] ??= [];
+        filesToProcess[project].push(join(workspaceRoot, file));
       }
+    }
+  }
 
-      return undefined;
-    })
-    .filter(Boolean);
+  return filesToProcess;
+}
+
+function convertImportToDependency(
+  importExpr: string,
+  sourceFile: string,
+  source: string,
+  type: RawProjectGraphDependency['type'],
+  targetProjectLocator: TargetProjectLocator
+): RawProjectGraphDependency {
+  const target =
+    ('findProjectWithImport' in targetProjectLocator
+      ? // @ts-expect-error available method in versions lower than 19.1.2
+        targetProjectLocator.findProjectWithImport(importExpr, sourceFile)
+      : targetProjectLocator.findProjectFromImport(importExpr, sourceFile)) ??
+    `npm:${importExpr}`;
+
+  return {
+    source,
+    target,
+    sourceFile,
+    type,
+  };
 }
