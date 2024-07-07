@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [19.0.1](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v19.0.0...@nxtensions/astro@v19.0.1) (2024-07-07)
+
+### Bug Fixes
+
+- **astro:** support renamed nx project locator helper and native helper to find imports ([#654](https://github.com/nxtensions/nxtensions/issues/654)) ([55e2554](https://github.com/nxtensions/nxtensions/commit/55e255469d32f10f5c5df21c2ca5440da09f5aa5))
+
 ## [19.0.0](https://github.com/nxtensions/nxtensions/compare/@nxtensions/astro@v18.2.1...@nxtensions/astro@v19.0.0) (2024-05-18)
 
 ### ⚠ BREAKING CHANGES
