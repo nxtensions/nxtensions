@@ -35,7 +35,7 @@
     "@types/fs-extra": "~11.0.4",
     "@types/jest": "~29.5.12",
     "@types/kill-port": "~2.0.3",
-    "@types/node": "20.11.17",
+    "@types/node": "20.14.12",
     "@types/node-fetch": "~2.6.11",
     "@types/standard-version": "~7.1.3",
     "@typescript-eslint/eslint-plugin": "7.9.0",
