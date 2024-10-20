@@ -10,16 +10,6 @@ export async function componentGenerator(
   tree: Tree,
   rawOptions: GeneratorOptions
 ) {
-  return await componentGeneratorInternal(tree, {
-    nameAndDirectoryFormat: 'derived',
-    ...rawOptions,
-  });
-}
-
-export async function componentGeneratorInternal(
-  tree: Tree,
-  rawOptions: GeneratorOptions
-) {
   const options = await normalizeOptions(tree, rawOptions);
 
   addComponentFile(tree, options);

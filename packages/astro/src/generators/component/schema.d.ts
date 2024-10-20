@@ -1,26 +1,13 @@
-import type { NameAndDirectoryFormat } from '@nx/devkit/src/generators/artifact-name-and-directory-utils';
-
 export type Style = 'css' | 'scss' | 'sass' | 'less' | 'styl' | 'none';
 
 export interface GeneratorOptions {
-  name: string;
-  directory?: string;
-  nameAndDirectoryFormat?: NameAndDirectoryFormat;
+  path: string;
+  name?: string;
   style?: Style;
-
-  /**
-   * @deprecated
-   */
-  capitalizeName?: boolean;
-  /**
-   * @deprecated
-   */
-  project?: string;
 }
 
-export interface NormalizedGeneratorOptions extends GeneratorOptions {
+export interface NormalizedGeneratorOptions extends Required<GeneratorOptions> {
   directory: string;
   fileName: string;
   filePath: string;
-  style: Style;
 }
