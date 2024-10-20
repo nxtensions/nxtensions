@@ -50,7 +50,7 @@ describe('Preview Executor', () => {
       target: {
         outputs: ['{workspaceRoot}/dist/apps/app1'],
       },
-      workspace: {
+      projectsConfigurations: {
         projects: {
           app1: { root: 'apps/app1' },
         },

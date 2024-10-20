@@ -65,5 +65,6 @@
     }
   ],
   "nxCloudAccessToken": "NzA4YTdiYmUtYzFhMC00ZjUxLThmNTMtN2VmMWYxOGZmYWRjfHJlYWQ=",
-  "parallel": 3
+  "parallel": 3,
+  "useLegacyCache": true
 }

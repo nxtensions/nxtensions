@@ -17,8 +17,8 @@ import type { GeneratorOptions } from './schema';
 describe('library generator', () => {
   let tree: Tree;
   const options: GeneratorOptions = {
+    directory: 'lib1',
     name: 'lib1',
-    projectNameAndRootFormat: 'as-provided',
   };
 
   beforeEach(() => {
@@ -55,20 +55,6 @@ describe('library generator', () => {
     expect(tree.exists(`${options.name}/tsconfig.json`)).toBeTruthy();
   });
 
-  test('should generate files in a monorepo layout', async () => {
-    tree.write('libs/.gitkeep', '');
-
-    await libraryGenerator(tree, {
-      ...options,
-      projectNameAndRootFormat: 'derived',
-    });
-
-    expect(tree.exists(`libs/${options.name}/index.ts`)).toBeTruthy();
-    expect(tree.exists(`libs/${options.name}/src/Lib1.astro`)).toBeTruthy();
-    expect(tree.exists(`libs/${options.name}/README.md`)).toBeTruthy();
-    expect(tree.exists(`libs/${options.name}/tsconfig.json`)).toBeTruthy();
-  });
-
   test('should add the path mapping', async () => {
     await libraryGenerator(tree, options);
 
@@ -101,29 +87,6 @@ describe('library generator', () => {
       expect(tree.exists(`${directory}/src/Lib1.astro`)).toBeTruthy();
       expect(tree.exists(`${directory}/README.md`)).toBeTruthy();
       expect(tree.exists(`${directory}/tsconfig.json`)).toBeTruthy();
-    });
-
-    test('should generate files in the right directory in a monorepo layout', async () => {
-      tree.write('libs/.gitkeep', '');
-
-      await libraryGenerator(tree, {
-        ...options,
-        directory,
-        projectNameAndRootFormat: 'derived',
-      });
-
-      expect(
-        tree.exists(`libs/${directory}/${options.name}/index.ts`)
-      ).toBeTruthy();
-      expect(
-        tree.exists(`libs/${directory}/${options.name}/src/Lib1.astro`)
-      ).toBeTruthy();
-      expect(
-        tree.exists(`libs/${directory}/${options.name}/README.md`)
-      ).toBeTruthy();
-      expect(
-        tree.exists(`libs/${directory}/${options.name}/tsconfig.json`)
-      ).toBeTruthy();
     });
 
     test('should add the path mapping with the right directory', async () => {

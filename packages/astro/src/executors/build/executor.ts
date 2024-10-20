@@ -13,7 +13,8 @@ export async function buildExecutor(
 ): Promise<{ success: boolean }> {
   options = normalizeOptions(options);
 
-  const projectRoot = context.workspace.projects[context.projectName].root;
+  const projectRoot =
+    context.projectsConfigurations.projects[context.projectName].root;
 
   // TODO: use what's in the Astro config once the CLI API is available.
   // See https://github.com/snowpackjs/astro/issues/1483.

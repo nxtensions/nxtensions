@@ -4,14 +4,14 @@
   "version": "0.0.1",
   "generators": {
     "application": {
-      "factory": "./src/generators/application/generator#applicationGeneratorInternal",
+      "factory": "./src/generators/application/generator",
       "schema": "./src/generators/application/schema.json",
       "aliases": ["app"],
       "x-type": "application",
       "description": "Generates an Astro application."
     },
     "component": {
-      "factory": "./src/generators/component/generator#componentGeneratorInternal",
+      "factory": "./src/generators/component/generator",
       "schema": "./src/generators/component/schema.json",
       "aliases": ["c"],
       "description": "Generates an Astro or Markdown component."
@@ -23,7 +23,7 @@
       "hidden": true
     },
     "library": {
-      "factory": "./src/generators/library/generator#libraryGeneratorInternal",
+      "factory": "./src/generators/library/generator",
       "schema": "./src/generators/library/schema.json",
       "aliases": ["lib"],
       "x-type": "library",

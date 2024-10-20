@@ -11,14 +11,14 @@ export async function normalizeOptions(
   tree: Tree,
   options: GeneratorOptions
 ): Promise<NormalizedGeneratorOptions> {
-  const { projectName, projectRoot, projectNameAndRootFormat } =
-    await determineProjectNameAndRootOptions(tree, {
+  const { projectName, projectRoot } = await determineProjectNameAndRootOptions(
+    tree,
+    {
       name: options.name,
       projectType: 'application',
       directory: options.directory,
-      projectNameAndRootFormat: options.projectNameAndRootFormat,
-      callingGenerator: '@nxtensions/astro:application',
-    });
+    }
+  );
 
   const e2eProjectName = `${projectName}-e2e`;
   const e2eProjectRoot = `${projectRoot}-e2e`;
@@ -31,15 +31,13 @@ export async function normalizeOptions(
 
   return {
     ...options,
-    e2eTestRunner:
-      options.e2eTestRunner ?? (options.addCypressTests ? 'cypress' : 'none'),
+    e2eTestRunner: options.e2eTestRunner ?? 'none',
     projectName,
     projectRoot,
     e2eProjectName,
     e2eProjectRoot,
     integrations,
     tags,
-    projectNameAndRootFormat,
   };
 }
 

@@ -6,21 +6,18 @@ export async function normalizeOptions(
   tree: Tree,
   options: GeneratorOptions
 ): Promise<NormalizedGeneratorOptions> {
-  const { importPath, projectName, projectRoot, projectNameAndRootFormat } =
+  const { importPath, projectName, projectRoot } =
     await determineProjectNameAndRootOptions(tree, {
       name: options.name,
       projectType: 'library',
       directory: options.directory,
       importPath: options.importPath,
-      projectNameAndRootFormat: options.projectNameAndRootFormat,
-      callingGenerator: '@nxtensions/astro:library',
     });
 
   const tags = options.tags ? options.tags.split(',').map((s) => s.trim()) : [];
 
   return {
     ...options,
-    projectNameAndRootFormat,
     importPath,
     projectName,
     projectRoot,
