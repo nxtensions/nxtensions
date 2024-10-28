@@ -13,25 +13,19 @@ concurrency:
 jobs:
   main:
     name: Nx Cloud - Main Job
-    uses: nrwl/ci/.github/workflows/nx-cloud-main.yml@v0.12
-    secrets:
-      NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+    uses: nrwl/ci/.github/workflows/nx-cloud-main.yml@v0.15
     with:
-      pnpm-version: 8
+      pnpm-version: 9
       environment-variables: |
         NX_E2E_CI_CACHE_KEY: e2e-ci-linux
       parallel-commands: |
         pnpm nx-cloud record -- pnpm nx format:check
       parallel-commands-on-agents: |
-        pnpm nx affected -t lint test build --parallel=2
-      final-commands: |
-        pnpm nx affected -t e2e --parallel=1
+        pnpm nx affected -t lint test build e2e
 
   agents:
     name: Nx Cloud - Agents
-    uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.12
-    secrets:
-      NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+    uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.15
     with:
       number-of-agents: 2
-      pnpm-version: 8
+      pnpm-version: 9
