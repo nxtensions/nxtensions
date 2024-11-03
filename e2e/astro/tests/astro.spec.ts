@@ -30,7 +30,7 @@ describe('astro e2e', () => {
     await runNxCommandAsync(`generate @nxtensions/astro:app ${app}`);
     expect(() => checkFilesExist(app)).not.toThrow();
 
-    const output = await runNxCommandAsync(`build ${app}`);
+    const output = await runNxCommandAsync(`build ${app} --verbose`);
 
     expect(stripAnsi(output.stdout)).toContain(
       `Successfully ran target build for project ${app}`
@@ -59,7 +59,7 @@ import { ${libComponentName} } from '@proj/${lib}';
 `
     );
 
-    const output = await runNxCommandAsync(`run ${app}:build`);
+    const output = await runNxCommandAsync(`run ${app}:build --verbose`);
 
     expect(stripAnsi(output.stdout)).toContain(
       `Successfully ran target build for project ${app}`
@@ -83,7 +83,7 @@ import { ${libComponentName} } from '@proj/${lib}';
     await runNxCommandAsync(`generate @nxtensions/astro:app ${app}`);
     await runNxCommandAsync(`generate @nxtensions/astro:lib ${lib}`);
 
-    await runNxCommandAsync(`run ${app}:build`);
+    await runNxCommandAsync(`run ${app}:build --verbose`);
     const appRun = await runNxCommandAsync(`run ${app}:check`);
     expect(stripAnsi(appRun.stdout)).toContain(
       `Successfully ran target check for project ${app}`
@@ -139,7 +139,7 @@ import { ${libComponentName} } from '@proj/${lib}';
       `generate @nxtensions/astro:app ${app} --e2eTestRunner=cypress`
     );
     ensureCypressInstallation();
-    const output = await runNxCommandAsync(`run ${app}-e2e:e2e`);
+    const output = await runNxCommandAsync(`run ${app}-e2e:e2e --verbose`);
 
     expect(stripAnsi(output.stdout)).toContain('All specs passed!');
     expect(stripAnsi(output.stdout)).toContain(
@@ -156,7 +156,7 @@ import { ${libComponentName} } from '@proj/${lib}';
       `generate @nxtensions/astro:app ${app} --e2eTestRunner=playwright`
     );
     ensurePlaywrightBrowsersInstallation();
-    const output = await runNxCommandAsync(`run ${app}-e2e:e2e`, {
+    const output = await runNxCommandAsync(`run ${app}-e2e:e2e --verbose`, {
       // Playwright uses it to determine Jest is running and throws, don't propagate it
       env: { JEST_WORKER_ID: undefined },
     });
@@ -196,7 +196,7 @@ import { ${libComponentName} } from '@proj/${lib}';
       `<h2 class="text-2xl">Welcome to ${lib}!</h2>`
     );
 
-    const output = await runNxCommandAsync(`build ${app}`);
+    const output = await runNxCommandAsync(`build ${app} --verbose`);
 
     expect(stripAnsi(output.stdout)).toContain(
       `Successfully ran target build for project ${app}`
