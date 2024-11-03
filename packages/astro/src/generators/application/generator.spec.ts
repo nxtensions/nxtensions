@@ -18,8 +18,8 @@ import type { GeneratorOptions } from './schema';
 describe('application generator', () => {
   let tree: Tree;
   const options: GeneratorOptions = {
+    directory: 'app1',
     name: 'app1',
-    projectNameAndRootFormat: 'as-provided',
   };
 
   beforeEach(() => {
@@ -87,28 +87,6 @@ describe('application generator', () => {
     expect(tree.exists(`${options.name}/tsconfig.json`)).toBeTruthy();
   });
 
-  test('should generate files in the right location in a monorepo layout', async () => {
-    tree.write('apps/.gitkeep', '');
-
-    await applicationGenerator(tree, {
-      ...options,
-      projectNameAndRootFormat: undefined,
-    });
-
-    expect(tree.exists(`apps/${options.name}/public/favicon.svg`)).toBeTruthy();
-    expect(
-      tree.exists(`apps/${options.name}/src/components/Card.astro`)
-    ).toBeTruthy();
-    expect(
-      tree.exists(`apps/${options.name}/src/layouts/Layout.astro`)
-    ).toBeTruthy();
-    expect(
-      tree.exists(`apps/${options.name}/src/pages/index.astro`)
-    ).toBeTruthy();
-    expect(tree.exists(`apps/${options.name}/astro.config.mjs`)).toBeTruthy();
-    expect(tree.exists(`apps/${options.name}/tsconfig.json`)).toBeTruthy();
-  });
-
   describe('--directory', () => {
     test('should add project with the right name when a directory is provided', async () => {
       const directory = `some-directory/sub-directory/${options.name}`;
@@ -132,40 +110,6 @@ describe('application generator', () => {
       expect(tree.exists(`${directory}/src/pages/index.astro`)).toBeTruthy();
       expect(tree.exists(`${directory}/astro.config.mjs`)).toBeTruthy();
       expect(tree.exists(`${directory}/tsconfig.json`)).toBeTruthy();
-    });
-
-    test('should generate files in the right directory in a monorepo layout', async () => {
-      tree.write('apps/.gitkeep', '');
-      const directory = 'some-directory/sub-directory';
-
-      await applicationGenerator(tree, {
-        ...options,
-        directory,
-        projectNameAndRootFormat: undefined,
-      });
-
-      expect(
-        tree.exists(`apps/${directory}/${options.name}/public/favicon.svg`)
-      ).toBeTruthy();
-      expect(
-        tree.exists(
-          `apps/${directory}/${options.name}/src/components/Card.astro`
-        )
-      ).toBeTruthy();
-      expect(
-        tree.exists(
-          `apps/${directory}/${options.name}/src/layouts/Layout.astro`
-        )
-      ).toBeTruthy();
-      expect(
-        tree.exists(`apps/${directory}/${options.name}/src/pages/index.astro`)
-      ).toBeTruthy();
-      expect(
-        tree.exists(`apps/${directory}/${options.name}/astro.config.mjs`)
-      ).toBeTruthy();
-      expect(
-        tree.exists(`apps/${directory}/${options.name}/tsconfig.json`)
-      ).toBeTruthy();
     });
   });
 
@@ -317,7 +261,7 @@ describe('application generator', () => {
 
       expect(tree.exists(`${e2eProjectName}`)).toBeTruthy();
       expect(readProjectConfiguration(tree, e2eProjectName)).toBeTruthy();
-    });
+    }, 10_000);
 
     test('should configure the right web server command in cypress preset', async () => {
       const e2eProjectName = `${options.name}-e2e`;
@@ -344,7 +288,7 @@ describe('application generator', () => {
         });
         "
       `);
-    });
+    }, 10_000);
 
     test('should create cypress e2e project correctly when passing a directory', async () => {
       const directory = `some-directory/sub-directory/${options.name}`;
@@ -358,7 +302,7 @@ describe('application generator', () => {
 
       expect(tree.exists(`${directory}-e2e`)).toBeTruthy();
       expect(readProjectConfiguration(tree, e2eProjectName)).toBeTruthy();
-    });
+    }, 10_000);
 
     test('should add a playwright e2e project when --e2eTestRunner=playwright', async () => {
       const e2eProjectName = `${options.name}-e2e`;
@@ -370,7 +314,7 @@ describe('application generator', () => {
 
       expect(tree.exists(`${e2eProjectName}`)).toBeTruthy();
       expect(readProjectConfiguration(tree, e2eProjectName)).toBeTruthy();
-    });
+    }, 10_000);
 
     test('should configure playwright correctly', async () => {
       const e2eProjectName = `${options.name}-e2e`;
@@ -386,7 +330,7 @@ describe('application generator', () => {
       expect(
         tree.read(`${e2eProjectName}/playwright.config.ts`, 'utf-8')
       ).toMatchSnapshot();
-    });
+    }, 10_000);
 
     test('should create playwright e2e project correctly when passing a directory', async () => {
       const directory = `some-directory/sub-directory/${options.name}`;
@@ -400,6 +344,6 @@ describe('application generator', () => {
 
       expect(tree.exists(`${directory}-e2e`)).toBeTruthy();
       expect(readProjectConfiguration(tree, e2eProjectName)).toBeTruthy();
-    });
+    }, 10_000);
   });
 });

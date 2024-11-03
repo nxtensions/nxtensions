@@ -9,7 +9,8 @@ export async function checkExecutor(
   _options: CheckExecutorOptions,
   context: ExecutorContext
 ): Promise<{ success: boolean }> {
-  const projectRoot = context.workspace.projects[context.projectName].root;
+  const projectRoot =
+    context.projectsConfigurations.projects[context.projectName].root;
 
   try {
     const exitCode = await runCliCheck(context.root, projectRoot);

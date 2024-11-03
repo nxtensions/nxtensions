@@ -5,30 +5,27 @@
   "description": "Generates an Astro library.",
   "type": "object",
   "properties": {
-    "name": {
+    "directory": {
       "type": "string",
-      "description": "The name of the library.",
+      "description": "A directory where the library is placed.",
+      "alias": "d",
       "$default": {
         "$source": "argv",
         "index": 0
       },
-      "x-prompt": "What name would you like to use?",
-      "pattern": "^[a-zA-Z].*$"
+      "x-prompt": "Which directory do you want to create the library in?",
+      "x-priority": "important"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the library.",
+      "pattern": "^@[a-zA-Z0-9-*~][a-zA-Z0-9-*._~]*\\/[a-zA-Z0-9-~][a-zA-Z0-9-._~]*$",
+      "x-priority": "important"
     },
     "tags": {
       "type": "string",
       "description": "Comma separated list of tags to be applied to the project (used for linting).",
       "alias": "t"
-    },
-    "directory": {
-      "type": "string",
-      "description": "A directory where the project is placed.",
-      "alias": "d"
-    },
-    "projectNameAndRootFormat": {
-      "description": "Whether to generate the project name and root directory as provided (`as-provided`) or generate them composing their values and taking the configured layout into account (`derived`).",
-      "type": "string",
-      "enum": ["as-provided", "derived"]
     },
     "publishable": {
       "type": "boolean",
@@ -38,13 +35,8 @@
     "importPath": {
       "type": "string",
       "description": "The path used to import the library, like `@myorg/my-awesome-lib`. Must be a valid npm name and must be provided when creating a publishable library."
-    },
-    "standaloneConfig": {
-      "description": "Split the project configuration into `<projectRoot>/project.json` rather than including it inside `workspace.json`.",
-      "type": "boolean",
-      "x-deprecated": "This option is no longer used and will be removed in v19."
     }
   },
   "additionalProperties": false,
-  "required": ["name"]
+  "required": ["directory"]
 }

@@ -11,7 +11,8 @@ export async function* devExecutor(
   options: DevExecutorOptions,
   context: ExecutorContext
 ): AsyncGenerator<{ baseUrl?: string; success: boolean }> {
-  const projectRoot = context.workspace.projects[context.projectName].root;
+  const projectRoot =
+    context.projectsConfigurations.projects[context.projectName].root;
 
   try {
     const success = await runCliDev(context.root, projectRoot, options);

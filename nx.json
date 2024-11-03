@@ -20,14 +20,24 @@
       "cache": true
     },
     "test": {
-      "inputs": [
-        "default",
-        "{workspaceRoot}/jest.preset.js",
-        "^production",
-        { "externalDependencies": ["jest"] }
-      ]
+      "options": {
+        "args": ["--detectOpenHandles", "--forceExit"]
+      }
     },
     "e2e": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "default",
+        "^production",
+        "{workspaceRoot}/jest.preset.js",
+        "{workspaceRoot}/.verdaccio/config.yml",
+        { "externalDependencies": ["jest"] }
+      ],
+      "options": {
+        "runInBand": true
+      }
+    },
+    "e2e-ci--**/*": {
       "dependsOn": ["^build"],
       "inputs": [
         "default",
@@ -37,6 +47,7 @@
         { "externalDependencies": ["jest"] },
         { "env": "NX_E2E_CI_CACHE_KEY" }
       ],
+      "parallelism": false,
       "options": {
         "runInBand": true
       }
@@ -60,10 +71,12 @@
       "plugin": "@nx/jest/plugin",
       "include": ["e2e/**/*"],
       "options": {
-        "targetName": "e2e"
+        "targetName": "e2e",
+        "ciTargetName": "e2e-ci"
       }
     }
   ],
-  "nxCloudAccessToken": "NzA4YTdiYmUtYzFhMC00ZjUxLThmNTMtN2VmMWYxOGZmYWRjfHJlYWQ=",
-  "parallel": 3
+  "nxCloudId": "616aed7daf8af731d0c92d85",
+  "parallel": 3,
+  "useLegacyCache": true
 }

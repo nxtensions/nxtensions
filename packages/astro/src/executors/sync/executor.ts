@@ -9,7 +9,8 @@ export async function syncExecutor(
   _options: SyncExecutorOptions,
   context: ExecutorContext
 ): Promise<{ success: boolean }> {
-  const projectRoot = context.workspace.projects[context.projectName].root;
+  const projectRoot =
+    context.projectsConfigurations.projects[context.projectName].root;
 
   try {
     const exitCode = await runCliSync(context.root, projectRoot);

@@ -14,7 +14,7 @@ export function addFiles(tree: Tree, options: NormalizedGeneratorOptions) {
     options.projectRoot,
     {
       ...options,
-      ...names(options.name),
+      ...names(options.projectName),
       offsetFromRoot: offsetFromRoot(options.projectRoot),
       tmpl: '',
     }

@@ -28,12 +28,12 @@
   "executors": "./executors.json",
   "nx-migrations": "./migrations.json",
   "peerDependencies": {
-    "@nx/cypress": "^19.0.0",
-    "@nx/devkit": "^19.0.0",
-    "@nx/js": "^19.0.0",
-    "@nx/playwright": "^19.0.0",
+    "@nx/cypress": "^20.0.0",
+    "@nx/devkit": "^20.0.0",
+    "@nx/js": "^20.0.0",
+    "@nx/playwright": "^20.0.0",
     "astro": "^3.0.0 || ^4.0.0",
-    "nx": "^19.0.0",
+    "nx": "^20.0.0",
     "typescript": "^5.0.0"
   },
   "peerDependenciesMeta": {

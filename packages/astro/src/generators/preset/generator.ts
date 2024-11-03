@@ -12,10 +12,9 @@ export default async function (
   options: GeneratorOptions
 ): Promise<GeneratorCallback | void> {
   const applicationTask = await applicationGenerator(tree, {
+    directory: joinPathFragments('apps', options.astroAppName),
     name: options.astroAppName,
     tags: options.tags,
-    directory: joinPathFragments('apps', options.astroAppName),
-    projectNameAndRootFormat: 'as-provided',
   });
 
   await formatFiles(tree);

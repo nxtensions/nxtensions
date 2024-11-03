@@ -1,7 +1,6 @@
 import {
   generateFiles,
   joinPathFragments,
-  names,
   offsetFromRoot,
   type Tree,
 } from '@nx/devkit';
@@ -19,7 +18,6 @@ export function addFiles(
     options.projectRoot,
     {
       ...options,
-      ...names(options.name),
       offsetFromRoot: rootOffset,
       outDir: joinPathFragments(rootOffset, 'dist', options.projectRoot),
       tmpl: '',
