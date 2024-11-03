@@ -20,12 +20,9 @@
       "cache": true
     },
     "test": {
-      "inputs": [
-        "default",
-        "{workspaceRoot}/jest.preset.js",
-        "^production",
-        { "externalDependencies": ["jest"] }
-      ]
+      "options": {
+        "args": ["--detectOpenHandles", "--forceExit"]
+      }
     },
     "e2e": {
       "dependsOn": ["^build"],
