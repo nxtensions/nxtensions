@@ -10,7 +10,8 @@ export async function* previewExecutor(
   options: PreviewExecutorOptions,
   context: ExecutorContext
 ): AsyncGenerator<{ baseUrl?: string; success: boolean }> {
-  const projectRoot = context.workspace.projects[context.projectName].root;
+  const projectRoot =
+    context.projectsConfigurations.projects[context.projectName].root;
 
   try {
     const success = await runCliPreview(context.root, projectRoot, options);
